@@ -1,0 +1,74 @@
+<fieldset>
+  <legend>Add New Movement</legend>
+  <form [formGroup]="movementForm" (ngSubmit)="handlerSubmitMovementForm()">
+    <label>
+      Value:
+      <input type="number" step="0.01" formControlName="value" />
+    </label>
+    <label>
+      Date:
+      <input type="date" formControlName="date" />
+    </label>
+    <label>
+      Income
+      <input
+        type="radio"
+        value="income"
+        formControlName="type"
+        (change)="handlerCurrentMovementTypeChange()"
+      />
+    </label>
+    <label>
+      Savings
+      <input
+        type="radio"
+        value="savings"
+        formControlName="type"
+        (change)="handlerCurrentMovementTypeChange()"
+      />
+    </label>
+    <label>
+      Expense
+      <input
+        type="radio"
+        value="expense"
+        formControlName="type"
+        (change)="handlerCurrentMovementTypeChange()"
+      />
+    </label>
+
+    <label>
+      Description:
+      <input type="text" formControlName="description" />
+    </label>
+
+    <label>
+      Category:
+      <select
+        formControlName="category"
+        (change)="handlerCurrentCategoryChange()"
+      >
+        <option
+          *ngFor="let category of currentCategorie$ | async"
+          [value]="category.name"
+        >
+          {{ category.name | titlecase }}
+        </option>
+      </select>
+    </label>
+
+    <!-- *ngIf="currentCategory?.subCategories.length > 0" -->
+    <label>
+      Sub-Category:
+      <select formControlName="subCategory">
+        <option
+          *ngFor="let subCategory of currentCategory?.subCategories"
+          [value]="subCategory"
+        >
+          {{ subCategory | uppercase | lowercase | titlecase }}
+        </option>
+      </select>
+    </label>
+    <button type="submit" [disabled]="!movementForm.valid">Enviar</button>
+  </form>
+</fieldset>

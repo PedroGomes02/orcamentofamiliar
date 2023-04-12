@@ -1,0 +1,30 @@
+<fieldset>
+  <legend>Add New Category</legend>
+  <form [formGroup]="categoryForm" (ngSubmit)="handlerSubmitCategoryForm()">
+    <label>
+      Name:
+      <input type="text" formControlName="name" />
+    </label>
+    <label>
+      Income
+      <input type="radio" value="income" formControlName="type" />
+    </label>
+    <label>
+      Savings
+      <input type="radio" value="savings" formControlName="type" />
+    </label>
+    <label>
+      Expense
+      <input type="radio" value="expense" formControlName="type" />
+    </label>
+    <label>
+      Avatar (emoji):
+      <input type="text" formControlName="avatar" />
+    </label>
+    <label>
+      Sub-Categories (space between)
+      <input type="text" formControlName="subCategories" />
+    </label>
+    <button type="submit" [disabled]="!categoryForm.valid">Enviar</button>
+  </form>
+</fieldset>

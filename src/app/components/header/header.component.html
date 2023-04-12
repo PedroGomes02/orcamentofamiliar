@@ -1,0 +1,16 @@
+<nav>
+  <span>{{ title }}</span>
+  <a routerLink="/">Home</a>
+  <a routerLink="/categories">Categories</a>
+  <a routerLink="/movements">Movements</a>
+</nav>
+
+<div *ngIf="authService.afAuth.authState | async as user; else loginButton">
+  <p>Olá, {{ user.displayName }}!</p>
+  <button (click)="authService.logout()">Sair</button>
+  <hr />
+</div>
+
+<ng-template #loginButton>
+  <button (click)="authService.loginWithGoogle()">Entrar com o Google</button>
+</ng-template>

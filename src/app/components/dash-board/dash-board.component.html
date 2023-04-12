@@ -1,0 +1,48 @@
+<fieldset>
+  <legend>Last 5 Movements</legend>
+  <ul>
+    <li *ngFor="let movement of (movement$ | async)?.slice(0, 5)">
+      {{ movement.value }} - {{ movement.description }} - {{ movement.date }}
+    </li>
+  </ul>
+</fieldset>
+<fieldset>
+  <legend>Monthly Summary</legend>
+
+  <input
+    [(ngModel)]="filters.year"
+    type="number"
+    (change)="handlerChangeFilters()"
+  />
+  <input
+    [(ngModel)]="filters.month"
+    type="number"
+    (change)="handlerChangeFilters()"
+  />
+
+  <ul>
+    SUMMARY BY CATTEGORY
+    <li>INCOME - {{ filteredMovementsSummary.income }}</li>
+    <li>SAVINGS - {{ filteredMovementsSummary.savings }}</li>
+    <li>EXPENSE - {{ filteredMovementsSummary.expense }}</li>
+  </ul>
+
+  <ul>
+    INCOME SUMMARY BY CATTEGORY
+    <li *ngFor="let item of incomeSummaryByCategorie$ | async">
+      {{ item.avatar }} - {{ item.category }} - {{ item.accumulatedValue }}
+    </li>
+  </ul>
+  <ul>
+    SAVINGS SUMMARY BY CATTEGORY
+    <li *ngFor="let item of savingsSummaryByCategorie$ | async">
+      {{ item.avatar }} - {{ item.category }} - {{ item.accumulatedValue }}
+    </li>
+  </ul>
+  <ul>
+    EXPENSE SUMMARY BY CATTEGORY
+    <li *ngFor="let item of expenseSummaryByCategorie$ | async">
+      {{ item.avatar }} - {{ item.category }} - {{ item.accumulatedValue }}
+    </li>
+  </ul>
+</fieldset>

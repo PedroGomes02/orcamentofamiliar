@@ -1,0 +1,69 @@
+<app-new-category></app-new-category>
+<fieldset>
+  <legend>Categories</legend>
+  <label
+    >Filter
+    <select
+      [(ngModel)]="filterAndSortBy.categoryType"
+      (change)="handlerCategoriesFilterAndSort()"
+    >
+      <option value="all">All</option>
+      <option value="income">Income</option>
+      <option value="savings">Savings</option>
+      <option value="expense">Expense</option>
+    </select>
+  </label>
+  <label
+    >Sort By
+    <select
+      [(ngModel)]="filterAndSortBy.sortBy"
+      (change)="handlerCategoriesFilterAndSort()"
+    >
+      <option value="name">Name</option>
+    </select>
+  </label>
+
+  <button (click)="pagination.previousPage()">PAGE -</button>
+  <input
+    [(ngModel)]="pagination.currentPage"
+    type="number"
+    min="1"
+    max="{{ pagination.numberOfPages }}"
+    disabled
+  />
+  <span>of {{ pagination.numberOfPages }}</span>
+  <button (click)="pagination.nextPage()">PAGE +</button>
+  <label>
+    Number of Categories per Page
+    <input
+      [(ngModel)]="pagination.numberDocsByPage"
+      type="number"
+      (change)="this.pagination.calculateNumberOfPages(pagination.totalDocs)"
+    />
+  </label>
+
+  <ul>
+    Total Docs:
+    {{
+      pagination.totalDocs
+    }}
+    <li
+      *ngFor="
+        let category of (filteredCategorie$ | async)?.slice(
+          (pagination.currentPage - 1) * pagination.numberDocsByPage,
+          pagination.numberDocsByPage * pagination.currentPage
+        )
+      "
+    >
+      {{ category.name }}{{ category.avatar }}{{ category.type
+      }}{{ category.subCategories }}
+
+      <button (click)="firestoreService.updateCategory(category.id)">
+        UPDATE
+      </button>
+      <button (click)="firestoreService.deleteCategory(category.id)">
+        DELETE
+      </button>
+    </li>
+  </ul>
+</fieldset>
