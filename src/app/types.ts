@@ -18,4 +18,9 @@ interface Movement {
   userId: string;
 }
 
-export type { Category, Movement };
+interface FilterAndSort {
+  type: string;
+  sortBy: string;
+}
+
+export type { Category, Movement, FilterAndSort };

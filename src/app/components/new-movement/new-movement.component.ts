@@ -20,6 +20,7 @@ export class NewMovementComponent {
   currentCategorie$: Observable<Category[]> | undefined;
   currentCategory: Category | undefined;
   userId: string = '';
+  showNewCategoryComponent: boolean = false;
 
   constructor(
     private firestoreService: FirestoreService,
@@ -33,17 +34,11 @@ export class NewMovementComponent {
     });
 
     this.categorie$ = this.firestoreService.getCategories();
-    this.currentCategorie$ = this.categorie$.pipe(
-      map((data) =>
-        data.filter((category) => category.type === this.currentMovementType)
-      )
-    );
-    this.currentCategorie$.subscribe((doc) => (this.currentCategory = doc[0]));
 
     this.movementForm = this.fb.group({
       value: [0, Validators.required],
       date: [, Validators.required],
-      type: ['expense', Validators.required],
+      type: ['', Validators.required],
       category: ['', Validators.required],
       subCategory: [''],
       description: ['', Validators.required],
@@ -68,8 +63,10 @@ export class NewMovementComponent {
   handlerCurrentMovementTypeChange() {
     this.currentMovementType = this.movementForm.value.type;
     this.currentCategorie$ = this.categorie$?.pipe(
-      map((data) =>
-        data.filter((category) => category.type === this.currentMovementType)
+      map((categories) =>
+        categories.filter(
+          (category) => category.type === this.currentMovementType
+        )
       )
     );
     this.currentCategory = {
@@ -84,10 +81,19 @@ export class NewMovementComponent {
 
   handlerCurrentCategoryChange() {
     this.currentCategorie$?.subscribe(
-      (data) =>
-        (this.currentCategory = data.filter(
+      (categories) =>
+        (this.currentCategory = categories.filter(
           (element) => element.name === this.movementForm.value.category
         )[0])
     );
+  }
+
+  handlerShowNewCategoryComponent(event: any) {
+    event.preventDefault();
+    this.showNewCategoryComponent = !this.showNewCategoryComponent;
+  }
+
+  onFormSubmitted() {
+    this.showNewCategoryComponent = false;
   }
 }

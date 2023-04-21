@@ -1,74 +1,105 @@
 <fieldset>
-  <legend>Add New Movement</legend>
+  <legend>Novo Movimento</legend>
+
   <form [formGroup]="movementForm" (ngSubmit)="handlerSubmitMovementForm()">
-    <label>
-      Value:
-      <input type="number" step="0.01" formControlName="value" />
-    </label>
-    <label>
-      Date:
-      <input type="date" formControlName="date" />
-    </label>
-    <label>
-      Income
-      <input
-        type="radio"
-        value="income"
-        formControlName="type"
-        (change)="handlerCurrentMovementTypeChange()"
-      />
-    </label>
-    <label>
-      Savings
-      <input
-        type="radio"
-        value="savings"
-        formControlName="type"
-        (change)="handlerCurrentMovementTypeChange()"
-      />
-    </label>
-    <label>
-      Expense
-      <input
-        type="radio"
-        value="expense"
-        formControlName="type"
-        (change)="handlerCurrentMovementTypeChange()"
-      />
-    </label>
+    <div class="dateAndValueContainer">
+      <label>
+        Data:
+        <input type="date" formControlName="date" />
+      </label>
+      <label>
+        Valor:
+        <input type="number" step="0.01" formControlName="value" />
+      </label>
+    </div>
 
-    <label>
-      Description:
-      <input type="text" formControlName="description" />
-    </label>
+    <div class="categoryTypeContainer">
+      <label>
+        💵Receita
+        <input
+          type="radio"
+          value="income"
+          formControlName="type"
+          (change)="handlerCurrentMovementTypeChange()"
+        />
+      </label>
+      <label>
+        💰Poupanças
+        <input
+          type="radio"
+          value="savings"
+          formControlName="type"
+          (change)="handlerCurrentMovementTypeChange()"
+        />
+      </label>
+      <label>
+        🤑Despesa
+        <input
+          type="radio"
+          value="expense"
+          formControlName="type"
+          (change)="handlerCurrentMovementTypeChange()"
+        />
+      </label>
+    </div>
 
-    <label>
-      Category:
-      <select
-        formControlName="category"
-        (change)="handlerCurrentCategoryChange()"
-      >
-        <option
-          *ngFor="let category of currentCategorie$ | async"
-          [value]="category.name"
+    <div class="categoryAndSubCategoryContainer">
+      <label>
+        Categoria:
+        <select
+          formControlName="category"
+          (change)="handlerCurrentCategoryChange()"
         >
-          {{ category.name | titlecase }}
-        </option>
-      </select>
-    </label>
+          <option
+            *ngFor="let category of currentCategorie$ | async"
+            [value]="category.name"
+          >
+            {{ category.name | titlecase }}
+          </option>
+        </select>
+      </label>
 
-    <!-- *ngIf="currentCategory?.subCategories.length > 0" -->
-    <label>
-      Sub-Category:
-      <select formControlName="subCategory">
-        <option
-          *ngFor="let subCategory of currentCategory?.subCategories"
-          [value]="subCategory"
-        >
-          {{ subCategory | uppercase | lowercase | titlecase }}
-        </option>
-      </select>
-    </label>
-    <button type="submit" [disabled]="!movementForm.valid">Enviar</button>
+      <label>
+        Sub-Categoria:
+        <select formControlName="subCategory">
+          <option
+            *ngFor="let subCategory of currentCategory?.subCategories"
+            [value]="subCategory"
+          >
+            {{ subCategory | uppercase | lowercase | titlecase }}
+          </option>
+        </select>
+      </label>
+    </div>
+
+    <button
+      class="fieldsetButton"
+      (click)="handlerShowNewCategoryComponent($event)"
+    >
+      {{
+        showNewCategoryComponent ? "❌Fechar Formulário" : "🎚️Nova Categoria"
+      }}
+    </button>
+
+    <app-new-category
+      *ngIf="showNewCategoryComponent"
+      (formSubmitted)="onFormSubmitted()"
+    >
+    </app-new-category>
+
+    <div class="descriptionContainer">
+      <label>
+        Descrição:
+        <textarea formControlName="description"></textarea>
+      </label>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!movementForm.valid"
+      class="fieldsetButton"
+    >
+      Enviar
+    </button>
   </form>
 </fieldset>

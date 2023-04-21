@@ -1,69 +1,120 @@
-<app-new-category></app-new-category>
-<fieldset>
-  <legend>Categories</legend>
-  <label
-    >Filter
-    <select
-      [(ngModel)]="filterAndSortBy.categoryType"
-      (change)="handlerCategoriesFilterAndSort()"
-    >
-      <option value="all">All</option>
-      <option value="income">Income</option>
-      <option value="savings">Savings</option>
-      <option value="expense">Expense</option>
-    </select>
-  </label>
-  <label
-    >Sort By
-    <select
-      [(ngModel)]="filterAndSortBy.sortBy"
-      (change)="handlerCategoriesFilterAndSort()"
-    >
-      <option value="name">Name</option>
-    </select>
-  </label>
+<div class="categoriesContainer">
+  <button
+    *ngIf="!showNewCategoryComponent"
+    class="newCategoryButton"
+    (click)="handlerShowNewCategoryComponent()"
+  >
+    {{ showNewCategoryComponent ? "❌Fechar Formulário" : "🎚️Nova Categoria" }}
+  </button>
 
-  <button (click)="pagination.previousPage()">PAGE -</button>
-  <input
-    [(ngModel)]="pagination.currentPage"
-    type="number"
-    min="1"
-    max="{{ pagination.numberOfPages }}"
-    disabled
-  />
-  <span>of {{ pagination.numberOfPages }}</span>
-  <button (click)="pagination.nextPage()">PAGE +</button>
-  <label>
-    Number of Categories per Page
+  <app-new-category
+    *ngIf="showNewCategoryComponent"
+    (formSubmitted)="onFormSubmitted()"
+  >
+    <button
+      class="newCategoryButton"
+      (click)="handlerShowNewCategoryComponent()"
+    >
+      {{ showNewCategoryComponent ? "❌" : "🎚️Nova Categoria" }}
+    </button>
+  </app-new-category>
+
+  <fieldset>
+    <legend>Categorias</legend>
+    <div class="filterAndSortContainer">
+      <label
+        >Filtrar
+        <select
+          [(ngModel)]="filterAndSortBy.type"
+          (change)="handlerCategoriesFilterAndSort()"
+        >
+          <option value="all">Todas</option>
+          <option value="income">Receitas</option>
+          <option value="savings">Poupanças</option>
+          <option value="expense">Despesas</option>
+        </select>
+      </label>
+      <label
+        >Ordenar:
+        <select
+          [(ngModel)]="filterAndSortBy.sortBy"
+          (change)="handlerCategoriesFilterAndSort()"
+        >
+          <option value="name">Nome</option>
+        </select>
+      </label>
+    </div>
+    <div
+      class="paginationContainer"
+      *ngTemplateOutlet="paginationTemplate"
+    ></div>
+
+    <ul class="categoryList">
+      <li
+        class="categoryListItem"
+        *ngFor="
+          let category of (filteredCategorie$ | async)?.slice(
+            (pagination.currentPage - 1) * pagination.numberDocsByPage,
+            pagination.numberDocsByPage * pagination.currentPage
+          )
+        "
+        class="{{ category.type }}"
+      >
+        <span>{{ category.avatar }}</span>
+        <span>{{ category.name | titlecase }}</span>
+        <span>{{
+          category.type === "income"
+            ? "Receita"
+            : category.type === "savings"
+            ? "Poupanças"
+            : "Despesa"
+        }}</span>
+        <span>{{ category.subCategories }}</span>
+
+        <div class="categoryListItemButtons">
+          <button
+            (click)="this.firestoreService.updateDoc('categories', category.id)"
+          >
+            🆙
+          </button>
+          <button
+            (click)="firestoreService.deleteDoc('categories', category.id)"
+          >
+            🗑️
+          </button>
+        </div>
+      </li>
+    </ul>
+    <div
+      class="paginationContainer"
+      *ngTemplateOutlet="paginationTemplate"
+    ></div>
+  </fieldset>
+</div>
+
+<ng-template #paginationTemplate>
+  <div class="paginationContainer">
+    <button (click)="pagination.previousPage()" class="paginationButton">
+      <
+    </button>
     <input
-      [(ngModel)]="pagination.numberDocsByPage"
+      [(ngModel)]="pagination.currentPage"
       type="number"
-      (change)="this.pagination.calculateNumberOfPages(pagination.totalDocs)"
+      min="1"
+      max="{{ pagination.numberOfPages }}"
+      disabled
     />
-  </label>
+    <span class="textPagination">de {{ pagination.numberOfPages }}</span>
+    <button (click)="pagination.nextPage()" class="paginationButton">></button>
 
-  <ul>
-    Total Docs:
-    {{
-      pagination.totalDocs
-    }}
-    <li
-      *ngFor="
-        let category of (filteredCategorie$ | async)?.slice(
-          (pagination.currentPage - 1) * pagination.numberDocsByPage,
-          pagination.numberDocsByPage * pagination.currentPage
-        )
-      "
-    >
-      {{ category.name }}{{ category.avatar }}{{ category.type
-      }}{{ category.subCategories }}
-
-      <button (click)="firestoreService.updateCategory(category.id)">
-        UPDATE
-      </button>
-      <button (click)="firestoreService.deleteCategory(category.id)">
-        DELETE
-      </button>
-    </li>
-  </ul>
-</fieldset>
+    <label>
+      Categorias por Página:
+      <input
+        [(ngModel)]="pagination.numberDocsByPage"
+        type="number"
+        (change)="this.pagination.calculateNumberOfPages(pagination.totalDocs)"
+      />
+    </label>
+    <span class="textPagination">Total: {{ pagination.totalDocs }}</span>
+  </div>
+</ng-template>

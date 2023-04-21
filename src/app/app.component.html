@@ -1,20 +1,23 @@
-<app-header [title]="title"></app-header>
+<app-header [title]="title">
+  <!-- <app-navmenu></app-navmenu> -->
+</app-header>
 
-<div *ngIf="!showLogIn; else loginButton">
-  <div *ngIf="!isLoading; else loading">
-    <!-- <div *ngIf="authService.afAuth.authState | async as user; else loginButton"> -->
+<!-- <aside>Publicity Space</aside> -->
+<!-- <app-new-category></app-new-category>
+        <app-new-movement></app-new-movement> -->
+
+<main *ngIf="!showLogIn; else loginButton">
+  <div class="mainContainer" *ngIf="!isLoading; else loading">
     <router-outlet></router-outlet>
-    <app-new-category></app-new-category>
-    <app-new-movement></app-new-movement>
-    <!-- </div> -->
   </div>
-  <app-footer></app-footer>
-</div>
+</main>
 
 <ng-template #loginButton>
-  <button (click)="authService.loginWithGoogle()">Entrar com o Google</button>
+  <app-login></app-login>
 </ng-template>
 
 <ng-template #loading>
-  <div>LOADINGGGG....</div>
+  <app-loading></app-loading>
 </ng-template>
+
+<app-footer></app-footer>

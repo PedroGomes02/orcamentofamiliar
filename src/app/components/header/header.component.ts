@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -10,9 +11,24 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class HeaderComponent {
   @Input()
   title: string = '';
+  showLogIn = false;
+  isLoading = true;
 
-  constructor(public afAuth: AngularFireAuth, public authService:AuthenticationService) {}
+  constructor(
+    public afAuth: AngularFireAuth,
+    public authService: AuthenticationService,
+    public themeService: ThemeService
+  ) {}
 
+  ngOnInit() {
+    this.authService.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.isLoading = false;
+      } else {
+        this.showLogIn = true;
+      }
+    });
+  }
   // async loginWithGoogle() {
   //   try {
   //     await this.afAuth.signInWithRedirect(new GoogleAuthProvider());

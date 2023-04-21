@@ -1,16 +1,19 @@
-<nav>
-  <span>{{ title }}</span>
-  <a routerLink="/">Home</a>
-  <a routerLink="/categories">Categories</a>
-  <a routerLink="/movements">Movements</a>
-</nav>
+<button class="themeButton" (click)="themeService.changeTheme()">
+  {{ themeService.isDarkTheme ? "🌒" : "🌔" }}
+</button>
 
-<div *ngIf="authService.afAuth.authState | async as user; else loginButton">
-  <p>Olá, {{ user.displayName }}!</p>
-  <button (click)="authService.logout()">Sair</button>
-  <hr />
+<h1>{{ title }}</h1>
+
+<ng-content></ng-content>
+<!-- //Onde renderiza p que for passado como children no template onde for usado -->
+
+<div *ngIf="!isLoading" class="avatarContainer">
+  <!-- <p>Olá, {{ (authService.afAuth.authState | async)?.displayName }}!</p> -->
+  <img
+    class="avatar"
+    src="{{ (authService.afAuth.authState | async)?.photoURL }}"
+    alt=""
+    width="40"
+  />
+  <button class="logOutButton" (click)="authService.logout()">❌</button>
 </div>
-
-<ng-template #loginButton>
-  <button (click)="authService.loginWithGoogle()">Entrar com o Google</button>
-</ng-template>

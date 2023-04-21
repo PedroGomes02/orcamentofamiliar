@@ -20,6 +20,11 @@ import { MovementsComponent } from './components/movements/movements.component';
 import { NewCategoryComponent } from './components/new-category/new-category.component';
 import { NewMovementComponent } from './components/new-movement/new-movement.component';
 import { DashBoardComponent } from './components/dash-board/dash-board.component';
+import { NavmenuComponent } from './components/navmenu/navmenu.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { LoginComponent } from './components/login/login.component';
+import { SummaryComponent } from './components/summary/summary.component';
+import { UpdateMovementComponent } from './components/update-movement/update-movement.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +35,11 @@ import { DashBoardComponent } from './components/dash-board/dash-board.component
     NewCategoryComponent,
     NewMovementComponent,
     DashBoardComponent,
+    NavmenuComponent,
+    LoadingComponent,
+    LoginComponent,
+    SummaryComponent,
+    UpdateMovementComponent,
   ],
   imports: [
     BrowserModule,

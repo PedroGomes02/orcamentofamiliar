@@ -1,0 +1,106 @@
+.movementsContainer {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0.125rem solid var(--secondaryColor);
+}
+
+legend {
+  margin: 0.5rem;
+  padding: 0 0.5rem;
+  color: var(--primaryTextColor);
+  font-size: 0.8rem;
+}
+label {
+  margin: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--primaryTextColor);
+}
+input {
+  width: 2rem;
+  text-align: center;
+  border-radius: 5px;
+}
+
+input:disabled {
+  background-color: white;
+}
+
+select {
+  text-align: center;
+  border-radius: 5px;
+}
+
+ul {
+  width: 100%;
+  list-style-type: none;
+}
+
+.movementList {
+  width: 100%;
+}
+
+.movementListItem {
+  border-radius: 5px;
+  padding: 0.25rem;
+  margin: 0.25rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.movementsListMain {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movementListItemButtons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.movementListItem button {
+  background-color: rgba(255, 255, 255, 0.25);
+  border: none;
+  border-radius: 50%;
+  padding: 0.125rem;
+  cursor: pointer;
+}
+
+.movementListItem button:hover {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.filterAndSortContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.paginationContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.125rem;
+  font-size: 0.8rem;
+}
+
+.paginationButton {
+  border: 1px solid var(--secondaryColor);
+  background-color: transparent;
+  border-radius: 5px;
+  font-weight: bold;
+  padding: 0.125rem;
+  margin: 0.125rem;
+  color: var(--primaryTextColor);
+}
+
+.textPagination {
+  color: var(--primaryTextColor);
+}

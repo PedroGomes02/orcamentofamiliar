@@ -5,7 +5,7 @@ import { map, Observable } from 'rxjs';
 import { FirestoreService } from '../../services/firestore.service';
 import { PaginationService } from '../../services/pagination.service';
 
-import { Movement } from '../../types';
+import { FilterAndSort, Movement } from '../../types';
 
 @Component({
   selector: 'app-movements',
@@ -15,8 +15,10 @@ import { Movement } from '../../types';
 export class MovementsComponent {
   movement$: Observable<Movement[]>;
   filteredMovement$: Observable<Movement[]>;
-  filterAndSortBy: any = { movementType: 'all', sortBy: 'date' };
-  pagination: any;
+  filterAndSortBy: FilterAndSort = { type: 'all', sortBy: 'date' };
+  pagination: PaginationService;
+
+  idMovementUpdateOpen: string = '';
 
   constructor(
     public firestoreService: FirestoreService,
@@ -25,6 +27,7 @@ export class MovementsComponent {
     this.movement$ = this.firestoreService.getMovements();
     this.filteredMovement$ = this.movement$;
     this.pagination = this.paginationService;
+    this.pagination.currentPage = 1;
 
     this.filteredMovement$
       .pipe(map((array) => array.length))
@@ -34,30 +37,22 @@ export class MovementsComponent {
   }
 
   handlerMovementsFilterAndSort() {
-    if (this.filterAndSortBy.movementType === 'all') {
-      this.filteredMovement$ = this.movement$.pipe(
-        map((movements) =>
-          movements.sort((a: any, b: any) =>
-            b[this.filterAndSortBy.sortBy].localeCompare(
-              a[this.filterAndSortBy.sortBy]
-            )
-          )
-        )
-      );
+    this.filteredMovement$ = this.firestoreService.filterAndSortDocs(
+      this.movement$,
+      this.filterAndSortBy
+    );
+    this.filteredMovement$
+      .pipe(map((array) => array.length))
+      .subscribe((arrayLength) => {
+        this.pagination.calculateNumberOfPages(arrayLength);
+      });
+  }
+
+  handlerClickMovementUpdate(movementId: string) {
+    if (this.idMovementUpdateOpen === movementId) {
+      this.idMovementUpdateOpen = '';
     } else {
-      this.filteredMovement$ = this.movement$.pipe(
-        map((movements) =>
-          movements
-            .sort((a: any, b: any) =>
-              b[this.filterAndSortBy.sortBy].localeCompare(
-                a[this.filterAndSortBy.sortBy]
-              )
-            )
-            .filter(
-              (movement) => movement.type === this.filterAndSortBy.movementType
-            )
-        )
-      );
+      this.idMovementUpdateOpen = movementId;
     }
   }
 }

@@ -1,70 +1,93 @@
-<app-new-movement></app-new-movement>
-<fieldset>
-  <legend>Movements</legend>
+<fieldset class="movementsContainer">
+  <legend>Movimentos</legend>
 
-  <label>
-    Filter
-    <select
-      [(ngModel)]="filterAndSortBy.movementType"
-      (change)="handlerMovementsFilterAndSort()"
-    >
-      <option value="all">All</option>
-      <option value="income">Income</option>
-      <option value="savings">Savings</option>
-      <option value="expense">Expense</option>
-    </select>
-  </label>
-  <label>
-    Sort By
-    <select
-      [(ngModel)]="filterAndSortBy.sortBy"
-      (change)="handlerMovementsFilterAndSort()"
-    >
-      <option value="description">Description</option>
-      <option value="date">Date</option>
-    </select>
-  </label>
+  <div class="filterAndSortContainer">
+    <label
+      >Filtrar
+      <select
+        [(ngModel)]="filterAndSortBy.type"
+        (change)="handlerMovementsFilterAndSort()"
+      >
+        <option value="all">Todos</option>
+        <option value="income">Receitas</option>
+        <option value="savings">Poupanças</option>
+        <option value="expense">Despesas</option>
+      </select>
+    </label>
+    <label>
+      Ordenar:
+      <select
+        [(ngModel)]="filterAndSortBy.sortBy"
+        (change)="handlerMovementsFilterAndSort()"
+      >
+        <option value="description">Descrição</option>
+        <option value="date">Data</option>
+      </select>
+    </label>
+  </div>
 
-  <button (click)="pagination.previousPage()">PAGE -</button>
-  <input
-    [(ngModel)]="pagination.currentPage"
-    type="number"
-    min="1"
-    max="{{ pagination.numberOfPages }}"
-    disabled
-  />
-  <span>of {{ pagination.numberOfPages }}</span>
-  <button (click)="pagination.nextPage()">PAGE +</button>
+  <div class="paginationContainer" *ngTemplateOutlet="paginationTemplate"></div>
 
-  <label>
-    Number of Categories per Page
-    <input
-      [(ngModel)]="pagination.numberDocsByPage"
-      type="number"
-      (change)="this.pagination.calculateNumberOfPages(pagination.totalDocs)"
-    />
-  </label>
-  <ul>
-    Total Docs:
-    {{
-      pagination.totalDocs
-    }}
+  <ul class="movementList">
     <li
+      class="movementListItem"
       *ngFor="
         let movement of (filteredMovement$ | async)?.slice(
           (pagination.currentPage - 1) * pagination.numberDocsByPage,
           pagination.numberDocsByPage * pagination.currentPage
         )
       "
+      class="{{ movement.type }}"
     >
-      {{ movement.description | titlecase }}{{ movement.value | currency : "€"
-      }}{{ movement.date | date : "dd-MM-yyyy" }}
-      <button (click)="this.firestoreService.getDoc(movement.id)">
-        GET DOC
-      </button>
-      <button (click)="this.firestoreService.deleteDoc(movement.id)">
-        DELETE
-      </button>
+      <div class="movementsListMain">
+        <span>{{ movement.date | date : "dd-MM-yyyy" }}</span>
+        <span>{{ movement.description | titlecase }}</span>
+        <span>{{ movement.value | currency : "€" }}</span>
+
+        <div class="movementListItemButtons">
+          
+          <button (click)="handlerClickMovementUpdate(movement.id)">🆙</button>
+
+          <button
+            (click)="this.firestoreService.deleteDoc('movements', movement.id)"
+          >
+            🗑️
+          </button>
+        </div>
+      </div>
+      <app-update-movement
+        *ngIf="idMovementUpdateOpen === movement.id"
+        [idMovement]="idMovementUpdateOpen"
+      ></app-update-movement>
     </li>
   </ul>
+
+  <div class="paginationContainer" *ngTemplateOutlet="paginationTemplate"></div>
 </fieldset>
+
+<ng-template #paginationTemplate>
+  <div class="paginationContainer">
+    <button (click)="pagination.previousPage()" class="paginationButton">
+      <
+    </button>
+    <input
+      [(ngModel)]="pagination.currentPage"
+      type="number"
+      min="1"
+      max="{{ pagination.numberOfPages }}"
+      disabled
+    />
+    <span class="textPagination">de {{ pagination.numberOfPages }}</span>
+    <button (click)="pagination.nextPage()" class="paginationButton">></button>
+
+    <label>
+      Movimentos por Página:
+      <input
+        [(ngModel)]="pagination.numberDocsByPage"
+        type="number"
+        (change)="this.pagination.calculateNumberOfPages(pagination.totalDocs)"
+      />
+    </label>
+    <span class="textPagination">Total: {{ pagination.totalDocs }}</span>
+  </div>
+</ng-template>

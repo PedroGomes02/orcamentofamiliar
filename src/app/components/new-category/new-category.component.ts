@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FirestoreService } from '../../services/firestore.service';
@@ -27,17 +27,21 @@ export class NewCategoryComponent {
       }
     });
 
-    this.firestoreService.getCategories().subscribe((doc) => {
-      doc.forEach((doc) => this.currentCategoryNames.push(doc.name));
+    this.firestoreService.getCategories().subscribe((categories) => {
+      categories.forEach((category) =>
+        this.currentCategoryNames.push(category.name)
+      );
     });
 
     this.categoryForm = this.fb.group({
-      name: ['default', Validators.required],
-      type: ['income', Validators.required],
+      name: ['', Validators.required],
+      type: ['', Validators.required],
       avatar: ['', Validators.required],
       subCategories: [''],
     });
   }
+
+  @Output() formSubmitted = new EventEmitter<void>();
 
   handlerSubmitCategoryForm() {
     if (
@@ -61,5 +65,6 @@ export class NewCategoryComponent {
     };
     this.firestoreService.categoriesCollectionRef?.add(newCategory);
     this.categoryForm.reset();
+    this.formSubmitted.emit();
   }
 }

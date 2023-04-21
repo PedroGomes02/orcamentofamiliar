@@ -32,7 +32,7 @@ export class DashBoardComponent {
   savingsSummaryByCategorie$: Observable<any>;
   expenseSummaryByCategorie$: Observable<any>;
 
-  constructor(private firestoreService: FirestoreService) {
+  constructor(public firestoreService: FirestoreService) {
     this.movement$ = this.firestoreService.getMovements();
     this.filteredMovement$ = this.filterMovements();
     this.getfilteredMovementsSummary();

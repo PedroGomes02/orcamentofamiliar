@@ -1,48 +1,88 @@
-<fieldset>
-  <legend>Last 5 Movements</legend>
-  <ul>
-    <li *ngFor="let movement of (movement$ | async)?.slice(0, 5)">
-      {{ movement.value }} - {{ movement.description }} - {{ movement.date }}
-    </li>
-  </ul>
-</fieldset>
-<fieldset>
-  <legend>Monthly Summary</legend>
+<div class="dashBoardContainer">
+  
+  <button class="newMovementButton" routerLink="/newmovement">
+    💸Novo Movimento
+  </button>
 
-  <input
-    [(ngModel)]="filters.year"
-    type="number"
-    (change)="handlerChangeFilters()"
-  />
-  <input
-    [(ngModel)]="filters.month"
-    type="number"
-    (change)="handlerChangeFilters()"
-  />
+  <fieldset>
+    <legend>Últimos Movimentos</legend>
+    <ul class="movementList">
+      <li
+        class="movementListItem"
+        *ngFor="let movement of (movement$ | async)?.slice(0, 5)"
+        class="{{ movement.type }}"
+      >
+        <span>{{ movement.date | date : "dd-MM-yyyy" }}</span>
+        <span>{{ movement.description | titlecase }}</span>
+        <span>{{ movement.value | currency : "€" }}</span>
+        <div class="movementListItemButtons">
+          <button (click)="this.firestoreService.getDocc(movement.id)">
+            🆙
+          </button>
+          <button
+            (click)="this.firestoreService.deleteDoc('movements', movement.id)"
+          >
+            🗑️
+          </button>
+        </div>
+      </li>
+    </ul>
+    <button routerLink="/movements" class="fieldsetButton">
+      📃Ver Todos os Movimentos
+    </button>
+  </fieldset>
 
-  <ul>
-    SUMMARY BY CATTEGORY
-    <li>INCOME - {{ filteredMovementsSummary.income }}</li>
-    <li>SAVINGS - {{ filteredMovementsSummary.savings }}</li>
-    <li>EXPENSE - {{ filteredMovementsSummary.expense }}</li>
-  </ul>
+  <fieldset>
+    <legend>Resumo Mensal</legend>
+    <div>
+      <label>
+        Ano:
+        <input
+          [(ngModel)]="filters.year"
+          type="number"
+          (change)="handlerChangeFilters()"
+        />
+      </label>
+      <label>
+        Mês:
+        <input
+          [(ngModel)]="filters.month"
+          type="number"
+          (change)="handlerChangeFilters()"
+          size="5"
+        />
+      </label>
+    </div>
 
-  <ul>
-    INCOME SUMMARY BY CATTEGORY
-    <li *ngFor="let item of incomeSummaryByCategorie$ | async">
-      {{ item.avatar }} - {{ item.category }} - {{ item.accumulatedValue }}
-    </li>
-  </ul>
-  <ul>
-    SAVINGS SUMMARY BY CATTEGORY
-    <li *ngFor="let item of savingsSummaryByCategorie$ | async">
-      {{ item.avatar }} - {{ item.category }} - {{ item.accumulatedValue }}
-    </li>
-  </ul>
-  <ul>
-    EXPENSE SUMMARY BY CATTEGORY
-    <li *ngFor="let item of expenseSummaryByCategorie$ | async">
-      {{ item.avatar }} - {{ item.category }} - {{ item.accumulatedValue }}
-    </li>
-  </ul>
-</fieldset>
+    <div class="balanceContainer">
+      <span>Saldo</span>
+      <span>{{ filteredMovementsSummary.balance | currency : "€" }}</span>
+    </div>
+    <progress
+      class="progressBalance"
+      value="{{
+        filteredMovementsSummary.income - filteredMovementsSummary.balance
+      }}"
+      max="{{ filteredMovementsSummary.income }}"
+    ></progress>
+
+    <ul class="monthlySummary">
+      <li class="income">
+        <span>Receitas</span>
+        <span>{{ filteredMovementsSummary.income | currency : "€" }}</span>
+      </li>
+      <li class="savings">
+        <span>Poupanças</span>
+        <span>{{ filteredMovementsSummary.savings | currency : "€" }}</span>
+      </li>
+      <li class="expense">
+        <span>Despesas</span>
+        <span>{{ filteredMovementsSummary.expense | currency : "€" }}</span>
+      </li>
+    </ul>
+
+    <button routerLink="/summary" class="fieldsetButton">
+      📊Mais Detalhes
+    </button>
+  </fieldset>
+</div>

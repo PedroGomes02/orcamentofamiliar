@@ -7,7 +7,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'O Meu Orçamento Familiar';
+  title = 'Orçamento Familiar';
   showLogIn = false;
   isLoading = true;
 

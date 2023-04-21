@@ -1,0 +1,164 @@
+.dashBoardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.newMovementButton {
+  border: 0.125rem solid var(--primaryColor);
+  background-color: var(--secondaryColor);
+  text-align: center;
+  padding: 0.75rem;
+  border-radius: 5px;
+  margin: 0.5rem;
+  color: var(--secondaryTextColor);
+  font-size: 1.2rem;
+  opacity: 1;
+  transition: all 0.25s ease;
+}
+.newMovementButton:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.25s ease;
+}
+
+fieldset {
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0.125rem solid var(--secondaryColor);
+}
+
+legend {
+  margin: 0.5rem;
+  padding: 0 0.5rem;
+  color: var(--primaryTextColor);
+  font-size: 0.8rem;
+}
+label {
+  margin: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--primaryTextColor);
+}
+input {
+  width: 4rem;
+}
+
+ul {
+  width: 100%;
+  list-style-type: none;
+}
+.movementList {
+  width: 100%;
+}
+
+.movementListItem {
+  border-radius: 5px;
+  padding: 0.25rem;
+  margin: 0.25rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movementListItemButtons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.movementListItem button {
+  background-color: rgba(255, 255, 255, 0.25);
+  border: none;
+  border-radius: 50%;
+  padding: 0.125rem;
+  cursor: pointer;
+}
+
+.movementListItem button:hover {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.fieldsetButton {
+  border: 0.125rem solid var(--primaryColor);
+  background-color: var(--secondaryColor);
+  text-align: center;
+  padding: 0.25rem;
+  border-radius: 5px;
+  margin: 0.5rem;
+  color: var(--secondaryTextColor);
+  font-size: 0.8rem;
+  opacity: 1;
+  transition: all 0.25s ease;
+  align-self: flex-end;
+}
+.fieldsetButton:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.25s ease;
+}
+
+.balanceContainer {
+  width: 80%;
+  border: 0.125rem solid var(--primaryColor);
+  background-color: var(--secondaryColor);
+  text-align: center;
+  padding: 0.25rem;
+  border-radius: 5px;
+  margin-bottom: 0.125rem;
+  margin-top: 1rem;
+  color: var(--secondaryTextColor);
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.monthlySummary {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.25rem;
+  gap: 0.125rem;
+}
+.monthlySummary li {
+  width: 80%;
+  text-align: center;
+  padding: 0.25rem;
+  display: flex;
+  justify-content: space-evenly;
+  border-radius: 5px;
+  font-weight: bold;
+  margin: 0.25rem;
+}
+
+.progressBalance {
+  width: 80%;
+  height: 1rem;
+  border: none;
+  margin-bottom: 0.5rem;
+  margin-top: 0rem;
+}
+
+.progressBalance::-webkit-progress-bar {
+  background-color: var(--incomeColor);
+  border-radius: 5px;
+  border: 0.125rem solid var(--primaryColor);
+}
+
+.progressBalance::-webkit-progress-value {
+  background: linear-gradient(
+    to right,
+    var(--savingsColor),
+    var(--expenseColor)
+  );
+  border-radius: 10px;
+}
+
+.progressBalance::-moz-progress-bar {
+  background-color: var(--incomeColor);
+}

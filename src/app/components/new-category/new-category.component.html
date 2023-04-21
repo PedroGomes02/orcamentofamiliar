@@ -1,30 +1,48 @@
 <fieldset>
-  <legend>Add New Category</legend>
+  <legend>Nova Categoria</legend>
+
+  <ng-content></ng-content>
+
   <form [formGroup]="categoryForm" (ngSubmit)="handlerSubmitCategoryForm()">
-    <label>
-      Name:
-      <input type="text" formControlName="name" />
-    </label>
-    <label>
-      Income
-      <input type="radio" value="income" formControlName="type" />
-    </label>
-    <label>
-      Savings
-      <input type="radio" value="savings" formControlName="type" />
-    </label>
-    <label>
-      Expense
-      <input type="radio" value="expense" formControlName="type" />
-    </label>
-    <label>
-      Avatar (emoji):
-      <input type="text" formControlName="avatar" />
-    </label>
-    <label>
-      Sub-Categories (space between)
-      <input type="text" formControlName="subCategories" />
-    </label>
-    <button type="submit" [disabled]="!categoryForm.valid">Enviar</button>
+    <div class="nameAndSymbolContainer">
+      <label>
+        Nome:
+        <input type="text" formControlName="name" />
+      </label>
+      <label>
+        Símbolo:
+        <input type="text" formControlName="avatar" />
+      </label>
+    </div>
+
+    <div class="categoryTypeContainer">
+      <label>
+        💵Receita
+        <input type="radio" value="income" formControlName="type" />
+      </label>
+      <label>
+        💰Poupanças
+        <input type="radio" value="savings" formControlName="type" />
+      </label>
+      <label>
+        🤑Despesa
+        <input type="radio" value="expense" formControlName="type" />
+      </label>
+    </div>
+
+    <div class="subCategoriesContainer">
+      <label>
+        Sub-Categorias (separar por espaços)
+        <textarea formControlName="subCategories"></textarea>
+      </label>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!categoryForm.valid"
+      class="fieldsetButton"
+    >
+      Enviar
+    </button>
   </form>
 </fieldset>

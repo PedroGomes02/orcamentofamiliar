@@ -9,7 +9,10 @@ export class PaginationService {
   numberOfPages: number = 1;
   totalDocs: number = 0;
 
-  constructor() {}
+  constructor() {
+    this.currentPage = 1;
+  }
+
   calculateNumberOfPages(arrayLength: number) {
     this.totalDocs = arrayLength;
     this.numberOfPages = Math.ceil(arrayLength / this.numberDocsByPage);

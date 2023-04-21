@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { FirestoreService } from '../../services/firestore.service';
 import { PaginationService } from '../../services/pagination.service';
 
-import { Category } from '../../types';
+import { Category, FilterAndSort } from '../../types';
 
 @Component({
   selector: 'app-categories',
@@ -16,8 +16,9 @@ import { Category } from '../../types';
 export class CategoriesComponent {
   categorie$: Observable<Category[]>;
   filteredCategorie$: Observable<Category[]>;
-  filterAndSortBy: any = { categoryType: 'all', sortBy: 'name' };
-  pagination: any;
+  filterAndSortBy: FilterAndSort = { type: 'all', sortBy: 'name' };
+  pagination: PaginationService;
+  showNewCategoryComponent: boolean = false;
 
   constructor(
     public firestoreService: FirestoreService,
@@ -27,42 +28,32 @@ export class CategoriesComponent {
     this.filteredCategorie$ = this.categorie$;
     this.pagination = this.paginationService;
 
+    this.pagination.currentPage = 1;
+
     this.filteredCategorie$
       .pipe(map((array) => array.length))
       .subscribe((arrayLength) => {
-        // this.pagination.totalDocs = arrayLength;
-        // this.pagination.numberOfPages = Math.ceil(
-        //   arrayLength / this.pagination.numberDocsByPage
-        // );
         this.pagination.calculateNumberOfPages(arrayLength);
       });
   }
 
   handlerCategoriesFilterAndSort() {
-    if (this.filterAndSortBy.categoryType === 'all') {
-      this.filteredCategorie$ = this.categorie$.pipe(
-        map((categories) =>
-          categories.sort((a: any, b: any) =>
-            a[this.filterAndSortBy.sortBy].localeCompare(
-              b[this.filterAndSortBy.sortBy]
-            )
-          )
-        )
-      );
-    } else {
-      this.filteredCategorie$ = this.categorie$.pipe(
-        map((categories) =>
-          categories
-            .sort((a: any, b: any) =>
-              a[this.filterAndSortBy.sortBy].localeCompare(
-                b[this.filterAndSortBy.sortBy]
-              )
-            )
-            .filter(
-              (category) => category.type === this.filterAndSortBy.categoryType
-            )
-        )
-      );
-    }
+    this.filteredCategorie$ = this.firestoreService.filterAndSortDocs(
+      this.categorie$,
+      this.filterAndSortBy
+    );
+    this.filteredCategorie$
+      .pipe(map((array) => array.length))
+      .subscribe((arrayLength) => {
+        this.pagination.calculateNumberOfPages(arrayLength);
+      });
+  }
+
+  handlerShowNewCategoryComponent() {
+    this.showNewCategoryComponent = !this.showNewCategoryComponent;
+  }
+
+  onFormSubmitted() {
+    this.showNewCategoryComponent = false;
   }
 }
