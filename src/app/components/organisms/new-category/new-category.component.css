@@ -1,0 +1,80 @@
+fieldset {
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0.125rem solid var(--secondaryColor);
+}
+
+legend {
+  margin: 0rem 0.5rem;
+  padding: 0 0.5rem;
+  color: var(--primaryTextColor);
+  font-size: 0.8rem;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem;
+}
+label {
+  margin: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--primaryTextColor);
+}
+
+.nameAndSymbolContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.categoryTypeContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.subCategoriesContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.subCategoriesContainer label{
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+textarea {
+  width: 100%;
+}
+
+.fieldsetButton {
+  border: 0.125rem solid var(--primaryColor);
+  background-color: var(--secondaryColor);
+  text-align: center;
+  padding: 0.25rem;
+  border-radius: 5px;
+  margin: 0 0.5rem;
+  color: var(--secondaryTextColor);
+  font-size: 0.8rem;
+  opacity: 1;
+  transition: all 0.25s ease;
+  align-self: flex-end;
+}
+.fieldsetButton:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.25s ease;
+}
+.fieldsetButton:disabled {
+  opacity: 0.2;
+}

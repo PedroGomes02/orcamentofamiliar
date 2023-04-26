@@ -1,0 +1,41 @@
+<div class="summaryContainer">
+  <app-monthly-summary></app-monthly-summary>
+
+  <fieldset>
+    <legend>Resumo Mensal por Categorias</legend>
+    <div class="summaryByCategories">
+      <ul>
+        <li
+          class="income"
+          *ngFor="let item of incomeSummaryByCategorie$ | async"
+        >
+          <span class="categoryAvatar">{{ item.avatar }}</span>
+          <span class="categoryName">{{ item.category | titlecase }}</span>
+          <span>{{ item.accumulatedValue | currency : "€" }}</span>
+        </li>
+      </ul>
+
+      <ul>
+        <li
+          class="savings"
+          *ngFor="let item of savingsSummaryByCategorie$ | async"
+        >
+          <span class="categoryAvatar">{{ item.avatar }}</span>
+          <span class="categoryName">{{ item.category | titlecase }}</span>
+          <span>{{ item.accumulatedValue | currency : "€" }}</span>
+        </li>
+      </ul>
+
+      <ul>
+        <li
+          class="expense"
+          *ngFor="let item of expenseSummaryByCategorie$ | async"
+        >
+          <span class="categoryAvatar">{{ item.avatar }}</span>
+          <span class="categoryName">{{ item.category | titlecase }}</span>
+          <span>{{ item.accumulatedValue | currency : "€" }}</span>
+        </li>
+      </ul>
+    </div>
+  </fieldset>
+</div>

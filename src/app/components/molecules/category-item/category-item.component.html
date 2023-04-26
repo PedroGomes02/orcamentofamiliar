@@ -1,0 +1,43 @@
+<li class="categoryListItem" class="{{ categoryItem.type }}">
+  <div class="categoryListItemContainer">
+    <div class="categoryListMain">
+      <div class="typeAndAvatarContainer">
+        <span>{{
+          categoryItem.type === "income"
+            ? "Receita"
+            : categoryItem.type === "savings"
+            ? "Poupanças"
+            : "Despesa"
+        }}</span>
+        <span class="categoryAvatar">{{ categoryItem.avatar }}</span>
+      </div>
+
+      <div class="categoryNameAndSubcategoriesContainer">
+        <div class="categoryNameContainer">
+          <span>{{ categoryItem.name | titlecase }}</span>
+        </div>
+        <div class="subCategoriesContainer">
+          <span *ngFor="let subcategory of categoryItem.subCategories">{{
+            subcategory | titlecase
+          }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="categoryListItemButtons">
+      <button (click)="handlerClickMovementUpdate(categoryItem.id)">🆙</button>
+      <button
+        (click)="this.firestoreService.deleteDoc('categories', categoryItem.id)"
+      >
+        🗑️
+      </button>
+    </div>
+  </div>
+
+  <div class="categoryListItemUpdateBox">
+    <app-update-category
+      *ngIf="idCategoryUpdateOpen === categoryItem.id"
+      [idCategory]="idCategoryUpdateOpen"
+    ></app-update-category>
+  </div>
+</li>

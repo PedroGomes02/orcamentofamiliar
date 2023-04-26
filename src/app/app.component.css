@@ -35,10 +35,11 @@ main {
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin:1rem;
+  margin: 0.5rem;
 }
 
 app-footer {
+  margin-top: 1rem;
   width: 100%;
   height: 70px;
   display: flex;

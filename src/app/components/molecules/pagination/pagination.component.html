@@ -1,0 +1,14 @@
+<div class="paginationContainer">
+  <button (click)="paginationService.previousPage()" class="paginationButton">
+    <
+  </button>
+  <span class="textPagination"
+    >{{ paginationService.currentPage }} /
+    {{ paginationService.numberOfPages }}</span
+  >
+  <button (click)="paginationService.nextPage()" class="paginationButton">
+    >
+  </button>
+
+  <span class="textPagination">Total: {{ paginationService.totalDocs }}</span>
+</div>

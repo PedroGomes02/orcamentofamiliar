@@ -1,0 +1,110 @@
+<fieldset>
+  <legend>Novo Movimento</legend>
+
+  <form [formGroup]="movementForm" (ngSubmit)="handlerSubmitMovementForm()">
+    <div class="dateAndValueContainer">
+      <label>
+        Data:
+        <input type="date" formControlName="date" />
+      </label>
+      <label>
+        Valor:
+        <input type="number" step="0.01" formControlName="value" size="20"/>
+      </label>
+    </div>
+
+    <div class="categoryTypeContainer">
+      <label>
+        💵Receita
+        <input
+          type="radio"
+          value="income"
+          formControlName="type"
+          (change)="handlerCurrentMovementTypeChange()"
+        />
+      </label>
+      <label>
+        💰Poupanças
+        <input
+          type="radio"
+          value="savings"
+          formControlName="type"
+          (change)="handlerCurrentMovementTypeChange()"
+        />
+      </label>
+      <label>
+        🤑Despesa
+        <input
+          type="radio"
+          value="expense"
+          formControlName="type"
+          (change)="handlerCurrentMovementTypeChange()"
+        />
+      </label>
+    </div>
+
+    <div class="categoryAndSubCategoryContainer">
+      <label>
+        Categoria:
+        <select
+          formControlName="category"
+          (change)="handlerCurrentCategoryChange()"
+        >
+          <option
+            *ngFor="let category of currentCategorie$ | async"
+            [value]="category.name"
+          >
+            {{ category.name | titlecase }}
+          </option>
+        </select>
+      </label>
+
+      <label>
+        Sub-Categoria:
+        <select formControlName="subCategory">
+          <option
+            *ngFor="let subCategory of currentCategory?.subCategories"
+            [value]="subCategory"
+          >
+            {{ subCategory | uppercase | lowercase | titlecase }}
+          </option>
+        </select>
+      </label>
+    </div>
+
+    <button
+      *ngIf="!showNewCategoryComponent"
+      class="fieldsetButton"
+      (click)="handlerShowNewCategoryComponent($event)"
+    >
+      🎚️Nova Categoria
+    </button>
+
+    <app-new-category
+      *ngIf="showNewCategoryComponent"
+      (formSubmitted)="onFormSubmitted()"
+    >
+      <button
+        class="closeNewCategoryButton"
+        (click)="handlerShowNewCategoryComponent($event)"
+      >
+        ❌
+      </button>
+    </app-new-category>
+
+    <div class="descriptionContainer">
+      <label>
+        Descrição:
+        <textarea formControlName="description"></textarea>
+      </label>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!movementForm.valid"
+      class="fieldsetButton"
+    >
+      Enviar
+    </button>
+  </form>
+</fieldset>

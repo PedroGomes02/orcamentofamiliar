@@ -1,0 +1,34 @@
+<li class="movementListItem" class="{{ movementItem.type }}">
+  <div class="movementListItemContainer">
+    <div class="movementListMain">
+      <div class="dateAndValueContainer">
+        <span>{{ movementItem.date | date : "dd-MM-yyyy" }}</span>
+        <strong>{{ movementItem.value | currency : "€" }}</strong>
+      </div>
+
+      <div class="descriptionContainer">
+        <span class="categoryAvatar">{{ movementItem.categoryAvatar }}</span>
+        <span>{{ movementItem.category | titlecase }}</span>
+        <span *ngIf="movementItem.subCategory"
+          >({{ movementItem.subCategory | titlecase }})</span
+        >
+        <i>{{ movementItem.description | titlecase }}</i>
+      </div>
+    </div>
+
+    <div class="movementListItemButtons">
+      <button (click)="handlerClickMovementUpdate(movementItem.id)">🆙</button>
+      <button
+        (click)="this.firestoreService.deleteDoc('movements', movementItem.id)"
+      >
+        🗑️
+      </button>
+    </div>
+  </div>
+  <div class="movementListItemUpdateBox">
+    <app-update-movement
+      *ngIf="idMovementUpdateOpen === movementItem.id"
+      [idMovement]="idMovementUpdateOpen"
+    ></app-update-movement>
+  </div>
+</li>

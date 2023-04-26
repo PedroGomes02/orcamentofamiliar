@@ -13,18 +13,23 @@ import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CategoriesComponent } from './components/categories/categories.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { MovementsComponent } from './components/movements/movements.component';
-import { NewCategoryComponent } from './components/new-category/new-category.component';
-import { NewMovementComponent } from './components/new-movement/new-movement.component';
-import { DashBoardComponent } from './components/dash-board/dash-board.component';
-import { NavmenuComponent } from './components/navmenu/navmenu.component';
+import { CategoriesComponent } from './components/organisms/categories/categories.component';
+import { HeaderComponent } from './components/organisms/header/header.component';
+import { FooterComponent } from './components/organisms/footer/footer.component';
+import { MovementsComponent } from './components/organisms/movements/movements.component';
+import { NewCategoryComponent } from './components/organisms/new-category/new-category.component';
+import { NewMovementComponent } from './components/organisms/new-movement/new-movement.component';
+import { DashBoardComponent } from './components/organisms/dash-board/dash-board.component';
+import { NavmenuComponent } from './components/molecules/navmenu/navmenu.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoginComponent } from './components/login/login.component';
-import { SummaryComponent } from './components/summary/summary.component';
-import { UpdateMovementComponent } from './components/update-movement/update-movement.component';
+import { SummaryComponent } from './components/organisms/summary/summary.component';
+import { UpdateMovementComponent } from './components/organisms/update-movement/update-movement.component';
+import { MonthlySummaryComponent } from './components/organisms/monthly-summary/monthly-summary.component';
+import { PaginationComponent } from './components/molecules/pagination/pagination.component';
+import { MovementItemComponent } from './components/molecules/movement-item/movement-item.component';
+import { CategoryItemComponent } from './components/molecules/category-item/category-item.component';
+import { UpdateCategoryComponent } from './components/organisms/update-category/update-category.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +45,11 @@ import { UpdateMovementComponent } from './components/update-movement/update-mov
     LoginComponent,
     SummaryComponent,
     UpdateMovementComponent,
+    MonthlySummaryComponent,
+    PaginationComponent,
+    MovementItemComponent,
+    CategoryItemComponent,
+    UpdateCategoryComponent,
   ],
   imports: [
     BrowserModule,

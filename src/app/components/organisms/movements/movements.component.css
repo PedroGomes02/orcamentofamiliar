@@ -1,0 +1,45 @@
+.movementsContainer {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0.125rem solid var(--secondaryColor);
+}
+
+.movementsContainerTitle {
+  margin: 0.25rem;
+  padding: 0 0.25rem;
+  color: var(--primaryTextColor);
+  font-size: 0.8rem;
+}
+
+.filterAndSortContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.filterAndSortContainer label {
+  margin: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--primaryTextColor);
+}
+
+.filterAndSortContainer select {
+  text-align: center;
+  border-radius: 5px;
+}
+
+.movementsList {
+  width: 100%;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+app-pagination {
+  width: 100%;
+}

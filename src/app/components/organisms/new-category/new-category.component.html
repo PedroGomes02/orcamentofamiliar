@@ -1,0 +1,48 @@
+<fieldset>
+  <legend>Nova Categoria</legend>
+
+  <ng-content></ng-content>
+
+  <form [formGroup]="categoryForm" (ngSubmit)="handlerSubmitCategoryForm()">
+    <div class="nameAndSymbolContainer">
+      <label>
+        Nome:
+        <input type="text" formControlName="name" maxlength="20" size="20" />
+      </label>
+      <label>
+        Símbolo/Abrev.:
+        <input type="text" formControlName="avatar" maxlength="3" size="12" />
+      </label>
+    </div>
+
+    <div class="categoryTypeContainer">
+      <label>
+        💵Receita
+        <input type="radio" value="income" formControlName="type" />
+      </label>
+      <label>
+        💰Poupanças
+        <input type="radio" value="savings" formControlName="type" />
+      </label>
+      <label>
+        🤑Despesa
+        <input type="radio" value="expense" formControlName="type" />
+      </label>
+    </div>
+
+    <div class="subCategoriesContainer">
+      <label>
+        Sub-Categorias (separadas por vírgula)
+        <textarea formControlName="subCategories"></textarea>
+      </label>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!categoryForm.valid"
+      class="fieldsetButton"
+    >
+      Enviar
+    </button>
+  </form>
+</fieldset>

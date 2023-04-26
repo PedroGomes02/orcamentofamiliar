@@ -1,0 +1,45 @@
+.themeButton {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  transition: all 0.25s ease;
+  width:10%;
+}
+.themeButton:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: all 0.25s ease;
+}
+
+h1 {
+  width:80%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.avatarContainer {
+  width:10%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.avatar {
+  border: 0.125rem solid var(--backgroundColor);
+  border-radius: 50%;
+}
+
+.logOutButton {
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: transparent;
+  font-size: 1.25rem;
+  padding: 0.125rem;
+  border: none;
+  font-weight: bold;
+  color: var(--backgroundColor);
+}
+.logOutButton:hover {
+  cursor: pointer;
+}

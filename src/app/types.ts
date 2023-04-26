@@ -2,7 +2,7 @@ interface Category {
   id: string;
   name: string;
   type: string;
-  avatar: String;
+  avatar: string;
   subCategories: string[];
   userId: string;
 }
@@ -12,6 +12,7 @@ interface Movement {
   value: number;
   date: string;
   type: string;
+  categoryAvatar?: string;
   category: string;
   subCategory: string;
   description: string;

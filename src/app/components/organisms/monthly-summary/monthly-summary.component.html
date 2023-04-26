@@ -1,0 +1,76 @@
+<fieldset>
+  <legend>Resumo Mensal</legend>
+  <div>
+    <label>
+      Ano:
+      <select
+        [(ngModel)]="summaryService.filters.year"
+        (ngModelChange)="summaryService.filters.year = +$event"
+        (change)="summaryService.handlerChangeFilters()"
+      >
+        <option
+          *ngFor="let year of summaryService.years | async"
+          [selected]="summaryService.filters.year === year"
+        >
+          {{ year }}
+        </option>
+      </select>
+    </label>
+
+    <label>
+      Mês:
+      <select
+        [(ngModel)]="summaryService.filters.month"
+        (ngModelChange)="summaryService.filters.month = +$event"
+        (change)="summaryService.handlerChangeFilters()"
+      >
+        <option
+          *ngFor="let month of summaryService.months; let i = index"
+          [selected]="summaryService.filters.month === i + 1"
+          [value]="i + 1"
+        >
+          {{ month }}
+        </option>
+      </select>
+    </label>
+  </div>
+
+  <div class="balanceContainer">
+    <span>Saldo</span>
+    <span>{{
+      summaryService.filteredMovementsSummary.balance | currency : "€"
+    }}</span>
+  </div>
+  <progress
+    class="progressBalance"
+    value="{{
+      summaryService.filteredMovementsSummary.income -
+        summaryService.filteredMovementsSummary.balance
+    }}"
+    max="{{ summaryService.filteredMovementsSummary.income }}"
+  ></progress>
+
+  <ul class="monthlySummary">
+    <li class="income">
+      <span>Receitas</span>
+      <span>{{
+        summaryService.filteredMovementsSummary.income | currency : "€"
+      }}</span>
+    </li>
+    <li class="savings">
+      <span>Poupanças</span>
+      <span>{{
+        summaryService.filteredMovementsSummary.savings | currency : "€"
+      }}</span>
+    </li>
+    <li class="expense">
+      <span>Despesas</span>
+      <span>{{
+        summaryService.filteredMovementsSummary.expense | currency : "€"
+      }}</span>
+    </li>
+  </ul>
+
+  <ng-content></ng-content>
+
+</fieldset>

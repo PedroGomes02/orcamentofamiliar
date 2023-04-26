@@ -1,0 +1,19 @@
+<button class="themeButton" (click)="themeService.changeTheme()">
+  {{ themeService.isDarkTheme ? "🌒" : "🌔" }}
+</button>
+
+<h1>{{ title }}</h1>
+
+<ng-content></ng-content>
+<!-- //Onde renderiza p que for passado como children no template onde for usado -->
+
+<div *ngIf="!isLoading" class="avatarContainer">
+  <!-- <p>Olá, {{ (authService.afAuth.authState | async)?.displayName }}!</p> -->
+  <img
+    class="avatar"
+    src="{{ (authService.afAuth.authState | async)?.photoURL }}"
+    alt=""
+    width="40"
+  />
+  <button class="logOutButton" (click)="authService.logout()">X</button>
+</div>

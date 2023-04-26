@@ -1,0 +1,64 @@
+<div class="categoriesContainer">
+  <button
+    *ngIf="!showNewCategoryComponent"
+    class="newCategoryButton"
+    (click)="handlerShowNewCategoryComponent()"
+  >
+    🎚️Nova Categoria
+  </button>
+
+  <app-new-category
+    *ngIf="showNewCategoryComponent"
+    (formSubmitted)="onFormSubmitted()"
+  >
+    <button
+      class="closeNewCategoryButton"
+      (click)="handlerShowNewCategoryComponent()"
+    >
+      ❌
+    </button>
+  </app-new-category>
+
+  <fieldset class="categoriesListContainer">
+    <legend class="categoriesContainerTitle">Categorias</legend>
+    <div class="filterAndSortContainer">
+      <label
+        >Filtrar
+        <select
+          [(ngModel)]="filterAndSortBy.type"
+          (change)="handlerCategoriesFilterAndSort()"
+        >
+          <option value="all">Todas</option>
+          <option value="income">Receitas</option>
+          <option value="savings">Poupanças</option>
+          <option value="expense">Despesas</option>
+        </select>
+      </label>
+      <label
+        >Ordenar:
+        <select
+          [(ngModel)]="filterAndSortBy.sortBy"
+          (change)="handlerCategoriesFilterAndSort()"
+        >
+          <option value="name">Nome</option>
+        </select>
+      </label>
+    </div>
+
+    <app-pagination></app-pagination>
+
+    <ul class="categoriesList">
+      <app-category-item
+        *ngFor="
+          let category of (filteredCategorie$ | async)?.slice(
+            (pagination.currentPage - 1) * pagination.numberDocsByPage,
+            pagination.numberDocsByPage * pagination.currentPage
+          )
+        "
+        [categoryItem]="category"
+      ></app-category-item>
+    </ul>
+
+    <app-pagination></app-pagination>
+  </fieldset>
+</div>

@@ -1,0 +1,24 @@
+<div class="dashBoardContainer">
+  <button class="newMovementButton" routerLink="/newmovement">
+    💸Novo Movimento
+  </button>
+
+  <fieldset>
+    <legend>Movimentos Recentes</legend>
+    <ul class="movementsList">
+      <app-movement-item
+        *ngFor="let movement of (movement$ | async)?.slice(0, 3)"
+        [movementItem]="movement"
+      ></app-movement-item>
+    </ul>
+    <button routerLink="/movements" class="fieldsetButton">
+      📃Ver Todos os Movimentos
+    </button>
+  </fieldset>
+
+  <app-monthly-summary>
+    <button routerLink="/summary" class="fieldsetButton">
+      📊Mais Detalhes
+    </button></app-monthly-summary
+  >
+</div>

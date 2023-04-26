@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class PaginationService {
-  numberDocsByPage: number = 6;
+  numberDocsByPage: number = 10;
   currentPage: number = 1;
   numberOfPages: number = 1;
   totalDocs: number = 0;

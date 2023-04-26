@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CategoriesComponent } from './components/categories/categories.component';
-import { DashBoardComponent } from './components/dash-board/dash-board.component';
-import { MovementsComponent } from './components/movements/movements.component';
-import { NewMovementComponent } from './components/new-movement/new-movement.component';
-import { NewCategoryComponent } from './components/new-category/new-category.component';
-import { SummaryComponent } from './components/summary/summary.component';
+import { CategoriesComponent } from './components/organisms/categories/categories.component';
+import { DashBoardComponent } from './components/organisms/dash-board/dash-board.component';
+import { MovementsComponent } from './components/organisms/movements/movements.component';
+import { NewMovementComponent } from './components/organisms/new-movement/new-movement.component';
+import { NewCategoryComponent } from './components/organisms/new-category/new-category.component';
+import { SummaryComponent } from './components/organisms/summary/summary.component';
 
 const routes: Routes = [
   { path: '', component: DashBoardComponent },
