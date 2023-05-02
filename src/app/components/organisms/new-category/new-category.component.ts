@@ -68,7 +68,16 @@ export class NewCategoryComponent {
         : null,
       userId: this.userId,
     };
-    this.firestoreService.categoriesCollectionRef?.add(newCategory);
+    this.firestoreService.categoriesCollectionRef
+      ?.add(newCategory)
+      .then((documentRef) => {
+        console.log(documentRef.id);
+        alert('Categoria adicionada com Sucesso!');
+      })
+      .catch((error: Error) => {
+        console.log(error.message);
+        alert('Algo correu mal, por favor tente novamente!');
+      });
     this.categoryForm.reset();
     this.formSubmitted.emit();
   }

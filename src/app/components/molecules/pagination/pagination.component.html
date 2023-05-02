@@ -3,7 +3,7 @@
     <
   </button>
   <span class="textPagination"
-    >{{ paginationService.currentPage }} /
+    >{{ paginationService.numberOfPages ? paginationService.currentPage : 0 }} /
     {{ paginationService.numberOfPages }}</span
   >
   <button (click)="paginationService.nextPage()" class="paginationButton">

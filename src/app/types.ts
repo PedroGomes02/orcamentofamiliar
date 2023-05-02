@@ -3,7 +3,7 @@ interface Category {
   name: string;
   type: string;
   avatar: string;
-  subCategories: string[];
+  subCategories: string[] | null;
   userId: string;
 }
 

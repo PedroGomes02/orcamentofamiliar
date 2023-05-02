@@ -37,40 +37,49 @@
 
   <div class="balanceContainer">
     <span>Saldo</span>
-    <span>{{
-      summaryService.filteredMovementsSummary.balance | currency : "€"
-    }}</span>
+    <span
+      >{{
+        ((this.summaryService.incomeTotal | async) || 0) -
+          (((this.summaryService.savingsTotal | async) || 0) +
+            ((this.summaryService.expenseTotal | async) || 0)) | currency : "€"
+      }}
+    </span>
   </div>
   <progress
     class="progressBalance"
     value="{{
-      summaryService.filteredMovementsSummary.income -
-        summaryService.filteredMovementsSummary.balance
+      ((this.summaryService.incomeTotal | async) || 0) -
+        (((this.summaryService.incomeTotal | async) || 0) -
+          (((this.summaryService.savingsTotal | async) || 0) +
+            ((this.summaryService.expenseTotal | async) || 0)))
     }}"
-    max="{{ summaryService.filteredMovementsSummary.income }}"
+    max="{{
+      ((this.summaryService.incomeTotal | async) || 0) -
+        (((this.summaryService.savingsTotal | async) || 0) +
+          ((this.summaryService.expenseTotal | async) || 0))
+    }}"
   ></progress>
 
   <ul class="monthlySummary">
     <li class="income">
       <span>Receitas</span>
       <span>{{
-        summaryService.filteredMovementsSummary.income | currency : "€"
+        this.summaryService.incomeTotal | async | currency : "€"
       }}</span>
     </li>
     <li class="savings">
       <span>Poupanças</span>
       <span>{{
-        summaryService.filteredMovementsSummary.savings | currency : "€"
+        this.summaryService.savingsTotal | async | currency : "€"
       }}</span>
     </li>
     <li class="expense">
       <span>Despesas</span>
       <span>{{
-        summaryService.filteredMovementsSummary.expense | currency : "€"
+        this.summaryService.expenseTotal | async | currency : "€"
       }}</span>
     </li>
   </ul>
 
   <ng-content></ng-content>
-
 </fieldset>

@@ -7,10 +7,14 @@
       <ul>
         <li
           class="income"
-          *ngFor="let item of incomeSummaryByCategorie$ | async"
+          *ngFor="
+            let item of this.summaryService.incomeSummaryByCategorie$ | async
+          "
         >
-          <span class="categoryAvatar">{{ item.avatar }}</span>
-          <span class="categoryName">{{ item.category | titlecase }}</span>
+          <div class="avatarAndNameContainer">
+            <span class="categoryAvatar">{{ item.avatar }}</span>
+            <span class="categoryName">{{ item.category | titlecase }}</span>
+          </div>
           <span>{{ item.accumulatedValue | currency : "€" }}</span>
         </li>
       </ul>
@@ -18,10 +22,14 @@
       <ul>
         <li
           class="savings"
-          *ngFor="let item of savingsSummaryByCategorie$ | async"
+          *ngFor="
+            let item of this.summaryService.savingsSummaryByCategorie$ | async
+          "
         >
-          <span class="categoryAvatar">{{ item.avatar }}</span>
-          <span class="categoryName">{{ item.category | titlecase }}</span>
+          <div class="avatarAndNameContainer">
+            <span class="categoryAvatar">{{ item.avatar }}</span>
+            <span class="categoryName">{{ item.category | titlecase }}</span>
+          </div>
           <span>{{ item.accumulatedValue | currency : "€" }}</span>
         </li>
       </ul>
@@ -29,10 +37,14 @@
       <ul>
         <li
           class="expense"
-          *ngFor="let item of expenseSummaryByCategorie$ | async"
+          *ngFor="
+            let item of this.summaryService.expenseSummaryByCategorie$ | async
+          "
         >
-          <span class="categoryAvatar">{{ item.avatar }}</span>
-          <span class="categoryName">{{ item.category | titlecase }}</span>
+          <div class="avatarAndNameContainer">
+            <span class="categoryAvatar">{{ item.avatar }}</span>
+            <span class="categoryName">{{ item.category | titlecase }}</span>
+          </div>
           <span>{{ item.accumulatedValue | currency : "€" }}</span>
         </li>
       </ul>

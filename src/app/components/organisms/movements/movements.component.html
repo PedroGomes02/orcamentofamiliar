@@ -2,8 +2,41 @@
   <legend class="movementsContainerTitle">Movimentos</legend>
 
   <div class="filterAndSortContainer">
+    <label>
+      Ano:
+      <select
+        [(ngModel)]="summaryService.filters.year"
+        (ngModelChange)="summaryService.filters.year = +$event"
+        (change)="this.handlerMovementsFilterAndSort()"
+      >
+        <option
+          *ngFor="let year of summaryService.years | async"
+          [selected]="summaryService.filters.year === year"
+        >
+          {{ year }}
+        </option>
+      </select>
+    </label>
+
+    <label>
+      Mês:
+      <select
+        [(ngModel)]="summaryService.filters.month"
+        (ngModelChange)="summaryService.filters.month = +$event"
+        (change)="this.handlerMovementsFilterAndSort()"
+      >
+        <option
+          *ngFor="let month of summaryService.months; let i = index"
+          [selected]="summaryService.filters.month === i + 1"
+          [value]="i + 1"
+        >
+          {{ month }}
+        </option>
+      </select>
+    </label>
+
     <label
-      >Filtrar
+      >Tipo:
       <select
         [(ngModel)]="filterAndSortBy.type"
         (change)="handlerMovementsFilterAndSort()"

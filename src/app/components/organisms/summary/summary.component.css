@@ -6,6 +6,10 @@
   gap: 1rem;
 }
 
+app-monthly-summary {
+  width: 100%;
+}
+
 fieldset {
   width: 100%;
   border-radius: 5px;
@@ -32,15 +36,17 @@ ul {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
-  margin: 0.125rem;
+  gap: 1rem;
+  margin: 1rem;
 }
 
 .summaryByCategories ul {
-  width: 100%;
+  width: 90%;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
 }
 
 .summaryByCategories ul li {
@@ -51,7 +57,16 @@ ul {
   align-items: center;
   border-radius: 5px;
   padding: 0.25rem;
-  margin: 0.125rem;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.avatarAndNameContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .categoryAvatar {
@@ -63,7 +78,4 @@ ul {
 
 .categoryName {
   flex-grow: 1;
-}
-app-monthly-summary {
-  width: 100%;
 }

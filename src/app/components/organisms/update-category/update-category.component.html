@@ -1,1 +1,48 @@
-<p>update-category works!</p>
+<fieldset class="newCategoryContainer">
+  <legend>Atualizar Categoria</legend>
+  <form
+    [formGroup]="updateCategoryForm"
+    (ngSubmit)="handlerSubmitUpdateCategoryForm()"
+  >
+    <div class="nameAndSymbolContainer">
+      <label>
+        Nome:
+        <input type="text" formControlName="name" maxlength="30" size="30" />
+      </label>
+      <label>
+        Símbolo/Abrev.:
+        <input type="text" formControlName="avatar" maxlength="3" size="12" />
+      </label>
+    </div>
+
+    <div class="categoryTypeContainer">
+      <label class="income">
+        💵Receita
+        <input type="radio" value="income" formControlName="type" />
+      </label>
+      <label class="savings">
+        💰Poupanças
+        <input type="radio" value="savings" formControlName="type" />
+      </label>
+      <label class="expense">
+        🤑Despesa
+        <input type="radio" value="expense" formControlName="type" />
+      </label>
+    </div>
+
+    <div class="subCategoriesContainer">
+      <label>
+        Sub-Categorias (separadas por vírgula)
+        <textarea formControlName="subCategories"></textarea>
+      </label>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!updateCategoryForm.valid"
+      class="fieldsetButton"
+    >
+      Atualizar
+    </button>
+  </form>
+</fieldset>

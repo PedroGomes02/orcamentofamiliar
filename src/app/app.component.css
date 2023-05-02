@@ -46,6 +46,5 @@ app-footer {
   justify-content: space-between;
   align-items: center;
   background-color: var(--primaryColor);
-  padding: 0.5rem;
   color: var(--secondaryTextColor);
 }

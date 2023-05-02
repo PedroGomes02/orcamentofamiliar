@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset class="newCategoryContainer">
   <legend>Nova Categoria</legend>
 
   <ng-content></ng-content>
@@ -7,7 +7,7 @@
     <div class="nameAndSymbolContainer">
       <label>
         Nome:
-        <input type="text" formControlName="name" maxlength="20" size="20" />
+        <input type="text" formControlName="name" maxlength="30" size="30" />
       </label>
       <label>
         Símbolo/Abrev.:
@@ -16,15 +16,15 @@
     </div>
 
     <div class="categoryTypeContainer">
-      <label>
+      <label class="income">
         💵Receita
         <input type="radio" value="income" formControlName="type" />
       </label>
-      <label>
+      <label class="savings">
         💰Poupanças
         <input type="radio" value="savings" formControlName="type" />
       </label>
-      <label>
+      <label class="expense">
         🤑Despesa
         <input type="radio" value="expense" formControlName="type" />
       </label>

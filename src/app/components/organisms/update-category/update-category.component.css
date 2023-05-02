@@ -1,0 +1,126 @@
+.newCategoryContainer {
+    width: 100%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 0.125rem solid var(--secondaryColor);
+  }
+  
+  legend {
+    margin: 0 0.25rem;
+    padding: 0 0.25rem;
+    color: var(--primaryTextColor);
+    font-size: 0.8rem;
+  }
+  
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.25rem;
+  }
+  
+  .nameAndSymbolContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .nameAndSymbolContainer label {
+    width: 90%;
+    padding: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    color: var(--primaryTextColor);
+  }
+  
+  .nameAndSymbolContainer label input {
+    width: 50%;
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+  
+  .categoryTypeContainer {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 0.5rem;
+  }
+  
+  .categoryTypeContainer label {
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.25rem;
+    flex-grow: 1;
+  }
+  .categoryTypeContainer label input {
+    transform: scale(1.5);
+  }
+  
+  .subCategoriesContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .subCategoriesContainer label {
+    width: 90%;
+    padding: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    color: var(--primaryTextColor);
+  }
+  .subCategoriesContainer label textarea {
+    text-align: center;
+    font-size: 1.25rem;
+    border-radius: 5px;
+    width: 50%;
+    flex-grow: 1;
+  }
+  
+  .fieldsetButton {
+    width: 50%;
+    border: 0.125rem solid var(--primaryColor);
+    background-color: var(--secondaryColor);
+    text-align: center;
+    padding: 0.25rem;
+    border-radius: 5px;
+    margin: 0 0.5rem;
+    color: var(--secondaryTextColor);
+    font-size: 1rem;
+    opacity: 1;
+    transition: all 0.25s ease;
+  }
+  .fieldsetButton:hover {
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all 0.25s ease;
+  }
+  .fieldsetButton:disabled {
+    opacity: 0.2;
+  }
+  

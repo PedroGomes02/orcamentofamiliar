@@ -8,23 +8,29 @@ nav {
 a {
   text-decoration: none;
   color: var(--secondaryTextColor);
-  border-radius: 50%;
-  padding: 0.5rem;
+  border-radius: 5px;
+  padding: 0.25rem;
   font-size: 1.8rem;
   transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 6);
+  margin: 0.5rem;
 }
 
 a:hover {
-  transform: scale(1.1);
   background-color: rgba(255, 255, 255, 0.25);
   transition: all 0.25s ease;
+  transform: scale(1.1);
 }
 a.active-link {
   background-color: rgba(255, 255, 255, 0.25);
   transform: scale(1.1);
 }
 
-.addButton {
-  border: 0.125rem solid var(--backgroundColor);
-  background-color: var(--backgroundColor);
+a span {
+  font-size: 0.6rem;
+  color: white;
 }

@@ -1,5 +1,109 @@
-<p>update-movement works! {{ idMovement }}</p>
-<span>Criar formulário que recolhe dados para update Movimento</span>
-<!-- <button (click)="this.firestoreService.getDocc(movement.id)">
-    NOT
-  </button> -->
+<fieldset class="newMovementContainer">
+  <legend>Atualizar Movimento</legend>
+  <form
+    [formGroup]="updateMovementForm"
+    (ngSubmit)="handlerSubmitUpdateMovementForm()"
+  >
+    <div class="dateAndValueContainer">
+      <label>
+        Data
+        <input type="date" formControlName="date" />
+      </label>
+      <label>
+        Valor
+        <input type="number" step="0.01" formControlName="value" size="12" />
+      </label>
+    </div>
+
+    <div class="categoryTypeContainer">
+      <label class="income">
+        💵Receita
+        <input
+          type="radio"
+          value="income"
+          formControlName="type"
+          (change)="handlerCurrentMovementTypeChange()"
+        />
+      </label>
+      <label class="savings">
+        💰Poupanças
+        <input
+          type="radio"
+          value="savings"
+          formControlName="type"
+          (change)="handlerCurrentMovementTypeChange()"
+        />
+      </label>
+      <label class="expense">
+        🤑Despesa
+        <input
+          type="radio"
+          value="expense"
+          formControlName="type"
+          (change)="handlerCurrentMovementTypeChange()"
+        />
+      </label>
+    </div>
+
+    <fieldset class="categoriesSelectContainer">
+      <legend>Categoria</legend>
+      <label *ngFor="let category of currentCategorie$ | async">
+        {{ category.avatar }} {{ category.name | titlecase }}
+        <input
+          type="radio"
+          [value]="category.name"
+          formControlName="category"
+          (change)="handlerCurrentCategoryChange()"
+        />
+      </label>
+      <button
+        *ngIf="!showNewCategoryComponent"
+        class="newCategoryButton"
+        (click)="handlerShowNewCategoryComponent($event)"
+      >
+        🎚️Nova Categoria
+      </button>
+      <app-new-category
+        *ngIf="showNewCategoryComponent"
+        (formSubmitted)="onFormSubmitted()"
+      >
+        <button
+          class="closeNewCategoryButton"
+          (click)="handlerShowNewCategoryComponent($event)"
+        >
+          ❌
+        </button>
+      </app-new-category>
+    </fieldset>
+
+    <fieldset
+      *ngIf="currentCategory?.subCategories"
+      class="subCategoriesSelectContainer"
+    >
+      <legend>SubCategoria (opcional)</legend>
+      <label *ngFor="let subCategory of currentCategory?.subCategories">
+        {{ subCategory | titlecase }}
+        <input
+          type="radio"
+          [value]="subCategory"
+          formControlName="subCategory"
+        />
+      </label>
+    </fieldset>
+
+    <div class="descriptionContainer">
+      <label>
+        Descrição
+        <textarea formControlName="description"></textarea>
+      </label>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!updateMovementForm.valid"
+      class="fieldsetButton"
+    >
+      Atualizar
+    </button>
+  </form>
+</fieldset>

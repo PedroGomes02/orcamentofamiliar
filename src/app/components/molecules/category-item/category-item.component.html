@@ -1,5 +1,5 @@
 <li class="categoryListItem" class="{{ categoryItem.type }}">
-  <div class="categoryListItemContainer">
+  <div class="categoryListItemContainer" (click)="handlershowControlButtons()">
     <div class="categoryListMain">
       <div class="typeAndAvatarContainer">
         <span>{{
@@ -16,7 +16,8 @@
         <div class="categoryNameContainer">
           <span>{{ categoryItem.name | titlecase }}</span>
         </div>
-        <div class="subCategoriesContainer">
+        <div class="subCategoriesContainer" *ngIf="categoryItem.subCategories">
+          Sub-Categorias:
           <span *ngFor="let subcategory of categoryItem.subCategories">{{
             subcategory | titlecase
           }}</span>
@@ -24,20 +25,27 @@
       </div>
     </div>
 
-    <div class="categoryListItemButtons">
-      <button (click)="handlerClickMovementUpdate(categoryItem.id)">🆙</button>
-      <button
-        (click)="this.firestoreService.deleteDoc('categories', categoryItem.id)"
-      >
-        🗑️
-      </button>
-    </div>
+    <span class="showControlButtonsIndicator">
+      {{ showControlButtons ? "⬆️" : "⬇️" }}
+    </span>
+  </div>
+
+  <div *ngIf="showControlButtons" class="categoryListItemButtons">
+    <button
+      *ngIf="!idCategoryUpdateOpen"
+      (click)="handlerClickCategoryUpdate(categoryItem.id)"
+    >
+      🔁 Atualizar
+    </button>
+    <button (click)="handlerClickCategoryDelete(categoryItem.id)">
+      🗑️ Apagar
+    </button>
   </div>
 
   <div class="categoryListItemUpdateBox">
     <app-update-category
       *ngIf="idCategoryUpdateOpen === categoryItem.id"
-      [idCategory]="idCategoryUpdateOpen"
+      [currentCategory]="categoryItem"
     ></app-update-category>
   </div>
 </li>

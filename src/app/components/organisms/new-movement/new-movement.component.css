@@ -1,4 +1,3 @@
-
 .closeNewCategoryButton {
   align-self: flex-end;
   border: 0.125rem solid var(--primaryColor);
@@ -18,7 +17,7 @@
   transition: all 0.25s ease;
 }
 
-fieldset {
+.newMovementContainer {
   width: 100%;
   border-radius: 5px;
   display: flex;
@@ -28,8 +27,8 @@ fieldset {
 }
 
 legend {
-  margin: 0.5rem;
-  padding: 0 0.5rem;
+  margin: 0 0.25rem;
+  padding: 0 0.25rem;
   color: var(--primaryTextColor);
   font-size: 0.8rem;
 }
@@ -39,32 +38,122 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  margin: 0.5rem;
-}
-
-label {
-  margin: 0.5rem;
-  font-size: 0.8rem;
-  color: var(--primaryTextColor);
+  gap: 0.5rem;
+  margin: 0.25rem;
 }
 
 .dateAndValueContainer {
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dateAndValueContainer label {
+  width: 90%;
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--primaryTextColor);
+}
+
+.dateAndValueContainer label input {
+  width: 50%;
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
 }
 
 .categoryTypeContainer {
-  width: 100%;
+  width: 90%;
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-evenly;
+  gap: 0.5rem;
 }
 
-.categoryAndSubCategoryContainer {
-  width: 100%;
+.categoryTypeContainer label {
+  padding: 1rem;
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1.25rem;
+  flex-grow: 1;
+}
+.categoryTypeContainer label input {
+  transform: scale(1.5);
+}
+
+.categoriesSelectContainer,
+.subCategoriesSelectContainer {
+  width: 90%;
+  border-radius: 5px;
+  border: 0.125rem solid var(--secondaryColor);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-evenly;
+  color: var(--primaryTextColor);
+  padding-bottom: 0.5rem;
+}
+
+.categoriesSelectContainer label,
+.subCategoriesSelectContainer label {
+  padding: 0.25rem;
+  margin: 0.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 0.125rem solid var(--primaryColor);
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+.categoriesSelectContainer label input,
+.subCategoriesSelectContainer label input {
+  transform: scale(1.5);
+}
+
+.newCategoryButton {
+  border: 0.125rem solid var(--primaryColor);
+  background-color: var(--secondaryColor);
+  text-align: center;
+  padding: 0.25rem;
+  margin: 0.125rem;
+  border-radius: 5px;
+  color: var(--secondaryTextColor);
+  font-size: 0.8rem;
+  opacity: 1;
+  transition: all 0.25s ease;
+  align-self: flex-end;
+  font-size: 1.25rem;
+}
+.newCategoryButton:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.25s ease;
+}
+.newCategoryButton:disabled {
+  opacity: 0.2;
+}
+
+app-new-category {
+  width: 95%;
 }
 
 .descriptionContainer {
@@ -73,19 +162,28 @@ label {
   justify-content: center;
 }
 
-.descriptionContainer label{
+.descriptionContainer label {
   width: 90%;
+  padding: 0.5rem;
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
-  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--primaryTextColor);
 }
 
-textarea {
-  width: 100%;
+.descriptionContainer label textarea {
+  text-align: center;
+  font-size: 1.25rem;
+  border-radius: 5px;
+  width: 50%;
+  flex-grow: 1;
 }
 
 .fieldsetButton {
+  width: 50%;
   border: 0.125rem solid var(--primaryColor);
   background-color: var(--secondaryColor);
   text-align: center;
@@ -93,10 +191,9 @@ textarea {
   border-radius: 5px;
   margin: 0 0.5rem;
   color: var(--secondaryTextColor);
-  font-size: 0.8rem;
+  font-size: 1rem;
   opacity: 1;
   transition: all 0.25s ease;
-  align-self: flex-end;
 }
 .fieldsetButton:hover {
   cursor: pointer;

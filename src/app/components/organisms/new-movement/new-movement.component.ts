@@ -36,11 +36,11 @@ export class NewMovementComponent {
     this.categorie$ = this.firestoreService.getCategories();
 
     this.movementForm = this.fb.group({
-      value: [0, Validators.required],
-      date: [, Validators.required],
+      value: [, Validators.required],
+      date: [new Date().toISOString().substring(0, 10), Validators.required],
       type: ['', Validators.required],
       category: ['', Validators.required],
-      subCategory: [''],
+      subCategory: null,
       description: ['', Validators.required],
     });
   }
@@ -53,12 +53,27 @@ export class NewMovementComponent {
       type: this.movementForm.value.type,
       categoryAvatar: this.currentCategory?.avatar,
       category: this.movementForm.value.category,
-      subCategory: this.movementForm.value.subCategory || null,
+      subCategory: this.movementForm.value.subCategory,
       description: this.movementForm.value.description.toLowerCase(),
       userId: this.userId,
     };
-    this.firestoreService.movementsCollectionRef?.add(newMovement);
+
+    this.firestoreService.movementsCollectionRef
+      ?.add(newMovement)
+      .then((documentRef) => {
+        console.log(documentRef.id);
+        alert('Movimento adicionado com Sucesso!');
+      })
+      .catch((error: Error) => {
+        console.log(error.message);
+        alert('Algo correu mal, por favor tente novamente!');
+      });
     this.movementForm.reset();
+    this.currentCategorie$ = undefined;
+    this.currentCategory = undefined;
+    this.movementForm.controls['date'].setValue(
+      new Date().toISOString().substring(0, 10)
+    );
   }
 
   handlerCurrentMovementTypeChange() {
@@ -70,14 +85,8 @@ export class NewMovementComponent {
         )
       )
     );
-    this.currentCategory = {
-      id: '',
-      name: '',
-      type: '',
-      avatar: '',
-      subCategories: [],
-      userId: '',
-    };
+    this.movementForm.controls['category'].reset();
+    this.currentCategory = undefined;
   }
 
   handlerCurrentCategoryChange() {
@@ -87,6 +96,7 @@ export class NewMovementComponent {
           (element) => element.name === this.movementForm.value.category
         )[0])
     );
+    this.movementForm.controls['subCategory'].reset();
   }
 
   handlerShowNewCategoryComponent(event: any) {

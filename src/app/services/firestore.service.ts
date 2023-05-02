@@ -58,14 +58,32 @@ export class FirestoreService {
     docRef?.get().subscribe((value) => console.log(value.data()));
   }
 
-  updateDoc(collection: string, docID: string) {
+  updateDoc(collection: string, docID: string, doc: any) {
     if (collection === 'categories') {
-      this.categoriesCollectionRef?.doc(docID).update({});
-      console.log(`Category with id ${docID} is updated`);
+      this.categoriesCollectionRef
+        ?.doc(docID)
+        .update(doc)
+        .then(() => {
+          console.log(`Category with id ${docID} is updated`);
+          alert('Categoria atualizada com Sucesso!');
+        })
+        .catch((error: Error) => {
+          console.log(error.message);
+          alert('Algo correu mal, por favor tente novamente!');
+        });
     }
     if (collection === 'movements') {
-      this.movementsCollectionRef?.doc(docID).update({});
-      console.log(`Movement with id ${docID} is updated`);
+      this.movementsCollectionRef
+        ?.doc(docID)
+        .update(doc)
+        .then(() => {
+          console.log(docID, 'moovement updated');
+          alert('Movimento atualizado com Sucesso!');
+        })
+        .catch((error: Error) => {
+          console.log(error.message);
+          alert('Algo correu mal, por favor tente novamente!');
+        });
     }
   }
 

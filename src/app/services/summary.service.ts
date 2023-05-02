@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, combineLatest, map } from 'rxjs';
+import { Observable, combineLatest, map, reduce } from 'rxjs';
 
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Movement } from '../types';
@@ -13,6 +13,10 @@ export class SummaryService {
   incomeMovement$: Observable<Movement[]>;
   savingsMovement$: Observable<Movement[]>;
   expenseMovement$: Observable<Movement[]>;
+
+  incomeTotal: Observable<number>;
+  savingsTotal: Observable<number>;
+  expenseTotal: Observable<number>;
 
   filteredMovement$: Observable<Movement[]>;
   filters: any = {
@@ -36,13 +40,6 @@ export class SummaryService {
     'dezembro',
   ];
 
-  filteredMovementsSummary: any = {
-    income: 0,
-    savings: 0,
-    expense: 0,
-    balance: 0,
-  };
-
   incomeSummaryByCategorie$: Observable<any>;
   savingsSummaryByCategorie$: Observable<any>;
   expenseSummaryByCategorie$: Observable<any>;
@@ -50,24 +47,21 @@ export class SummaryService {
   constructor(public firestoreService: FirestoreService) {
     this.movement$ = this.firestoreService.getMovements();
     this.filteredMovement$ = this.filterMovements();
-    this.getfilteredMovementsSummary();
 
     this.years = this.getYears();
 
-    this.incomeMovement$ = this.filteredMovement$.pipe(
-      map((movements) =>
-        movements.filter((movement) => movement.type === 'income')
-      )
+    this.incomeMovement$ = this.getFilteredMovementsByType('income');
+    this.savingsMovement$ = this.getFilteredMovementsByType('savings');
+    this.expenseMovement$ = this.getFilteredMovementsByType('expense');
+
+    this.incomeTotal = this.getFilteredMovementsTotalsByType(
+      this.incomeMovement$
     );
-    this.savingsMovement$ = this.movement$.pipe(
-      map((movements) =>
-        movements.filter((movement) => movement.type === 'savings')
-      )
+    this.savingsTotal = this.getFilteredMovementsTotalsByType(
+      this.savingsMovement$
     );
-    this.expenseMovement$ = this.movement$.pipe(
-      map((movements) =>
-        movements.filter((movement) => movement.type === 'expense')
-      )
+    this.expenseTotal = this.getFilteredMovementsTotalsByType(
+      this.expenseMovement$
     );
 
     this.incomeSummaryByCategorie$ =
@@ -107,33 +101,24 @@ export class SummaryService {
     );
   }
 
-  getfilteredMovementsSummary() {
-    this.getFilteredMovementTypeSummary('income');
-    this.getFilteredMovementTypeSummary('savings');
-    this.getFilteredMovementTypeSummary('expense');
+  getFilteredMovementsByType(movementsType: string) {
+    return this.filteredMovement$.pipe(
+      map((movements) =>
+        movements.filter((movement) => movement.type === movementsType)
+      )
+    );
   }
 
-  getFilteredMovementTypeSummary(movementType: string) {
-    this.filteredMovement$
-      .pipe(
-        map((movements: Movement[]) =>
-          movements
-            .filter((doc) => doc.type === movementType)
-            .reduce((a, c) => Number(a) + Number(c.value), 0)
+  getFilteredMovementsTotalsByType(movementsByType: Observable<any>) {
+    return movementsByType.pipe(
+      map((movements) =>
+        movements.reduce(
+          (total: number, movement: { value: any }) =>
+            total + Number(movement.value),
+          0
         )
       )
-      .subscribe((total) => {
-        this.filteredMovementsSummary[movementType] = total.toFixed(2);
-        if (movementType === 'income') {
-          this.filteredMovementsSummary.balance = (
-            Number(this.filteredMovementsSummary.balance) + Number(total)
-          ).toFixed(2);
-        } else {
-          this.filteredMovementsSummary.balance = (
-            Number(this.filteredMovementsSummary.balance) - Number(total)
-          ).toFixed(2);
-        }
-      });
+    );
   }
 
   getFilteredMovementsTypeSummaryByCategories(movementType: string) {
@@ -144,6 +129,12 @@ export class SummaryService {
           categories.filter((category) => category.type === movementType)
         )
       );
+
+    // const selectedCategorySubCategorie$ = selectedTypeCategories$.pipe(
+    //   map((categories) =>
+    //     categories.filter((category) => category.subCategories)
+    //   )
+    // );
 
     const selectedTypeMovement$ = this.filteredMovement$.pipe(
       map((movements) =>
@@ -157,6 +148,16 @@ export class SummaryService {
           const accumulatedValue = movements
             .filter((movement) => movement.category === category.name)
             .reduce((acc, movement) => Number(acc) + Number(movement.value), 0);
+
+          if (category.subCategories) {
+            const accumulatedSubCategoryValue = movements
+              .filter((movement) => movement.category === category.name)
+              .reduce(
+                (acc, movement) => Number(acc) + Number(movement.value),
+                0
+              );
+          }
+
           return {
             avatar: category.avatar,
             category: category.name,
@@ -169,8 +170,17 @@ export class SummaryService {
 
   handlerChangeFilters() {
     this.filteredMovement$ = this.filterMovements();
-    this.filteredMovementsSummary.balance = 0;
-    this.getfilteredMovementsSummary();
+
+    this.incomeTotal = this.getFilteredMovementsTotalsByType(
+      this.incomeMovement$
+    );
+    this.savingsTotal = this.getFilteredMovementsTotalsByType(
+      this.savingsMovement$
+    );
+    this.expenseTotal = this.getFilteredMovementsTotalsByType(
+      this.expenseMovement$
+    );
+
     this.incomeSummaryByCategorie$ =
       this.getFilteredMovementsTypeSummaryByCategories('income');
     this.savingsSummaryByCategorie$ =

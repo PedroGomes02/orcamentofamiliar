@@ -9,16 +9,28 @@ import { Category } from 'src/app/types';
 })
 export class CategoryItemComponent {
   @Input()
- categoryItem!: Category;
+  categoryItem!: Category;
   idCategoryUpdateOpen: string = '';
+  showControlButtons: boolean = false;
 
   constructor(public firestoreService: FirestoreService) {}
 
-  handlerClickMovementUpdate(movementId: string) {
-    if (this.idCategoryUpdateOpen === movementId) {
+  handlershowControlButtons() {
+    this.showControlButtons = !this.showControlButtons;
+    this.idCategoryUpdateOpen = '';
+  }
+
+  handlerClickCategoryUpdate(categoryId: string) {
+    if (this.idCategoryUpdateOpen === categoryId) {
       this.idCategoryUpdateOpen = '';
     } else {
-      this.idCategoryUpdateOpen = movementId;
+      this.idCategoryUpdateOpen = categoryId;
+    }
+  }
+
+  handlerClickCategoryDelete(categoryId: string) {
+    if (confirm('Deseja apagar esta categoria? Confirme por favor!')) {
+      this.firestoreService.deleteDoc('categories', categoryId);
     }
   }
 }

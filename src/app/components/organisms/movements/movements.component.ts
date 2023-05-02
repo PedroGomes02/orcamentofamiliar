@@ -6,6 +6,7 @@ import { FirestoreService } from '../../../services/firestore.service';
 import { PaginationService } from '../../../services/pagination.service';
 
 import { FilterAndSort, Movement } from '../../../types';
+import { SummaryService } from 'src/app/services/summary.service';
 
 @Component({
   selector: 'app-movements',
@@ -22,10 +23,16 @@ export class MovementsComponent {
 
   constructor(
     public firestoreService: FirestoreService,
-    public paginationService: PaginationService
+    public paginationService: PaginationService,
+    public summaryService: SummaryService
   ) {
+    this.summaryService.filters.year = new Date().getFullYear();
+    this.summaryService.filters.month = new Date().getMonth() + 1;
+
     this.movement$ = this.firestoreService.getMovements();
-    this.filteredMovement$ = this.movement$;
+
+    this.filteredMovement$ = this.summaryService.filterMovements();
+
     this.pagination = this.paginationService;
     this.pagination.currentPage = 1;
 
@@ -38,7 +45,8 @@ export class MovementsComponent {
 
   handlerMovementsFilterAndSort() {
     this.filteredMovement$ = this.firestoreService.filterAndSortDocs(
-      this.movement$,
+      this.summaryService.filterMovements(),
+
       this.filterAndSortBy
     );
     this.filteredMovement$
