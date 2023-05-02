@@ -1,0 +1,11 @@
+h2,
+h3,
+p {
+  color: var(--primaryTextColor);
+  margin: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primaryColor);
+}

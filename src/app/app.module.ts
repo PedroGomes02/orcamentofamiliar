@@ -30,6 +30,7 @@ import { PaginationComponent } from './components/molecules/pagination/paginatio
 import { MovementItemComponent } from './components/molecules/movement-item/movement-item.component';
 import { CategoryItemComponent } from './components/molecules/category-item/category-item.component';
 import { UpdateCategoryComponent } from './components/organisms/update-category/update-category.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +51,7 @@ import { UpdateCategoryComponent } from './components/organisms/update-category/
     MovementItemComponent,
     CategoryItemComponent,
     UpdateCategoryComponent,
+    PrivacyComponent,
   ],
   imports: [
     BrowserModule,

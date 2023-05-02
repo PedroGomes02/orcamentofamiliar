@@ -6,6 +6,7 @@ import { MovementsComponent } from './components/organisms/movements/movements.c
 import { NewMovementComponent } from './components/organisms/new-movement/new-movement.component';
 import { NewCategoryComponent } from './components/organisms/new-category/new-category.component';
 import { SummaryComponent } from './components/organisms/summary/summary.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
 
 const routes: Routes = [
   { path: '', component: DashBoardComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'newmovement', component: NewMovementComponent },
   { path: 'newcategory', component: NewCategoryComponent },
   { path: 'summary', component: SummaryComponent },
+  { path: 'privacy', component: PrivacyComponent },
 ];
 
 @NgModule({
