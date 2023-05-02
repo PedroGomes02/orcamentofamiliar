@@ -19,7 +19,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.25rem;
     margin: 0.25rem;
   }
   
@@ -33,7 +33,7 @@
   
   .nameAndSymbolContainer label {
     width: 90%;
-    padding: 0.5rem;
+    padding: 0.25rem;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -47,8 +47,8 @@
     width: 50%;
     flex-grow: 1;
     text-align: center;
-    font-size: 1.5rem;
-    padding: 0.5rem;
+    font-size: 1.25rem;
+    padding: 0.25rem;
     border-radius: 5px;
   }
   
@@ -62,7 +62,7 @@
   }
   
   .categoryTypeContainer label {
-    padding: 1rem;
+    padding: 0.5rem;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -96,7 +96,7 @@
   }
   .subCategoriesContainer label textarea {
     text-align: center;
-    font-size: 1.25rem;
+    font-size: 1rem;
     border-radius: 5px;
     width: 50%;
     flex-grow: 1;

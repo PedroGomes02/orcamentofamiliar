@@ -1,10 +1,4 @@
-<app-header [title]="title">
-  <!-- <app-navmenu></app-navmenu> -->
-</app-header>
-
-<!-- <aside>Publicity Space</aside> -->
-<!-- <app-new-category></app-new-category>
-        <app-new-movement></app-new-movement> -->
+<app-header [title]="title"> </app-header>
 
 <main *ngIf="!showLogIn; else loginButton">
   <div class="mainContainer" *ngIf="!isLoading; else loading">

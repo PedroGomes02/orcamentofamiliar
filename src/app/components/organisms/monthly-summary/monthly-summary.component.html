@@ -48,16 +48,10 @@
   <progress
     class="progressBalance"
     value="{{
-      ((this.summaryService.incomeTotal | async) || 0) -
-        (((this.summaryService.incomeTotal | async) || 0) -
-          (((this.summaryService.savingsTotal | async) || 0) +
-            ((this.summaryService.expenseTotal | async) || 0)))
+      ((this.summaryService.savingsTotal | async) || 0) +
+        ((this.summaryService.expenseTotal | async) || 0)
     }}"
-    max="{{
-      ((this.summaryService.incomeTotal | async) || 0) -
-        (((this.summaryService.savingsTotal | async) || 0) +
-          ((this.summaryService.expenseTotal | async) || 0))
-    }}"
+    max="{{ (this.summaryService.incomeTotal | async) || 0 }}"
   ></progress>
 
   <ul class="monthlySummary">

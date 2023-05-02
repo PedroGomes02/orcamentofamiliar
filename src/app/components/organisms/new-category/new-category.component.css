@@ -62,7 +62,7 @@ form {
 }
 
 .categoryTypeContainer label {
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -73,6 +73,7 @@ form {
   font-size: 1.25rem;
   flex-grow: 1;
 }
+
 .categoryTypeContainer label input {
   transform: scale(1.5);
 }

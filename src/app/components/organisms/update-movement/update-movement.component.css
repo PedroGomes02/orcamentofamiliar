@@ -1,22 +1,3 @@
-.closeNewCategoryButton {
-  align-self: flex-end;
-  border: 0.125rem solid var(--primaryColor);
-  background-color: var(--secondaryColor);
-  text-align: center;
-  padding: 0.25rem;
-  border-radius: 5px;
-  margin: 0.5rem;
-  font-size: 1rem;
-  opacity: 1;
-  transition: all 0.25s ease;
-}
-
-.closeNewCategoryButton:hover {
-  cursor: pointer;
-  opacity: 0.8;
-  transition: all 0.25s ease;
-}
-
 .newMovementContainer {
   width: 100%;
   border-radius: 5px;
@@ -38,7 +19,7 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
   margin: 0.25rem;
 }
 
@@ -52,7 +33,7 @@ form {
 
 .dateAndValueContainer label {
   width: 90%;
-  padding: 0.5rem;
+  padding: 0.25rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -66,8 +47,8 @@ form {
   width: 50%;
   flex-grow: 1;
   text-align: center;
-  font-size: 1.5rem;
-  padding: 0.5rem;
+  font-size: 1.25rem;
+  padding: 0.25rem;
   border-radius: 5px;
 }
 
@@ -81,7 +62,7 @@ form {
 }
 
 .categoryTypeContainer label {
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -92,6 +73,7 @@ form {
   font-size: 1.25rem;
   flex-grow: 1;
 }
+
 .categoryTypeContainer label input {
   transform: scale(1.5);
 }
@@ -116,17 +98,17 @@ form {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.5rem;
   border: 0.125rem solid var(--primaryColor);
   background-color: rgba(255, 255, 255, 0.25);
   border-radius: 5px;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 0.8rem;
 }
 
 .categoriesSelectContainer label input,
 .subCategoriesSelectContainer label input {
-  transform: scale(1.5);
+  transform: scale(1.25);
 }
 
 .newCategoryButton {
@@ -134,22 +116,17 @@ form {
   background-color: var(--secondaryColor);
   text-align: center;
   padding: 0.25rem;
-  margin: 0.125rem;
   border-radius: 5px;
+  margin: 0.5rem 0;
   color: var(--secondaryTextColor);
   font-size: 0.8rem;
   opacity: 1;
   transition: all 0.25s ease;
-  align-self: flex-end;
-  font-size: 1.25rem;
 }
 .newCategoryButton:hover {
   cursor: pointer;
   opacity: 0.8;
   transition: all 0.25s ease;
-}
-.newCategoryButton:disabled {
-  opacity: 0.2;
 }
 
 app-new-category {
@@ -175,8 +152,7 @@ app-new-category {
 }
 
 .descriptionContainer label textarea {
-  text-align: center;
-  font-size: 1.25rem;
+  font-size: 1rem;
   border-radius: 5px;
   width: 50%;
   flex-grow: 1;
