@@ -37,9 +37,12 @@ main {
   flex-direction: column;
   margin: 0.5rem;
 }
+.publicityContainer {
+  margin-top: 0.5rem;
+  width: 100%;
+}
 
 app-footer {
-  margin-top: 0.5rem;
   width: 100%;
   height: 70px;
   display: flex;
