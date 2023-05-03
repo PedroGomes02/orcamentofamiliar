@@ -6,6 +6,12 @@
   >
     🎚️Nova Categoria
   </button>
+  <button
+    class="newCategoryButton"
+    (click)="handlerSetDefaultCategories()"
+  >
+    ♻️Carregar Categorias Padrão
+  </button>
 
   <app-new-category
     *ngIf="showNewCategoryComponent"

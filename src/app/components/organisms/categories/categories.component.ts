@@ -7,6 +7,7 @@ import { FirestoreService } from '../../../services/firestore.service';
 import { PaginationService } from '../../../services/pagination.service';
 
 import { Category, FilterAndSort } from '../../../types';
+import { defaultCategories } from 'src/assets/defaultCategories';
 
 @Component({
   selector: 'app-categories',
@@ -38,19 +39,6 @@ export class CategoriesComponent {
   }
 
   handlerCategoriesFilterAndSort() {
-    //USAR ESTA LÓGICA PARA ACRESCENTAR VALORES DEFAULT!
-    this.categorie$.subscribe((data) => {
-      if (data.length === 0) {
-        console.log(
-          'o array de dados emitido pela Observable tem um length de zero'
-        );
-      } else {
-        console.log(
-          'o array de dados emitido pela Observable tem um length maior que zero'
-        );
-      }
-    });
-
     this.filteredCategorie$ = this.firestoreService.filterAndSortDocs(
       this.categorie$,
       this.filterAndSortBy
@@ -69,5 +57,23 @@ export class CategoriesComponent {
 
   onFormSubmitted() {
     this.showNewCategoryComponent = false;
+  }
+
+  handlerSetDefaultCategories() {
+    this.categorie$.subscribe((data) => {
+      if (data.length === 0) {
+        console.log(
+          'o array de dados emitido pela Observable tem um length de zero'
+        );
+      } else {
+        console.log(
+          'o array de dados emitido pela Observable tem um length maior que zero'
+        );
+      }
+    });
+
+    defaultCategories.forEach((e) => console.log(e));
+    //Colocar um confirm!!!! Atenção
+    //Apagar todas as categorias existentes, e carregar estas novas!
   }
 }

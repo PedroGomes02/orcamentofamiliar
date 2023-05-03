@@ -17,6 +17,7 @@ interface Movement {
   subCategory: string;
   description: string;
   userId: string;
+  createAt: string;
 }
 
 interface FilterAndSort {

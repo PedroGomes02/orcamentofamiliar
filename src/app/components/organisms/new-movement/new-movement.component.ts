@@ -56,7 +56,10 @@ export class NewMovementComponent {
       subCategory: this.movementForm.value.subCategory,
       description: this.movementForm.value.description.toLowerCase(),
       userId: this.userId,
+      createAt: new Date().toISOString(),
     };
+
+    console.log(newMovement.createAt);
 
     this.firestoreService.movementsCollectionRef
       ?.add(newMovement)

@@ -1,0 +1,16 @@
+<div class="settingsContainer">
+  <div class="buttonsContainer">
+    <button
+      class="settingsButton"
+      routerLink="/privacy"
+      routerLinkActive="active-link"
+      title="Política de Privacidade"
+    >
+      ℹ️ Política de Privacidade
+    </button>
+    <button class="settingsButton" (click)="themeService.changeTheme()">
+      {{ themeService.isDarkTheme ? "🌒 Tema Escuro" : "🌔 Tema Claro" }}
+    </button>
+  </div>
+  <app-categories></app-categories>
+</div>

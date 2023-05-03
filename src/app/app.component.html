@@ -8,6 +8,12 @@
 
 <ng-template #loginButton>
   <app-login></app-login>
+  <button class="showPrivacyButton" (click)="showPrivacy()">
+    {{
+      privacyOpen ? "Fechar Política de Privacidade" : "Política de Privacidade"
+    }}
+  </button>
+  <app-privacy *ngIf="privacyOpen"></app-privacy>
 </ng-template>
 
 <ng-template #loading>
@@ -35,3 +41,11 @@
 </aside>
 
 <app-footer></app-footer>
+
+<!-- <button id="open-dialog" (click)="dialogService.openDialog()">
+  Abrir Dialog
+</button>
+<dialog id="my-dialog">
+  <p>Conteúdo do dialog.</p>
+  <button id="closeDialog" (click)="dialogService.closeDialog()">Fechar</button>
+</dialog> -->

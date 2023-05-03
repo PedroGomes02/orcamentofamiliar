@@ -18,11 +18,11 @@
 .filterAndSortContainer {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .filterAndSortContainer label {
-  margin: 0.5rem;
+  margin: 0.25rem;
   font-size: 0.8rem;
   color: var(--primaryTextColor);
 }

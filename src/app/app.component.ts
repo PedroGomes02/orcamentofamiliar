@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DialogService } from './services/dialog.service';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +11,12 @@ export class AppComponent {
   title = 'Orçamento Familiar';
   showLogIn = false;
   isLoading = true;
+  privacyOpen = false;
 
-  constructor(public authService: AuthenticationService) {}
+  constructor(
+    public authService: AuthenticationService,
+    public dialogService: DialogService
+  ) {}
 
   ngOnInit() {
     this.authService.afAuth.authState.subscribe((user) => {
@@ -21,5 +26,9 @@ export class AppComponent {
         this.showLogIn = true;
       }
     });
+  }
+
+  showPrivacy() {
+    this.privacyOpen = !this.privacyOpen;
   }
 }

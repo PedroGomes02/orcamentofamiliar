@@ -1,28 +1,16 @@
-.themeButton {
-  background-color: transparent;
-  border: none;
-  font-size: 1.5rem;
-  transition: all 0.25s ease;
-  width:10%;
-}
-.themeButton:hover {
-  cursor: pointer;
-  transform: scale(1.1);
-  transition: all 0.25s ease;
-}
-
 h1 {
-  width:80%;
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
 }
 
 .avatarContainer {
-  width:10%;
+  position: fixed;
+  top: 5px;
+  right: 5px;
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .avatar {

@@ -31,6 +31,7 @@ import { MovementItemComponent } from './components/molecules/movement-item/move
 import { CategoryItemComponent } from './components/molecules/category-item/category-item.component';
 import { UpdateCategoryComponent } from './components/organisms/update-category/update-category.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
+import { SettingsComponent } from './components/settings/settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +53,7 @@ import { PrivacyComponent } from './components/privacy/privacy.component';
     CategoryItemComponent,
     UpdateCategoryComponent,
     PrivacyComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

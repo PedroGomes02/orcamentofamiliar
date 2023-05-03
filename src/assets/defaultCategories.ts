@@ -1,0 +1,97 @@
+export const defaultCategories = [
+  { name: 'salários', type: 'income', avatar: '💶', subCategories: null },
+  {
+    name: 'atividade independente',
+    type: 'income',
+    avatar: '💪',
+    subCategories: null,
+  },
+  { name: 'subsídios', type: 'income', avatar: '💷', subCategories: null },
+  {
+    name: 'prendas (receitas)',
+    type: 'income',
+    avatar: '🎁',
+    subCategories: null,
+  },
+  {
+    name: 'impostos (receitas)',
+    type: 'income',
+    avatar: '🪙',
+    subCategories: null,
+  },
+  {
+    name: 'outras receitas',
+    type: 'income',
+    avatar: '💰',
+    subCategories: null,
+  },
+
+  {
+    name: 'depósito a prazo',
+    type: 'savings',
+    avatar: '🏦',
+    subCategories: null,
+  },
+  { name: 'ppr', type: 'savings', avatar: 'ppr', subCategories: null },
+  {
+    name: 'certificados de aforro/tesouro',
+    type: 'savings',
+    avatar: '📑',
+    subCategories: null,
+  },
+  {
+    name: 'outros investimentos',
+    type: 'savings',
+    avatar: '💱',
+    subCategories: null,
+  },
+
+  { name: 'transportes', type: 'expense', avatar: '🚗', subCategories: null },
+  {
+    name: 'animais de estimação',
+    type: 'expense',
+    avatar: '🐶',
+    subCategories: null,
+  },
+  {
+    name: 'atividades extra',
+    type: 'expense',
+    avatar: '🤸‍♂️',
+    subCategories: null,
+  },
+  { name: 'casa', type: 'expense', avatar: '🏠', subCategories: null },
+  {
+    name: 'despesas de consumo',
+    type: 'expense',
+    avatar: '🛒',
+    subCategories: null,
+  },
+  {
+    name: 'cuidados pessoais',
+    type: 'expense',
+    avatar: '✂️',
+    subCategories: null,
+  },
+  { name: 'educação', type: 'expense', avatar: '🚸', subCategories: null },
+  { name: 'impostos', type: 'expense', avatar: '🤑', subCategories: null },
+  {
+    name: 'outras despesas',
+    type: 'expense',
+    avatar: '🫰',
+    subCategories: null,
+  },
+  {
+    name: 'prendas (despesas)',
+    type: 'expense',
+    avatar: '🎁',
+    subCategories: null,
+  },
+  { name: 'saúde', type: 'expense', avatar: '💖', subCategories: null },
+  { name: 'serviços', type: 'expense', avatar: '📺', subCategories: null },
+  {
+    name: 'vestuário/calçado',
+    type: 'expense',
+    avatar: '👔',
+    subCategories: null,
+  },
+];
