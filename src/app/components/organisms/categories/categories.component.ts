@@ -8,6 +8,7 @@ import { PaginationService } from '../../../services/pagination.service';
 
 import { Category, FilterAndSort } from '../../../types';
 import { defaultCategories } from 'src/assets/defaultCategories';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-categories',
@@ -20,11 +21,19 @@ export class CategoriesComponent {
   filterAndSortBy: FilterAndSort = { type: 'all', sortBy: 'name' };
   pagination: PaginationService;
   showNewCategoryComponent: boolean = false;
+  userId: string = '';
 
   constructor(
     public firestoreService: FirestoreService,
-    public paginationService: PaginationService
+    public paginationService: PaginationService,
+    private authService: AuthenticationService
   ) {
+    this.authService.afAuth.authState.subscribe((user: any) => {
+      if (user) {
+        this.userId = user.uid;
+      }
+    });
+
     this.categorie$ = this.firestoreService.getCategories();
     this.filteredCategorie$ = this.categorie$;
     this.pagination = this.paginationService;
@@ -59,21 +68,63 @@ export class CategoriesComponent {
     this.showNewCategoryComponent = false;
   }
 
-  handlerSetDefaultCategories() {
-    this.categorie$.subscribe((data) => {
-      if (data.length === 0) {
-        console.log(
-          'o array de dados emitido pela Observable tem um length de zero'
-        );
-      } else {
-        console.log(
-          'o array de dados emitido pela Observable tem um length maior que zero'
-        );
+  async handlerEraseAllCategories() {
+    if (confirm('Tem a certeza que pretende apagar todas as categorias?')) {
+      try {
+        this.firestoreService.batchDeleteCategories();
+      } catch (error) {
+        console.error('Error deleting categories:', error);
       }
-    });
-
-    defaultCategories.forEach((e) => console.log(e));
-    //Colocar um confirm!!!! Atenção
-    //Apagar todas as categorias existentes, e carregar estas novas!
+    }
   }
+
+  // handlerEraseAllCategories() {
+  //   if (confirm('Are You Sure?')) {
+  //     this.categorie$.subscribe((data) => {
+  //       data.forEach((e) =>
+  //         this.firestoreService.categoriesCollectionRef?.doc(e.id).delete()
+  //       );
+  //     });
+  //   }
+  // }
+
+  async handlerSetDefaultCategories() {
+    if (
+      confirm(
+        'Este comando vai apagar todas as categorias atuais e repor as categorias padrão, tem a certeza?'
+      )
+    ) {
+      try {
+        await this.firestoreService.batchDeleteCategories();
+        await this.firestoreService.batchSetDefaultCategories();
+      } catch (error) {
+        console.error('Error setting default categories:', error);
+      }
+    }
+  }
+
+  // async handlerSetDefaultCategories() {
+  //   if (confirm('Este comando vai apagar todas as categorias atuais e repor as categorias padrão, tem a certeza?')) {
+  //     try {
+  //       await this.firestoreService.batchDeleteCategories();
+  //       // Adicione todas as categorias padrão em paralelo
+  //       const promises = defaultCategories.map((defaultCategory) => {
+  //         const newCategory: Category = {
+  //           id: '',
+  //           name: defaultCategory.name,
+  //           type: defaultCategory.type,
+  //           avatar: defaultCategory.avatar,
+  //           subCategories: null,
+  //           userId: this.userId,
+  //         };
+  //         return this.firestoreService.categoriesCollectionRef?.add(
+  //           newCategory
+  //         );
+  //       });
+  //       await Promise.all(promises);
+  //     } catch (error) {
+  //       console.error('Error setting default categories:', error);
+  //     }
+  //   }
+  // }
 }

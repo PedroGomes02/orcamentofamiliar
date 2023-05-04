@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
+  DocumentReference,
 } from '@angular/fire/compat/firestore';
 
 import { Observable } from 'rxjs';
@@ -11,6 +12,8 @@ import { map, switchMap } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 import { Category, Movement } from '../types';
+
+import { defaultCategories } from 'src/assets/defaultCategories';
 
 @Injectable({
   providedIn: 'root',
@@ -137,4 +140,67 @@ export class FirestoreService {
       );
     }
   }
+
+  async batchDeleteCategories() {
+    const batch = this.db.firestore.batch();
+    const querySnapshot = await this.categoriesCollectionRef?.ref.get();
+    querySnapshot?.forEach((doc) => batch.delete(doc.ref));
+    await batch.commit();
+  }
+
+  async batchSetDefaultCategories() {
+    const batch = this.db.firestore.batch();
+
+    const categoriesRef = this.categoriesCollectionRef?.ref;
+
+    defaultCategories.forEach((defaultCategory) => {
+      const newCategory: Category = {
+        id: '',
+        name: defaultCategory.name,
+        type: defaultCategory.type,
+        avatar: defaultCategory.avatar,
+        subCategories: null,
+        userId: this.userId,
+      };
+      const categoryRef = categoriesRef?.doc() as DocumentReference<Category>;
+      batch.set(categoryRef, newCategory);
+    });
+
+    await batch.commit();
+  }
+
+  //JUNTAR OS DOIS BATCHS??
+  // async handlerSetDefaultCategories() {
+  //   if (confirm('Este comando vai apagar todas as categorias atuais e repor as categorias padrão, tem a certeza?')) {
+  //     try {
+  //       const batch = this.firestoreService.batch();
+
+  //       // Adicionar todas as novas categorias no batch
+  //       defaultCategories.forEach((defaultCategory) => {
+  //         const newCategory: Category = {
+  //           id: '',
+  //           name: defaultCategory.name,
+  //           type: defaultCategory.type,
+  //           avatar: defaultCategory.avatar,
+  //           subCategories: null,
+  //           userId: this.userId,
+  //         };
+  //         const categoryRef = this.firestoreService.categoriesCollectionRef?.doc();
+  //         batch.set(categoryRef, newCategory);
+  //       });
+
+  //       // Apagar todas as categorias atuais no batch
+  //       const currentCategories = await this.firestoreService.categoriesCollectionRef?.get().toPromise();
+  //       currentCategories?.forEach((category) => {
+  //         const categoryRef = this.firestoreService.categoriesCollectionRef?.doc(category.id);
+  //         batch.delete(categoryRef);
+  //       });
+
+  //       // Executar o batch
+  //       await batch.commit();
+  //     } catch (error) {
+  //       console.error('Error setting default categories:', error);
+  //     }
+  //   }
+  // }
 }
