@@ -1,34 +1,33 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DialogService } from './services/dialog.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'Orçamento Familiar';
-  showLogIn = false;
-  isLoading = true;
-  privacyOpen = false;
+  title: string = 'Orçamento Familiar';
+  isShowingLogIn: boolean = false;
+  isLoading: boolean = true;
+  isPrivacyOpen: boolean = false;
 
   constructor(
-    public authService: AuthenticationService,
-    public dialogService: DialogService
+    private authService: AuthenticationService,
+    private dialogService: DialogService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.authService.afAuth.authState.subscribe((user) => {
       if (user) {
         this.isLoading = false;
       } else {
-        this.showLogIn = true;
+        this.isShowingLogIn = true;
       }
     });
   }
 
-  showPrivacy() {
-    this.privacyOpen = !this.privacyOpen;
+  togglePrivacy(): void {
+    this.isPrivacyOpen = !this.isPrivacyOpen;
   }
 }

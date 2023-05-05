@@ -1,6 +1,6 @@
 <app-header [title]="title"> </app-header>
 
-<main *ngIf="!showLogIn; else loginButton">
+<main *ngIf="!isShowingLogIn; else loginButton">
   <div class="mainContainer" *ngIf="!isLoading; else loading">
     <router-outlet></router-outlet>
   </div>
@@ -8,19 +8,25 @@
 
 <ng-template #loginButton>
   <app-login></app-login>
-  <button class="showPrivacyButton" (click)="showPrivacy()">
+  <button
+    class="togglePrivacyButton"
+    (click)="togglePrivacy()"
+    title="Mostrar Política de Privacidade"
+  >
     {{
-      privacyOpen ? "Fechar Política de Privacidade" : "Política de Privacidade"
+      isPrivacyOpen
+        ? "Fechar Política de Privacidade"
+        : "Mostrar Política de Privacidade"
     }}
   </button>
-  <app-privacy *ngIf="privacyOpen"></app-privacy>
+  <app-privacy *ngIf="isPrivacyOpen"></app-privacy>
 </ng-template>
 
 <ng-template #loading>
   <app-loading></app-loading>
 </ng-template>
 
-<aside class="publicityContainer">
+<aside class="adsContainer">
   <script
     async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5924661977828883"
@@ -42,6 +48,7 @@
 
 <app-footer></app-footer>
 
+<!-- Logic to implement Dialog in App - Test -->
 <!-- <button id="open-dialog" (click)="dialogService.openDialog()">
   Abrir Dialog
 </button>
