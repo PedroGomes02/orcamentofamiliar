@@ -13,7 +13,7 @@ interface Movement {
   date: string;
   type: string;
   category: string;
-  categoryAvatar: string;
+  categoryAvatar: string | undefined;
   subCategory: string;
   description: string;
   userId: string;

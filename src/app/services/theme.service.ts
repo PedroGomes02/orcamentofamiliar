@@ -23,11 +23,11 @@ export class ThemeService {
     document.documentElement.setAttribute('theme', 'light');
     this.isDarkTheme = false;
   }
-  changeTheme() {
-    if (this.isDarkTheme === false) {
-      this.setDarkTheme();
-    } else {
+  toggleTheme() {
+    if (this.isDarkTheme) {
       this.setLightTheme();
+    } else {
+      this.setDarkTheme();
     }
   }
 }

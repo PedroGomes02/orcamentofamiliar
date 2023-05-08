@@ -149,19 +149,37 @@ export class SummaryService {
             .filter((movement) => movement.category === category.name)
             .reduce((acc, movement) => Number(acc) + Number(movement.value), 0);
 
-          if (category.subCategories) {
-            const accumulatedSubCategoryValue = movements
-              .filter((movement) => movement.category === category.name)
-              .reduce(
-                (acc, movement) => Number(acc) + Number(movement.value),
-                0
-              );
-          }
+          const accumulatedSubCategoryValue: any[] = [];
 
+          if (category.subCategories) {
+            category.subCategories.map((subCategory) => {
+              const accumulatedValue = movements
+                .filter(
+                  (movement) =>
+                    movement.category === category.name &&
+                    movement.subCategory === subCategory
+                )
+                .reduce(
+                  (acc, movement) => Number(acc) + Number(movement.value),
+                  0
+                );
+              accumulatedSubCategoryValue.push({
+                name: subCategory,
+                accumulatedValue: accumulatedValue.toFixed(2),
+              });
+            });
+          }
           return {
             avatar: category.avatar,
             category: category.name,
             accumulatedValue: accumulatedValue.toFixed(2),
+            movements: movements.filter(
+              (movement) => movement.category === category.name
+            ),
+            subCategories:
+              accumulatedSubCategoryValue.length > 0
+                ? accumulatedSubCategoryValue
+                : null,
           };
         })
       )

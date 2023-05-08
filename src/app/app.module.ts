@@ -19,19 +19,19 @@ import { FooterComponent } from './components/organisms/footer/footer.component'
 import { MovementsComponent } from './components/organisms/movements/movements.component';
 import { NewCategoryComponent } from './components/organisms/new-category/new-category.component';
 import { NewMovementComponent } from './components/organisms/new-movement/new-movement.component';
-import { DashBoardComponent } from './components/organisms/dash-board/dash-board.component';
+import { DashBoardComponent } from './components/templates/dash-board/dash-board.component';
 import { NavmenuComponent } from './components/molecules/navmenu/navmenu.component';
-import { LoadingComponent } from './components/loading/loading.component';
-import { LoginComponent } from './components/login/login.component';
-import { SummaryComponent } from './components/organisms/summary/summary.component';
+import { LoadingComponent } from './components/atoms/loading/loading.component';
+import { LoginComponent } from './components/templates/login/login.component';
+import { SummaryComponent } from './components/templates/summary/summary.component';
 import { UpdateMovementComponent } from './components/organisms/update-movement/update-movement.component';
 import { MonthlySummaryComponent } from './components/organisms/monthly-summary/monthly-summary.component';
 import { PaginationComponent } from './components/molecules/pagination/pagination.component';
 import { MovementItemComponent } from './components/molecules/movement-item/movement-item.component';
 import { CategoryItemComponent } from './components/molecules/category-item/category-item.component';
 import { UpdateCategoryComponent } from './components/organisms/update-category/update-category.component';
-import { PrivacyComponent } from './components/privacy/privacy.component';
-import { SettingsComponent } from './components/settings/settings.component';
+import { PrivacyComponent } from './components/templates/privacy/privacy.component';
+import { SettingsComponent } from './components/templates/settings/settings.component';
 @NgModule({
   declarations: [
     AppComponent,

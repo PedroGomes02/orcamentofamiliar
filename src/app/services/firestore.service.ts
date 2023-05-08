@@ -56,10 +56,10 @@ export class FirestoreService {
     );
   }
 
-  async getDocc(docID: string) {
-    const docRef = await this.movementsCollectionRef?.doc(docID);
-    docRef?.get().subscribe((value) => console.log(value.data()));
-  }
+  // async getDocc(docID: string) {
+  //   const docRef = await this.movementsCollectionRef?.doc(docID);
+  //   docRef?.get().subscribe((value) => console.log(value.data()));
+  // }
 
   updateDoc(collection: string, docID: string, doc: any) {
     if (collection === 'categories') {
@@ -80,7 +80,7 @@ export class FirestoreService {
         ?.doc(docID)
         .update(doc)
         .then(() => {
-          console.log(docID, 'moovement updated');
+          console.log(`Movement with id ${docID} is updated`);
           alert('Movimento atualizado com Sucesso!');
         })
         .catch((error: Error) => {
@@ -92,12 +92,30 @@ export class FirestoreService {
 
   deleteDoc(collection: string, docID: string) {
     if (collection === 'categories') {
-      this.categoriesCollectionRef?.doc(docID).delete();
-      console.log(`Category with id ${docID} is deleted`);
+      this.categoriesCollectionRef
+        ?.doc(docID)
+        .delete()
+        .then(() => {
+          console.log(`Category with id ${docID} is deleted`);
+          alert('Categoria apagada com Sucesso!');
+        })
+        .catch((error: Error) => {
+          console.log(error.message);
+          alert('Algo correu mal, por favor tente novamente!');
+        });
     }
     if (collection === 'movements') {
-      this.movementsCollectionRef?.doc(docID).delete();
-      console.log(`Movement with id ${docID} is deleted`);
+      this.movementsCollectionRef
+        ?.doc(docID)
+        .delete()
+        .then(() => {
+          console.log(`Movement with id ${docID} is deleted`);
+          alert('Movimento apagado com Sucesso!');
+        })
+        .catch((error: Error) => {
+          console.log(error.message);
+          alert('Algo correu mal, por favor tente novamente!');
+        });
     }
   }
 
@@ -142,15 +160,21 @@ export class FirestoreService {
   }
 
   async batchDeleteCategories() {
-    const batch = this.db.firestore.batch();
-    const querySnapshot = await this.categoriesCollectionRef?.ref.get();
-    querySnapshot?.forEach((doc) => batch.delete(doc.ref));
-    await batch.commit();
+    try {
+      const batch = this.db.firestore.batch();
+      const querySnapshot = await this.categoriesCollectionRef?.ref.get();
+      if (querySnapshot) {
+        querySnapshot?.forEach((doc) => batch.delete(doc.ref));
+        await batch.commit();
+        alert('Categorias apagadas com sucesso!');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async batchSetDefaultCategories() {
     const batch = this.db.firestore.batch();
-
     const categoriesRef = this.categoriesCollectionRef?.ref;
 
     defaultCategories.forEach((defaultCategory) => {

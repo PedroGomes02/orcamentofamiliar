@@ -1,18 +1,4 @@
 <div class="categoriesContainer">
-  <button
-    *ngIf="!showNewCategoryComponent"
-    class="newCategoryButton"
-    (click)="handlerShowNewCategoryComponent()"
-  >
-    🎚️Nova Categoria
-  </button>
-  <button class="newCategoryButton" (click)="handlerEraseAllCategories()">
-    🗑️Apagar Todas as Categorias
-  </button>
-  <button class="newCategoryButton" (click)="handlerSetDefaultCategories()">
-    ♻️Carregar Categorias Padrão
-  </button>
-
   <app-new-category
     *ngIf="showNewCategoryComponent"
     (formSubmitted)="onFormSubmitted()"
@@ -27,6 +13,27 @@
 
   <fieldset class="categoriesListContainer">
     <legend class="categoriesContainerTitle">Categorias</legend>
+    <div class="categoriesControlButtonsContainer">
+      <button
+        *ngIf="!showNewCategoryComponent"
+        class="categoriesControlButton"
+        (click)="handlerShowNewCategoryComponent()"
+      >
+        🎚️Nova Categoria
+      </button>
+      <button
+        class="categoriesControlButton"
+        (click)="handlerEraseAllCategories()"
+      >
+        🗑️Apagar Todas as Categorias
+      </button>
+      <button
+        class="categoriesControlButton"
+        (click)="handlerSetDefaultCategories()"
+      >
+        ♻️Carregar Categorias Padrão
+      </button>
+    </div>
     <div class="filterAndSortContainer">
       <label
         >Tipo:

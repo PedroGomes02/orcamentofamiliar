@@ -7,5 +7,15 @@ import { SummaryService } from 'src/app/services/summary.service';
   styleUrls: ['./summary.component.css'],
 })
 export class SummaryComponent {
+  showMovementsList: string = '';
+
   constructor(public summaryService: SummaryService) {}
+
+  toogleShowCategoryList(categoryName: string) {
+    if (this.showMovementsList === categoryName) {
+      this.showMovementsList = '';
+    } else {
+      this.showMovementsList = categoryName;
+    }
+  }
 }
