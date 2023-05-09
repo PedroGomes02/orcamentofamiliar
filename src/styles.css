@@ -50,3 +50,8 @@ app-root {
 .expense {
   background-color: var(--expenseColor);
 }
+
+.adsContainer {
+  margin-top: 0.5rem;
+  width: 100%;
+}
