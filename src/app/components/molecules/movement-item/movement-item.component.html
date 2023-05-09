@@ -1,5 +1,5 @@
 <li class="movementListItem" class="{{ movementItem.type }}">
-  <div class="movementListItemContainer" (click)="handlershowControlButtons()">
+  <div class="movementListItemContainer" (click)="toggleShowControlButtons()">
     <div class="movementListMain">
       <div class="dateAndValueContainer">
         <span>{{ movementItem.date | date : "dd-MM-yyyy" }}</span>
@@ -21,25 +21,25 @@
     </div>
 
     <span class="showControlButtonsIndicator">
-      {{ showControlButtons ? "⬆️" : "⬇️" }}
+      {{ showCategoryControlButtons ? "⬆️" : "⬇️" }}
     </span>
   </div>
 
-  <div *ngIf="showControlButtons" class="movementListItemButtons">
+  <div *ngIf="showCategoryControlButtons" class="movementListItemButtons">
     <button
-      *ngIf="!idMovementUpdateOpen"
-      (click)="handlerClickMovementUpdate(movementItem.id)"
+      *ngIf="!selectedMovementId"
+      (click)="handlerMovementToUpdate(movementItem.id)"
     >
       🔁 Atualizar
     </button>
-    <button (click)="handlerClickMovementDelete(movementItem.id)">
+    <button (click)="handlerMovementToDelete(movementItem.id)">
       🗑️ Apagar
     </button>
   </div>
 
   <div class="movementListItemUpdateBox">
     <app-update-movement
-      *ngIf="idMovementUpdateOpen === movementItem.id"
+      *ngIf="selectedMovementId === movementItem.id"
       [currentMovement]="movementItem"
     ></app-update-movement>
   </div>

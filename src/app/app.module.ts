@@ -12,6 +12,8 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
+import { AdsenseModule } from 'ng2-adsense';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoriesComponent } from './components/organisms/categories/categories.component';
 import { HeaderComponent } from './components/organisms/header/header.component';
@@ -63,6 +65,7 @@ import { SettingsComponent } from './components/templates/settings/settings.comp
     AngularFireAuthModule,
     FormsModule,
     ReactiveFormsModule,
+    AdsenseModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

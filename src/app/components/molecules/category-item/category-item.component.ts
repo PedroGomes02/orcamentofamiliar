@@ -10,25 +10,25 @@ import { Category } from 'src/app/types';
 export class CategoryItemComponent {
   @Input()
   categoryItem!: Category;
-  idCategoryUpdateOpen: string = '';
-  showControlButtons: boolean = false;
+  selectedCategoryId: string = '';
+  showCategoryControlButtons: boolean = false;
 
   constructor(public firestoreService: FirestoreService) {}
 
-  handlershowControlButtons() {
-    this.showControlButtons = !this.showControlButtons;
-    this.idCategoryUpdateOpen = '';
+  toggleShowControlButtons() {
+    this.showCategoryControlButtons = !this.showCategoryControlButtons;
+    this.selectedCategoryId = '';
   }
 
-  handlerClickCategoryUpdate(categoryId: string) {
-    if (this.idCategoryUpdateOpen === categoryId) {
-      this.idCategoryUpdateOpen = '';
+  handlerCategoryToUpdate(categoryId: string) {
+    if (this.selectedCategoryId === categoryId) {
+      this.selectedCategoryId = '';
     } else {
-      this.idCategoryUpdateOpen = categoryId;
+      this.selectedCategoryId = categoryId;
     }
   }
 
-  handlerClickCategoryDelete(categoryId: string) {
+  handlerCategoryToDelete(categoryId: string) {
     if (confirm('Deseja apagar esta categoria? Confirme por favor!')) {
       this.firestoreService.deleteDoc('categories', categoryId);
     }

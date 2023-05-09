@@ -11,15 +11,16 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem;
   justify-content: flex-end;
+  gap: 0.25rem;
+  padding: 0.125rem;
 }
 
 .categoriesControlButton {
   border: 0.125rem solid var(--primaryColor);
   background-color: var(--secondaryColor);
   text-align: center;
-  padding: 0.25rem;
+  padding: 0.125rem;
   border-radius: 5px;
   color: var(--secondaryTextColor);
   font-size: 0.8rem;

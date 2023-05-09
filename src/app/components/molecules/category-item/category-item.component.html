@@ -1,5 +1,5 @@
 <li class="categoryListItem" class="{{ categoryItem.type }}">
-  <div class="categoryListItemContainer" (click)="handlershowControlButtons()">
+  <div class="categoryListItemContainer" (click)="toggleShowControlButtons()">
     <div class="categoryListMain">
       <div class="typeAndAvatarContainer">
         <span>{{
@@ -26,25 +26,25 @@
     </div>
 
     <span class="showControlButtonsIndicator">
-      {{ showControlButtons ? "⬆️" : "⬇️" }}
+      {{ showCategoryControlButtons ? "⬆️" : "⬇️" }}
     </span>
   </div>
 
-  <div *ngIf="showControlButtons" class="categoryListItemButtons">
+  <div *ngIf="showCategoryControlButtons" class="categoryListItemButtons">
     <button
-      *ngIf="!idCategoryUpdateOpen"
-      (click)="handlerClickCategoryUpdate(categoryItem.id)"
+      *ngIf="!selectedCategoryId"
+      (click)="handlerCategoryToUpdate(categoryItem.id)"
     >
       🔁 Atualizar
     </button>
-    <button (click)="handlerClickCategoryDelete(categoryItem.id)">
+    <button (click)="handlerCategoryToDelete(categoryItem.id)">
       🗑️ Apagar
     </button>
   </div>
 
   <div class="categoryListItemUpdateBox">
     <app-update-category
-      *ngIf="idCategoryUpdateOpen === categoryItem.id"
+      *ngIf="selectedCategoryId === categoryItem.id"
       [currentCategory]="categoryItem"
     ></app-update-category>
   </div>

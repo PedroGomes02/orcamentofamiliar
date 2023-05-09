@@ -11,28 +11,28 @@ import { Movement } from 'src/app/types';
 export class MovementItemComponent {
   @Input()
   movementItem!: Movement;
-  idMovementUpdateOpen: string = '';
-  showControlButtons: boolean = false;
+  selectedMovementId: string = '';
+  showCategoryControlButtons: boolean = false;
 
   constructor(
     public firestoreService: FirestoreService,
     public summaryService: SummaryService
   ) {}
 
- handlershowControlButtons() {
-    this.showControlButtons = !this.showControlButtons;
-    this.idMovementUpdateOpen = '';
+ toggleShowControlButtons() {
+    this.showCategoryControlButtons = !this.showCategoryControlButtons;
+    this.selectedMovementId = '';
   }
 
-  handlerClickMovementUpdate(movementId: string) {
-    if (this.idMovementUpdateOpen === movementId) {
-      this.idMovementUpdateOpen = '';
+  handlerMovementToUpdate(movementId: string) {
+    if (this.selectedMovementId === movementId) {
+      this.selectedMovementId = '';
     } else {
-      this.idMovementUpdateOpen = movementId;
+      this.selectedMovementId = movementId;
     }
   }
 
-  handlerClickMovementDelete(movementId: string) {
+  handlerMovementToDelete(movementId: string) {
     if (confirm('Deseja apagar este movimento? Confirme por favor!')) {
       this.firestoreService.deleteDoc('movements', movementId);
     }
