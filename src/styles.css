@@ -4,6 +4,7 @@
   --secondaryColor: #3d5467;
   --primaryTextColor: black;
   --secondaryTextColor: white;
+
   --whiteOpacity: rgba(255, 255, 255, 0.5);
   --blackOpacity: rgba(0, 0, 0, 0.5);
   
@@ -13,12 +14,8 @@
 }
 
 :root[theme="dark"] {
-  /* --backgroundColor: #3d5467;
-  --primaryColor: #23967f; */
-
   --backgroundColor: #001e3d;
   --primaryColor: #23E5DB;
-
   --secondaryColor: #e8eef2;
   --primaryTextColor: #e8eef2;
   --secondaryTextColor: #001e3d;
