@@ -26,8 +26,8 @@ app-login {
 }
 
 .togglePrivacyButton {
-  margin: 0.5rem;
   padding: 0.5rem;
+  margin: 0.5rem;
   border: none;
   border-radius: 5px;
   background-color: transparent;
@@ -48,10 +48,10 @@ app-privacy {
 
 main {
   flex-grow: 1;
+  height: calc(100vh - 70px - 100px);
   display: flex;
   justify-content: center;
   overflow: auto;
-  height: calc(100vh - 70px - 100px);
 }
 
 .mainContainer {
@@ -69,6 +69,7 @@ app-footer {
   align-items: center;
   background-color: var(--primaryColor);
   color: var(--secondaryTextColor);
+  margin-top: 0.2rem;
 }
 
 /* Logic to implement Dialog in App - Test */

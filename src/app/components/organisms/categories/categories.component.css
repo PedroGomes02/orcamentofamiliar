@@ -8,7 +8,7 @@
 }
 
 .categoriesControlButtonsContainer {
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -74,7 +74,7 @@ app-new-category {
 }
 
 .filterAndSortContainer {
-  width: 100%;
+  width: 95%;
   display: flex;
   justify-content: flex-start;
 }
@@ -91,13 +91,13 @@ app-new-category {
 }
 
 .categoriesList {
-  width: 100%;
-  list-style-type: none;
+  width: 95%;
   display: flex;
   flex-direction: column;
-  gap: 0.125rem;
+  gap: 0.2rem;
+  list-style-type: none;
 }
 
 app-pagination {
-  width: 100%;
+  width: 95%;
 }

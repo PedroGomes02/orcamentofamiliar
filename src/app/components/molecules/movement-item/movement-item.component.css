@@ -1,38 +1,37 @@
 .movementListItem {
-  margin: 0rem 0.125rem;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
+  border-radius: 5px;
   padding: 0.25rem;
 }
 
 .movementListItemContainer {
   display: flex;
-  gap: 0.25rem;
   justify-content: space-between;
+  gap: 0.25rem;
 }
 
 .movementListItemContainer:hover {
-  background-color: rgba(255, 255, 255, 0.2);
   border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .movementListMain {
+  flex-grow: 1;
   display: flex;
   gap: 0.25rem;
-  flex-grow: 1;
 }
 
 .dateAndValueContainer {
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  flex-shrink: 0;
-  background-color: rgba(255, 255, 255, 0.25);
   padding: 0.125rem;
   border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.25);
 }
 .informationContainer {
   display: flex;
@@ -48,8 +47,8 @@
 }
 
 .categoryAvatar {
-  font-size: 1.25rem;
   border-radius: 5px;
+  font-size: 1.25rem;
   background-color: rgba(255, 255, 255, 0.25);
 }
 

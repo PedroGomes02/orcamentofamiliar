@@ -4,19 +4,24 @@
   --secondaryColor: #3d5467;
   --primaryTextColor: black;
   --secondaryTextColor: white;
-  --whiteOpacity: rgba(255, 255, 255, 0.25);
-  --blackOpacity: rgba(0, 0, 0, 0.25);
-  --incomeColor: #73dcdfd4;
-  --savingsColor: #89ee80d4;
-  --expenseColor: #fb7272d4;
+  --whiteOpacity: rgba(255, 255, 255, 0.5);
+  --blackOpacity: rgba(0, 0, 0, 0.5);
+  
+  --incomeColor: #9ae6ffd9;
+  --savingsColor: #a3ff9bd2;
+  --expenseColor: #ffa7a7d8;
 }
 
 :root[theme="dark"] {
-  --backgroundColor: #3d5467;
-  --primaryColor: #23967f;
+  /* --backgroundColor: #3d5467;
+  --primaryColor: #23967f; */
+
+  --backgroundColor: #001e3d;
+  --primaryColor: #23E5DB;
+
   --secondaryColor: #e8eef2;
-  --primaryTextColor: white;
-  --secondaryTextColor: black;
+  --primaryTextColor: #e8eef2;
+  --secondaryTextColor: #001e3d;
 }
 
 * {
@@ -26,9 +31,9 @@
   font-family: "Roboto", sans-serif;
 }
 
-/* :root {
+:root {
   overflow: hidden;
-} */
+}
 
 app-root {
   width: 100%;
