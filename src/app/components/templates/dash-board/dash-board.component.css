@@ -7,13 +7,13 @@
 }
 
 .newMovementButton {
-  border: 0.125rem solid var(--primaryColor);
-  background-color: var(--secondaryColor);
-  text-align: center;
   padding: 0.75rem;
+  border: 0.125rem solid var(--primaryColor);
   border-radius: 5px;
+  background-color: var(--secondaryColor);
   color: var(--secondaryTextColor);
   font-size: 1.2rem;
+  text-align: center;
   opacity: 1;
   transition: all 0.25s ease;
 }
@@ -23,31 +23,40 @@
   transition: all 0.25s ease;
 }
 
-fieldset {
+.dashBoardMainContent{
   width: 100%;
-  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 769px) {
+  .dashBoardMainContent {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.recentMovementsContainer {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap:0.5rem;
   border: 0.125rem solid var(--secondaryColor);
+  border-radius: 5px;
 }
 
-legend {
-  margin: 0.5rem;
-  padding: 0 0.5rem;
+.recentMovementsContainer legend {
+  margin: 0.25rem;
+  padding: 0 0.25rem;
   color: var(--primaryTextColor);
   font-size: 0.8rem;
 }
-label {
-  margin: 0.5rem;
-  font-size: 0.8rem;
-  color: var(--primaryTextColor);
-}
-input {
-  width: 4rem;
-}
 
-.movementsList {
+.recentMovementsList {
   width: 95%;
   display: flex;
   flex-direction: column;
@@ -56,17 +65,16 @@ input {
 }
 
 .fieldsetButton {
-  border: 0.125rem solid var(--primaryColor);
-  background-color: var(--secondaryColor);
-  text-align: center;
   padding: 0.25rem;
+  margin: 0.5rem;
+  border: 0.125rem solid var(--primaryColor);
   border-radius: 5px;
-  margin: 0.25rem;
-  color: var(--secondaryTextColor);
+  background-color: var(--secondaryColor);
   font-size: 0.8rem;
+  text-align: center;
+  color: var(--secondaryTextColor);
   opacity: 1;
   transition: all 0.25s ease;
-  align-self: flex-end;
 }
 .fieldsetButton:hover {
   cursor: pointer;

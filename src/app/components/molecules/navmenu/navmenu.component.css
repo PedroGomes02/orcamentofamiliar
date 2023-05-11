@@ -27,6 +27,7 @@
 .navContainer a.active-link {
   background-color: var(--whiteOpacity);
   transform: scale(1.1);
+  font-weight: bold;
 }
 
 .navContainer a span {

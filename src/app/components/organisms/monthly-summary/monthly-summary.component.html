@@ -1,9 +1,10 @@
-<fieldset>
+<fieldset class="monthlySummaryContainer">
   <legend>Resumo Mensal</legend>
   <div>
-    <label>
+    <label class="labelElement">
       Ano:
       <select
+        class="selectElement"
         [(ngModel)]="summaryService.filters.year"
         (ngModelChange)="summaryService.filters.year = +$event"
         (change)="summaryService.handlerChangeFilters()"
@@ -17,9 +18,10 @@
       </select>
     </label>
 
-    <label>
+    <label class="labelElement">
       Mês:
       <select
+        class="selectElement"
         [(ngModel)]="summaryService.filters.month"
         (ngModelChange)="summaryService.filters.month = +$event"
         (change)="summaryService.handlerChangeFilters()"
@@ -35,7 +37,7 @@
     </label>
   </div>
 
-  <div class="balanceContainer">
+  <div class="balanceValueContainer">
     <span>Saldo</span>
     <span
       >{{

@@ -3,22 +3,24 @@
     💸Novo Movimento
   </button>
 
-  <fieldset>
-    <legend>Movimentos Recentes</legend>
-    <ul class="movementsList">
-      <app-movement-item
-        *ngFor="let movement of (orderedMovement$ | async)?.slice(0, 3)"
-        [movementItem]="movement"
-      ></app-movement-item>
-    </ul>
-    <button routerLink="/movements" class="fieldsetButton">
-      📃Ver Todos os Movimentos
-    </button>
-  </fieldset>
+  <div class="dashBoardMainContent">
+    <fieldset class="recentMovementsContainer">
+      <legend>Movimentos Recentes</legend>
+      <ul class="recentMovementsList">
+        <app-movement-item
+          *ngFor="let movement of (orderedMovement$ | async)?.slice(0, 3)"
+          [movementItem]="movement"
+        ></app-movement-item>
+      </ul>
+      <button routerLink="/movements" class="fieldsetButton">
+        📃Ver Todos os Movimentos
+      </button>
+    </fieldset>
 
-  <app-monthly-summary>
-    <button routerLink="/summary" class="fieldsetButton">
-      📊Mais Detalhes
-    </button></app-monthly-summary
-  >
+    <app-monthly-summary>
+      <button routerLink="/summary" class="fieldsetButton">
+        📊Mais Detalhes
+      </button></app-monthly-summary
+    >
+  </div>
 </div>

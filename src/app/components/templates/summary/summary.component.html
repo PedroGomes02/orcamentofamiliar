@@ -1,134 +1,132 @@
 <div class="summaryContainer">
   <app-monthly-summary></app-monthly-summary>
 
-  <fieldset>
+  <fieldset class="monthlySummaryByCategoriesContainer">
     <legend>Resumo Mensal por Categorias</legend>
-    <div class="summaryByCategories">
-      <ul>
-        <li
-          class="income"
-          *ngFor="
-            let item of this.summaryService.incomeSummaryByCategorie$ | async
-          "
+    <ul>
+      <li
+        class="income"
+        *ngFor="
+          let item of this.summaryService.incomeSummaryByCategorie$ | async
+        "
+      >
+        <div
+          class="categorySummaryContainer"
+          (click)="toogleShowCategoryList(item.category)"
         >
-          <div
-            class="categorySummaryContainer"
-            (click)="toogleShowCategoryList(item.category)"
-          >
-            <div class="avatarAndNameContainer">
-              <span class="categoryAvatar">{{ item.avatar }}</span>
-              <span class="categoryName">{{ item.category | titlecase }}</span>
-            </div>
-            <div>
-              <span>{{ item.accumulatedValue | currency : "€" }}</span>
-              <span class="showMovementsList">
-                {{ showMovementsList === item.category ? "⬆️" : "⬇️" }}
-              </span>
-            </div>
+          <div class="avatarAndNameContainer">
+            <span class="categoryAvatar">{{ item.avatar }}</span>
+            <span class="categoryName">{{ item.category | titlecase }}</span>
           </div>
-          <div *ngIf="item.subCategories" class="subCategorySummaryContainer">
-            Sub-Categorias:
-            <span
-              *ngFor="let subCategorie of item.subCategories"
-              class="subCategorySummary"
-            >
-              {{ subCategorie.name | titlecase }}
-              {{ subCategorie.accumulatedValue | currency : "€" }}
+          <div>
+            <span>{{ item.accumulatedValue | currency : "€" }}</span>
+            <span class="showMovementsList">
+              {{ showMovementsList === item.category ? "⬆️" : "⬇️" }}
             </span>
           </div>
-
-          <ul class="movementsList" *ngIf="showMovementsList === item.category">
-            <app-movement-item
-              *ngFor="let movement of item.movements"
-              [movementItem]="movement"
-            ></app-movement-item>
-          </ul>
-        </li>
-      </ul>
-
-      <ul>
-        <li
-          class="savings"
-          *ngFor="
-            let item of this.summaryService.savingsSummaryByCategorie$ | async
-          "
-        >
-          <div
-            class="categorySummaryContainer"
-            (click)="toogleShowCategoryList(item.category)"
+        </div>
+        <div *ngIf="item.subCategories" class="subCategorySummaryContainer">
+          Sub-Categorias:
+          <span
+            *ngFor="let subCategorie of item.subCategories"
+            class="subCategorySummary"
           >
-            <div class="avatarAndNameContainer">
-              <span class="categoryAvatar">{{ item.avatar }}</span>
-              <span class="categoryName">{{ item.category | titlecase }}</span>
-            </div>
-            <div>
-              <span>{{ item.accumulatedValue | currency : "€" }}</span>
-              <span class="showMovementsList">
-                {{ showMovementsList === item.category ? "⬆️" : "⬇️" }}
-              </span>
-            </div>
-          </div>
+            {{ subCategorie.name | titlecase }}
+            {{ subCategorie.accumulatedValue | currency : "€" }}
+          </span>
+        </div>
 
-          <div *ngIf="item.subCategories" class="subCategorySummaryContainer">
-            Sub-Categorias:
-            <span
-              *ngFor="let subCategorie of item.subCategories"
-              class="subCategorySummary"
-            >
-              {{ subCategorie.name | titlecase }}
-              {{ subCategorie.accumulatedValue | currency : "€" }}
+        <ul class="movementsList" *ngIf="showMovementsList === item.category">
+          <app-movement-item
+            *ngFor="let movement of item.movements"
+            [movementItem]="movement"
+          ></app-movement-item>
+        </ul>
+      </li>
+    </ul>
+
+    <ul>
+      <li
+        class="savings"
+        *ngFor="
+          let item of this.summaryService.savingsSummaryByCategorie$ | async
+        "
+      >
+        <div
+          class="categorySummaryContainer"
+          (click)="toogleShowCategoryList(item.category)"
+        >
+          <div class="avatarAndNameContainer">
+            <span class="categoryAvatar">{{ item.avatar }}</span>
+            <span class="categoryName">{{ item.category | titlecase }}</span>
+          </div>
+          <div>
+            <span>{{ item.accumulatedValue | currency : "€" }}</span>
+            <span class="showMovementsList">
+              {{ showMovementsList === item.category ? "⬆️" : "⬇️" }}
             </span>
           </div>
-          <ul class="movementsList" *ngIf="showMovementsList === item.category">
-            <app-movement-item
-              *ngFor="let movement of item.movements"
-              [movementItem]="movement"
-            ></app-movement-item>
-          </ul>
-        </li>
-      </ul>
+        </div>
 
-      <ul>
-        <li
-          class="expense"
-          *ngFor="
-            let item of this.summaryService.expenseSummaryByCategorie$ | async
-          "
-        >
-          <div
-            class="categorySummaryContainer"
-            (click)="toogleShowCategoryList(item.category)"
+        <div *ngIf="item.subCategories" class="subCategorySummaryContainer">
+          Sub-Categorias:
+          <span
+            *ngFor="let subCategorie of item.subCategories"
+            class="subCategorySummary"
           >
-            <div class="avatarAndNameContainer">
-              <span class="categoryAvatar">{{ item.avatar }}</span>
-              <span class="categoryName">{{ item.category | titlecase }}</span>
-            </div>
-            <div>
-              <span>{{ item.accumulatedValue | currency : "€" }}</span>
-              <span class="showMovementsList">
-                {{ showMovementsList === item.category ? "⬆️" : "⬇️" }}
-              </span>
-            </div>
+            {{ subCategorie.name | titlecase }}
+            {{ subCategorie.accumulatedValue | currency : "€" }}
+          </span>
+        </div>
+        <ul class="movementsList" *ngIf="showMovementsList === item.category">
+          <app-movement-item
+            *ngFor="let movement of item.movements"
+            [movementItem]="movement"
+          ></app-movement-item>
+        </ul>
+      </li>
+    </ul>
+
+    <ul>
+      <li
+        class="expense"
+        *ngFor="
+          let item of this.summaryService.expenseSummaryByCategorie$ | async
+        "
+      >
+        <div
+          class="categorySummaryContainer"
+          (click)="toogleShowCategoryList(item.category)"
+        >
+          <div class="avatarAndNameContainer">
+            <span class="categoryAvatar">{{ item.avatar }}</span>
+            <span class="categoryName">{{ item.category | titlecase }}</span>
           </div>
-          <div *ngIf="item.subCategories" class="subCategorySummaryContainer">
-            Sub-Categorias:
-            <span
-              *ngFor="let subCategorie of item.subCategories"
-              class="subCategorySummary"
-            >
-              {{ subCategorie.name | titlecase }}
-              {{ subCategorie.accumulatedValue | currency : "€" }}
+          <div>
+            <span>{{ item.accumulatedValue | currency : "€" }}</span>
+            <span class="showMovementsList">
+              {{ showMovementsList === item.category ? "⬆️" : "⬇️" }}
             </span>
           </div>
+        </div>
+        <div *ngIf="item.subCategories" class="subCategorySummaryContainer">
+          Sub-Categorias:
+          <span
+            *ngFor="let subCategorie of item.subCategories"
+            class="subCategorySummary"
+          >
+            {{ subCategorie.name | titlecase }}
+            {{ subCategorie.accumulatedValue | currency : "€" }}
+          </span>
+        </div>
 
-          <ul class="movementsList" *ngIf="showMovementsList === item.category">
-            <app-movement-item
-              *ngFor="let movement of item.movements"
-              [movementItem]="movement"
-            ></app-movement-item>
-          </ul>
-        </li>
-      </ul>
-    </div>
+        <ul class="movementsList" *ngIf="showMovementsList === item.category">
+          <app-movement-item
+            *ngFor="let movement of item.movements"
+            [movementItem]="movement"
+          ></app-movement-item>
+        </ul>
+      </li>
+    </ul>
   </fieldset>
 </div>

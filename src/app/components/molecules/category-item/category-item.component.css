@@ -13,7 +13,7 @@
 }
 
 .categoryListItemContainer:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--whiteOpacity);
   border-radius: 5px;
 }
 
@@ -30,9 +30,18 @@
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: var(--whiteOpacity);
   padding: 0.25rem;
   border-radius: 5px;
+}
+
+@media (min-width: 769px) {
+  .categoryListItem {
+    padding: 0.5rem;
+  }
+  .typeAndAvatarContainer {
+    flex-direction: row;
+  }
 }
 
 .categoryNameAndSubcategoriesContainer {
@@ -57,7 +66,7 @@
 }
 
 .subCategoriesContainer span {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: var(--whiteOpacity);
   padding: 0.125rem;
   border-radius: 5px;
 }
@@ -66,7 +75,7 @@
   font-size: 1.5rem;
   border-radius: 5px;
   padding: 0.125rem;
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: var(--whiteOpacity);
 }
 
 .showControlButtonsIndicator {

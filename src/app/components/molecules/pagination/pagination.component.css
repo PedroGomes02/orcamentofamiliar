@@ -20,7 +20,7 @@
 }
 
 .paginationButton:hover {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: var(--whiteOpacity);
   transition: all 0.25s ease;
 }
 

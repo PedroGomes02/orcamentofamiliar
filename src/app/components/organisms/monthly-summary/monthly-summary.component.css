@@ -1,38 +1,39 @@
-fieldset {
+.monthlySummaryContainer {
   width: 100%;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.5rem;
   border: 0.125rem solid var(--secondaryColor);
+  border-radius: 5px;
 }
 
-legend {
+.monthlySummaryContainer legend {
   margin: 0.25rem;
   padding: 0 0.25rem;
   color: var(--primaryTextColor);
   font-size: 0.8rem;
 }
-label {
+
+.labelElement {
   margin: 0.5rem;
   font-size: 0.8rem;
   color: var(--primaryTextColor);
 }
 
-select {
+.selectElement {
   border-radius: 5px;
   text-align: center;
 }
 
-.balanceContainer {
+.balanceValueContainer {
   width: 80%;
   border: 0.125rem solid var(--primaryColor);
   background-color: var(--secondaryColor);
   text-align: center;
   padding: 0.25rem;
   border-radius: 5px;
-  margin-bottom: 0.125rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   color: var(--secondaryTextColor);
   font-size: 1.2rem;
   font-weight: bold;
@@ -40,32 +41,11 @@ select {
   justify-content: space-evenly;
 }
 
-.monthlySummary {
-  width: 95%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-evenly;
-  margin: 1rem;
-  gap: 0.5rem;
-}
-.monthlySummary li {
-  flex-grow: 1;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  padding: 1rem;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
-}
-
 .progressBalance {
   width: 80%;
-  height: 1rem;
+  height: 2rem;
   border: none;
   margin-bottom: 0.5rem;
-  margin-top: 0rem;
 }
 
 .progressBalance::-webkit-progress-bar {
@@ -80,9 +60,30 @@ select {
     var(--savingsColor),
     var(--expenseColor)
   );
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .progressBalance::-moz-progress-bar {
   background-color: var(--incomeColor);
+}
+
+.monthlySummary {
+  width: 95%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 0.5rem;
+  margin:0.5rem;
+}
+
+.monthlySummary li {
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
 }

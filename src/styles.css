@@ -5,12 +5,12 @@
   --primaryTextColor: black;
   --secondaryTextColor: white;
 
-  --whiteOpacity: rgba(255, 255, 255, 0.5);
-  --blackOpacity: rgba(0, 0, 0, 0.5);
+  --whiteOpacity: rgba(255, 255, 255, 0.25);
+  --blackOpacity: rgba(0, 0, 0, 0.25);
   
-  --incomeColor: #9ae6ffd9;
+  --incomeColor: #7fdfffd9;
   --savingsColor: #a3ff9bd2;
-  --expenseColor: #ffa7a7d8;
+  --expenseColor: #ff7f7fd8;
 }
 
 :root[theme="dark"] {
