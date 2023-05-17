@@ -1,0 +1,36 @@
+<fieldset class="familyGroupContainer">
+  <legend class="familyGroupContainerTitle">Grupo Familiar</legend>
+
+  <div class="groupContainer">
+    <div class="groupInfoContainer">
+      <span>{{ (firestoreService.groupIdData | async)?.name }}</span>
+      <span>
+        Administrador: {{ (firestoreService.groupIdData | async)?.admin }}
+      </span>
+      <span>
+        Email: {{ (firestoreService.groupIdData | async)?.id }}
+      </span>
+    </div>
+
+    <form class="changeGroupContainer" (submit)="firestoreService.handlerSubmitGroupEmail()">
+      Mudar o grupo familiar (email):
+      <input
+        type="email"
+        name="myGroupEmail"
+        [(ngModel)]="firestoreService.groupEmail"
+      />
+
+      <input type="submit" />
+    </form>
+  </div>
+
+  <div class="membersInfoContainer">
+    <ul class="membersList">
+      Membros:
+      <li *ngFor="let member of firestoreService.groupMembers | async">
+        {{ member.name }} ({{ member.id }})
+      </li>
+    </ul>
+    <app-new-member></app-new-member>
+  </div>
+</fieldset>

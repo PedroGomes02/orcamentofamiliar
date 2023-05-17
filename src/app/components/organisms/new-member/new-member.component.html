@@ -1,0 +1,18 @@
+<fieldset class="newMemberContainer">
+  <legend>Novo Membro</legend>
+
+  <form [formGroup]="memberForm" (ngSubmit)="handlerSubmitMemberForm()">
+    <label>
+      Nome:
+      <input type="text" formControlName="name" maxlength="30" size="30" />
+    </label>
+    <label>
+      Email:
+      <input type="email" formControlName="email" />
+    </label>
+
+    <button type="submit" [disabled]="!memberForm.valid" class="fieldsetButton">
+      Enviar
+    </button>
+  </form>
+</fieldset>

@@ -2,7 +2,11 @@
 
 <main *ngIf="!isShowingLogIn; else loginButton">
   <div class="mainContainer" *ngIf="!isLoading; else loading">
-    <router-outlet></router-outlet>
+    <div
+      *ngIf="(firestoreService.groupIdData | async)?.name; else noFamilyGroup"
+    >
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </main>
 
@@ -26,10 +30,37 @@
   <app-loading></app-loading>
 </ng-template>
 
-<ng-adsense
+<ng-template #noFamilyGroup>
+  <div class="noFamilyGroupMenu">
+    <div class="newFamilyGroup">
+      <span>Iniciar um Grupo Familiar</span>
+      <app-new-group></app-new-group>
+    </div>
+
+    <div class="enterFamilyGroup">
+      <span>Entrar num Grupo Familiar Existente</span>
+      <form (submit)="firestoreService.handlerSubmitGroupEmail()">
+        (Introduza o Email do Adminstrador do Grupo Familiar)
+        <input
+          type="email"
+          name="groupEmail"
+          [(ngModel)]="firestoreService.groupEmail"
+        />
+
+        <input type="submit" />
+      </form>
+      <div *ngIf="firestoreService.submitedGroupEmail">
+        O grupo familiar com o email {{firestoreService.submitedGroupEmail}} não existe ou voçe naz faz parte dos seus membros,
+        por favor contacte o administrador do grupo!
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- <ng-adsense
   [adClient]="'ca-pub-5924661977828883'"
   [pageLevelAds]="true"
-></ng-adsense>
+></ng-adsense> -->
 
 <app-footer></app-footer>
 

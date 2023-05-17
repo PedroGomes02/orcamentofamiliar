@@ -12,7 +12,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
-import { AdsenseModule } from 'ng2-adsense';
+// import { AdsenseModule } from 'ng2-adsense';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoriesComponent } from './components/organisms/categories/categories.component';
@@ -34,6 +34,9 @@ import { CategoryItemComponent } from './components/molecules/category-item/cate
 import { UpdateCategoryComponent } from './components/organisms/update-category/update-category.component';
 import { PrivacyComponent } from './components/templates/privacy/privacy.component';
 import { SettingsComponent } from './components/templates/settings/settings.component';
+import { FamilyGroupComponent } from './components/organisms/family-group/family-group.component';
+import { NewMemberComponent } from './components/organisms/new-member/new-member.component';
+import { NewGroupComponent } from './components/organisms/new-group/new-group.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +59,9 @@ import { SettingsComponent } from './components/templates/settings/settings.comp
     UpdateCategoryComponent,
     PrivacyComponent,
     SettingsComponent,
+    FamilyGroupComponent,
+    NewMemberComponent,
+    NewGroupComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +71,7 @@ import { SettingsComponent } from './components/templates/settings/settings.comp
     AngularFireAuthModule,
     FormsModule,
     ReactiveFormsModule,
-    AdsenseModule.forRoot(),
+    // AdsenseModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

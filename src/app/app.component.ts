@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DialogService } from './services/dialog.service';
+import { FirestoreService } from './services/firestore.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,6 +15,7 @@ export class AppComponent {
 
   constructor(
     private authService: AuthenticationService,
+    public firestoreService: FirestoreService,
     private dialogService: DialogService
   ) {}
 

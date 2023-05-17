@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class HeaderComponent {
   constructor(
     public afAuth: AngularFireAuth,
     public authService: AuthenticationService,
+    public firestoreService: FirestoreService,
     public themeService: ThemeService
   ) {}
 
