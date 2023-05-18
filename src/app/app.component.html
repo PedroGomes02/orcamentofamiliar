@@ -1,5 +1,25 @@
 <app-header [title]="title"> </app-header>
 
+<aside>
+  <script
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5924661977828883"
+    crossorigin="anonymous"
+  ></script>
+  <!-- banner horizontal -->
+  <ins
+    class="adsbygoogle"
+    style="display: block"
+    data-ad-client="ca-pub-5924661977828883"
+    data-ad-slot="2002962097"
+    data-ad-format="auto"
+    data-full-width-responsive="true"
+  ></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</aside>
+
 <main *ngIf="!isShowingLogIn; else loginButton">
   <div class="mainContainer" *ngIf="!isLoading; else loading">
     <div
@@ -31,36 +51,8 @@
 </ng-template>
 
 <ng-template #noFamilyGroup>
-  <div class="noFamilyGroupMenu">
-    <div class="newFamilyGroup">
-      <span>Iniciar um Grupo Familiar</span>
-      <app-new-group></app-new-group>
-    </div>
-
-    <div class="enterFamilyGroup">
-      <span>Entrar num Grupo Familiar Existente</span>
-      <form (submit)="firestoreService.handlerSubmitGroupEmail()">
-        (Introduza o Email do Adminstrador do Grupo Familiar)
-        <input
-          type="email"
-          name="groupEmail"
-          [(ngModel)]="firestoreService.groupEmail"
-        />
-
-        <input type="submit" />
-      </form>
-      <div *ngIf="firestoreService.submitedGroupEmail">
-        O grupo familiar com o email {{firestoreService.submitedGroupEmail}} não existe ou voçe naz faz parte dos seus membros,
-        por favor contacte o administrador do grupo!
-      </div>
-    </div>
-  </div>
+  <app-start-group-menu></app-start-group-menu>
 </ng-template>
-
-<!-- <ng-adsense
-  [adClient]="'ca-pub-5924661977828883'"
-  [pageLevelAds]="true"
-></ng-adsense> -->
 
 <app-footer></app-footer>
 

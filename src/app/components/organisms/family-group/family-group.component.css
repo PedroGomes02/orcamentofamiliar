@@ -19,12 +19,15 @@
 .groupContainer {
   width: 95%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   color: var(--primaryTextColor);
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .groupInfoContainer {
-  /* width: 95%; */
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   color: var(--primaryTextColor);
@@ -34,21 +37,50 @@
   display: flex;
   flex-direction: column;
   color: var(--primaryTextColor);
+  gap: 0.125rem;
+  margin: 0.25rem;
+}
+hr {
+  width: 95%;
 }
 
 .membersInfoContainer {
   width: 95%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
   color: var(--primaryTextColor);
-  margin:0.5rem;
+  margin: 0.5rem 0;
+  gap: 0.5rem;
 }
 
 .membersList {
-  width: 95%;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
   list-style-type: none;
+}
+
+input {
+  border-radius: 5px;
+  padding: 0.25rem;
+}
+
+button {
+  border: 0.125rem solid var(--primaryColor);
+  background-color: var(--secondaryColor);
+  text-align: center;
+  padding: 0.25rem;
+  border-radius: 5px;
+  color: var(--secondaryTextColor);
+  font-size: 0.8rem;
+  opacity: 1;
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.25s ease;
 }

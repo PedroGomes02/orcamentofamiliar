@@ -3,34 +3,36 @@
 
   <div class="groupContainer">
     <div class="groupInfoContainer">
-      <span>{{ (firestoreService.groupIdData | async)?.name }}</span>
-      <span>
-        Administrador: {{ (firestoreService.groupIdData | async)?.admin }}
-      </span>
-      <span>
-        Email: {{ (firestoreService.groupIdData | async)?.id }}
-      </span>
+      <span>👨‍👩‍👧‍👦{{ (firestoreService.groupIdData | async)?.name }}</span>
+      <span> 🙍‍♂️{{ (firestoreService.groupIdData | async)?.admin }} </span>
+      <span> ✉️ {{ (firestoreService.groupIdData | async)?.id }} </span>
     </div>
 
-    <form class="changeGroupContainer" (submit)="firestoreService.handlerSubmitGroupEmail()">
-      Mudar o grupo familiar (email):
+    <form
+      class="changeGroupContainer"
+      (submit)="firestoreService.handlerSubmitGroupEmail()"
+    >
+      🔁Mudar o grupo familiar (email):
       <input
         type="email"
         name="myGroupEmail"
         [(ngModel)]="firestoreService.groupEmail"
       />
-
-      <input type="submit" />
+      <button (click)="firestoreService.handlerSubmitGroupEmail()">
+        Mudar
+      </button>
     </form>
   </div>
-
+  <hr />
   <div class="membersInfoContainer">
     <ul class="membersList">
-      Membros:
+      👩‍👧‍👦Membros:
       <li *ngFor="let member of firestoreService.groupMembers | async">
-        {{ member.name }} ({{ member.id }})
+        <app-member-item [memberItem]="member"></app-member-item>
       </li>
     </ul>
-    <app-new-member></app-new-member>
+    <app-new-member
+      *ngIf="userEmail == firestoreService.groupEmail"
+    ></app-new-member>
   </div>
 </fieldset>

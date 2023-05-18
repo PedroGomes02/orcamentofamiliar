@@ -1,0 +1,28 @@
+<div class="noFamilyGroupMenu">
+  <div class="newFamilyGroup">
+    <span>🪄Criar um Grupo Familiar</span>
+    <app-new-group></app-new-group>
+  </div>
+
+  <div class="enterFamilyGroup">
+    <span>👉Entrar num Grupo Familiar</span>
+    <form>
+      (Email do Administrador do Grupo)
+      <input
+        type="email"
+        name="groupEmail"
+        maxlength="30"
+        size="30"
+        [(ngModel)]="firestoreService.groupEmail"
+      />
+      <button (click)="firestoreService.handlerSubmitGroupEmail()">
+        Entrar
+      </button>
+    </form>
+    <div *ngIf="firestoreService.submitedGroupEmail">
+      O grupo familiar com o email {{ firestoreService.submitedGroupEmail }} não
+      existe ou voçe não faz parte dos seus membros, por favor contacte o
+      administrador do grupo!
+    </div>
+  </div>
+</div>

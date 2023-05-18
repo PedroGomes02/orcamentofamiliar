@@ -4,7 +4,7 @@
   <form [formGroup]="groupForm" (ngSubmit)="handlerSubmitGroupForm()">
     <label>
       Nome do Grupo:
-      <input type="text" formControlName="name" maxlength="30" size="30" />
+      <input type="text" formControlName="name" maxlength="20" size="20" />
     </label>
     <label>
       Nome do Administrador:
@@ -12,7 +12,7 @@
     </label>
 
     <button type="submit" [disabled]="!groupForm.valid" class="fieldsetButton">
-      Enviar
+      Criar
     </button>
   </form>
 </fieldset>

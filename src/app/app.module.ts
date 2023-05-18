@@ -37,6 +37,8 @@ import { SettingsComponent } from './components/templates/settings/settings.comp
 import { FamilyGroupComponent } from './components/organisms/family-group/family-group.component';
 import { NewMemberComponent } from './components/organisms/new-member/new-member.component';
 import { NewGroupComponent } from './components/organisms/new-group/new-group.component';
+import { MemberItemComponent } from './components/molecules/member-item/member-item.component';
+import { StartGroupMenuComponent } from './components/templates/start-group-menu/start-group-menu.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +64,8 @@ import { NewGroupComponent } from './components/organisms/new-group/new-group.co
     FamilyGroupComponent,
     NewMemberComponent,
     NewGroupComponent,
+    MemberItemComponent,
+    StartGroupMenuComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -9,8 +9,14 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./family-group.component.css'],
 })
 export class FamilyGroupComponent {
+  userEmail: string = '';
+
   constructor(
-    public afAuth: AngularFireAuth,
+    public authService: AuthenticationService,
     public firestoreService: FirestoreService
-  ) {}
+  ) {
+    this.authService.afAuth.authState.subscribe((user) => {
+      this.userEmail = user?.email || '';
+    });
+  }
 }

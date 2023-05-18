@@ -1,0 +1,12 @@
+<div class="memberItemContainer">
+  <div class="nameAndEmailContainer">
+    <span class="memberName">{{ memberItem.name }}</span>
+    <span class="memberEmail">{{ memberItem.id }}</span>
+  </div>
+  <button
+    *ngIf="userEmail == firestoreService.groupEmail"
+    (click)="handlerMemberToDelete(memberItem.id)"
+  >
+    🗑️
+  </button>
+</div>

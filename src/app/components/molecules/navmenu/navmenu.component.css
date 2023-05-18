@@ -27,10 +27,19 @@
 .navContainer a.active-link {
   background-color: var(--whiteOpacity);
   transform: scale(1.1);
-  font-weight: bold;
 }
 
 .navContainer a span {
   font-size: 0.6rem;
   color: var(--secondaryTextColor);
+}
+
+.navContainer a.active-link span {
+  background-color: var(--whiteOpacity);
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  background-color: var(--backgroundColor);
+  opacity: 0.9;
+  color: var(--primaryTextColor);
+  border-radius: 5px;
 }

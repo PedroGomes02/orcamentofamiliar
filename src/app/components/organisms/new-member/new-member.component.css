@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   border: 0.125rem solid var(--secondaryColor);
-  padding:0.25rem;
+  padding: 0.25rem;
 }
 
 legend {
@@ -22,4 +22,27 @@ form {
   align-items: center;
   gap: 0.5rem;
   margin: 0.25rem;
+}
+
+input {
+  border-radius: 5px;
+  padding: 0.25rem;
+}
+
+button {
+  border: 0.125rem solid var(--primaryColor);
+  background-color: var(--secondaryColor);
+  text-align: center;
+  padding: 0.25rem;
+  border-radius: 5px;
+  color: var(--secondaryTextColor);
+  font-size: 0.8rem;
+  opacity: 1;
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.25s ease;
 }

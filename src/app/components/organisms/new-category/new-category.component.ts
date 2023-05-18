@@ -68,7 +68,7 @@ export class NewCategoryComponent {
         : null,
       userId: this.userId,
     };
-    this.firestoreService.categoriesCollectionRef
+    this.firestoreService.groupCategoriesCollectionRef
       ?.add(newCategory)
       .then((documentRef) => {
         console.log(documentRef.id);

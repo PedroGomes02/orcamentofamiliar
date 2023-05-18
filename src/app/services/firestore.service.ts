@@ -39,7 +39,11 @@ export class FirestoreService {
     private db: AngularFirestore,
     private authService: AuthenticationService
   ) {
-    this.groupEmail = localStorage.getItem('groupEmail') || 'null';
+    this.groupEmail = 'email...';
+    if (localStorage.getItem('groupEmail')) {
+      this.groupEmail = localStorage.getItem('groupEmail') || '';
+    }
+
     this.groupIdData = this.getGroupIdData();
     this.groupMembers = this.getGroupMembers();
 
@@ -204,6 +208,21 @@ export class FirestoreService {
           alert('Algo correu mal, por favor tente novamente!');
         });
     }
+
+    if (collection === 'members') {
+      this.db
+        .collection(`groups/${this.groupEmail}/members`)
+        .doc(docID)
+        .delete()
+        .then(() => {
+          console.log(`Member with id ${docID} is deleted`);
+          alert('Membro apagado com Sucesso!');
+        })
+        .catch((error: Error) => {
+          console.log(error.message);
+          alert('Algo correu mal, por favor tente novamente!');
+        });
+    }
   }
 
   filterAndSortDocs<T>(
@@ -342,7 +361,7 @@ export class FirestoreService {
   }
 
   handlerSubmitGroupEmail() {
-    localStorage.setItem('groupEmail', this.groupEmail || 'null');
+    localStorage.setItem('groupEmail', this.groupEmail || '');
 
     this.submitedGroupEmail = this.groupEmail;
     this.groupIdData = this.getGroupIdData();

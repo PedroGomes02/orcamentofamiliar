@@ -45,11 +45,10 @@
   .movementListItem {
     padding: 0.5rem;
   }
-  .dateAndValueContainer {
-    flex-direction: row;
-  }
+ 
   .informationContainer {
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
   }
   .descriptionContainer::before {

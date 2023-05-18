@@ -59,9 +59,7 @@ export class NewMovementComponent {
       createAt: new Date().toISOString(),
     };
 
-    console.log(newMovement.createAt);
-
-    this.firestoreService.movementsCollectionRef
+    this.firestoreService.groupMovementsCollectionRef
       ?.add(newMovement)
       .then((documentRef) => {
         console.log(documentRef.id);
