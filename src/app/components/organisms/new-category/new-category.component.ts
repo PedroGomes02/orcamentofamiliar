@@ -5,6 +5,7 @@ import { FirestoreService } from '../../../services/firestore.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 import { Category } from 'src/app/types';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-new-category',
@@ -19,7 +20,8 @@ export class NewCategoryComponent {
   constructor(
     private firestoreService: FirestoreService,
     private authService: AuthenticationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialogService: DialogService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {
@@ -72,11 +74,17 @@ export class NewCategoryComponent {
       ?.add(newCategory)
       .then((documentRef) => {
         console.log(documentRef.id);
-        alert('Categoria adicionada com Sucesso!');
+        this.dialogService.openDialog('Categoria adicionada com Sucesso!');
+
+        // alert('Categoria adicionada com Sucesso!');
       })
       .catch((error: Error) => {
         console.log(error.message);
-        alert('Algo correu mal, por favor tente novamente!');
+        this.dialogService.openDialog(
+          'Algo correu mal, por favor tente novamente!'
+        );
+
+        // alert('Algo correu mal, por favor tente novamente!');
       });
     this.categoryForm.reset();
     this.formSubmitted.emit();

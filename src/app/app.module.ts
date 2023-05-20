@@ -39,6 +39,7 @@ import { NewMemberComponent } from './components/organisms/new-member/new-member
 import { NewGroupComponent } from './components/organisms/new-group/new-group.component';
 import { MemberItemComponent } from './components/molecules/member-item/member-item.component';
 import { StartGroupMenuComponent } from './components/templates/start-group-menu/start-group-menu.component';
+import { DialogComponent } from './components/molecules/dialog/dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +67,7 @@ import { StartGroupMenuComponent } from './components/templates/start-group-menu
     NewGroupComponent,
     MemberItemComponent,
     StartGroupMenuComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,

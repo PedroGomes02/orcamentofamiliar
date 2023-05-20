@@ -39,6 +39,8 @@ export class NewGroupComponent {
     };
     this.firestoreService.addGroup(groupData);
     this.firestoreService.groupEmail = this.userEmail;
+    this.firestoreService.batchSetDefaultCategories();
+
     // this.groupForm.reset();
   }
 }

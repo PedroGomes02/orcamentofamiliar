@@ -16,7 +16,7 @@ export class AppComponent {
   constructor(
     private authService: AuthenticationService,
     public firestoreService: FirestoreService,
-    private dialogService: DialogService
+    public dialogService: DialogService
   ) {}
 
   ngOnInit(): void {

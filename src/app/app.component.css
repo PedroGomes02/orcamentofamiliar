@@ -80,15 +80,3 @@ app-footer {
   margin-top: 0.2rem;
 }
 
-/* Logic to implement Dialog in App - Test */
-/* dialog {
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-} */

@@ -1,0 +1,29 @@
+<!-- <button id="open-dialog" (click)="dialogService.openDialog()">
+  Abrir Dialog
+</button> -->
+<dialog id="my-dialog">
+  <div class="dialogContent">
+    <p>{{ dialogService.alertMessage }}</p>
+    <button id="closeDialog" (click)="dialogService.closeDialog()">
+      Fechar
+    </button>
+  </div>
+</dialog>
+
+<!-- <button id="open-dialog" (click)="dialogService.openConfirmDialog()">
+  Abrir Confirm Dialog
+</button> -->
+<dialog id="my-confirm-dialog">
+  <div class="dialogContent">
+    <p>{{ dialogService.confirmMessage }}</p>
+    <button
+      id="confirmDialog"
+      (click)="dialogService.confirmDialog()"
+    >
+      Sim
+    </button>
+    <button id="abortConfirmDialog" (click)="dialogService.abortConfirmDialog()">
+      Cancelar
+    </button>
+  </div>
+</dialog>

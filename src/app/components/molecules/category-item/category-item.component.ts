@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { DialogService } from 'src/app/services/dialog.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Category } from 'src/app/types';
 
@@ -13,7 +14,10 @@ export class CategoryItemComponent {
   selectedCategoryId: string = '';
   showCategoryControlButtons: boolean = false;
 
-  constructor(public firestoreService: FirestoreService) {}
+  constructor(
+    public firestoreService: FirestoreService,
+    private dialogService: DialogService
+  ) {}
 
   toggleShowControlButtons() {
     this.showCategoryControlButtons = !this.showCategoryControlButtons;
@@ -29,8 +33,13 @@ export class CategoryItemComponent {
   }
 
   handlerCategoryToDelete(categoryId: string) {
-    if (confirm('Deseja apagar esta categoria? Confirme por favor!')) {
-      this.firestoreService.deleteDoc('categories', categoryId);
-    }
+    this.dialogService.openConfirmDialog(
+      'Deseja apagar esta categoria? Confirme por favor!',
+      () => this.firestoreService.deleteDoc('categories', categoryId)
+    );
+
+    // if (confirm('Deseja apagar esta categoria? Confirme por favor!')) {
+    //   this.firestoreService.deleteDoc('categories', categoryId);
+    // }
   }
 }

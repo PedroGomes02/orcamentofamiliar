@@ -25,6 +25,11 @@
   </div>
 </div>
 
+<button (click)="dialogService.openConfirmDialog('tem a certeza', testDialog)">
+  CONFIRM DIALOG TEST
+</button>
+<button (click)="dialogService.openDialog('feito')">DIALOG TEST</button>
+
 <!-- <button (click)="firestoreService.setCategories()">setCategories</button>
 <button (click)="firestoreService.TESTE()">TESTE</button>
 <button (click)="firestoreService.batchCloneCategories()">

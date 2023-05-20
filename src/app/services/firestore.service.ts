@@ -14,6 +14,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Category, Movement } from '../types';
 
 import { defaultCategories } from 'src/assets/defaultCategories';
+import { DialogService } from './dialog.service';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +38,8 @@ export class FirestoreService {
 
   constructor(
     private db: AngularFirestore,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private dialogService: DialogService
   ) {
     this.groupEmail = 'email...';
     if (localStorage.getItem('groupEmail')) {
@@ -159,11 +161,16 @@ export class FirestoreService {
         .update(doc)
         .then(() => {
           console.log(`Category with id ${docID} is updated`);
-          alert('Categoria atualizada com Sucesso!');
+
+          this.dialogService.openDialog('Categoria atualizada com Sucesso!');
+          // alert('Categoria atualizada com Sucesso!');
         })
         .catch((error: Error) => {
           console.log(error.message);
-          alert('Algo correu mal, por favor tente novamente!');
+          this.dialogService.openDialog(
+            'Algo correu mal, por favor tente novamente!'
+          );
+          // alert('Algo correu mal, por favor tente novamente!');
         });
     }
     if (collection === 'movements') {
@@ -172,11 +179,15 @@ export class FirestoreService {
         .update(doc)
         .then(() => {
           console.log(`Movement with id ${docID} is updated`);
-          alert('Movimento atualizado com Sucesso!');
+          this.dialogService.openDialog('Movimento atualizado com Sucesso!');
+          // alert('Movimento atualizado com Sucesso!');
         })
         .catch((error: Error) => {
           console.log(error.message);
-          alert('Algo correu mal, por favor tente novamente!');
+          this.dialogService.openDialog(
+            'Algo correu mal, por favor tente novamente!'
+          );
+          // alert('Algo correu mal, por favor tente novamente!');
         });
     }
   }
@@ -192,7 +203,10 @@ export class FirestoreService {
         })
         .catch((error: Error) => {
           console.log(error.message);
-          alert('Algo correu mal, por favor tente novamente!');
+          this.dialogService.openDialog(
+            'Algo correu mal, por favor tente novamente!'
+          );
+          // alert('Algo correu mal, por favor tente novamente!');
         });
     }
     if (collection === 'movements') {
@@ -201,11 +215,15 @@ export class FirestoreService {
         .delete()
         .then(() => {
           console.log(`Movement with id ${docID} is deleted`);
-          alert('Movimento apagado com Sucesso!');
+          this.dialogService.openDialog('Movimento apagado com Sucesso!');
+          // alert('Movimento apagado com Sucesso!');
         })
         .catch((error: Error) => {
           console.log(error.message);
-          alert('Algo correu mal, por favor tente novamente!');
+          this.dialogService.openDialog(
+            'Algo correu mal, por favor tente novamente!'
+          );
+          // alert('Algo correu mal, por favor tente novamente!');
         });
     }
 
@@ -216,11 +234,15 @@ export class FirestoreService {
         .delete()
         .then(() => {
           console.log(`Member with id ${docID} is deleted`);
-          alert('Membro apagado com Sucesso!');
+          this.dialogService.openDialog('Membro apagado com Sucesso!');
+          // alert('Membro apagado com Sucesso!');
         })
         .catch((error: Error) => {
           console.log(error.message);
-          alert('Algo correu mal, por favor tente novamente!');
+          this.dialogService.openDialog(
+            'Algo correu mal, por favor tente novamente!'
+          );
+          // alert('Algo correu mal, por favor tente novamente!');
         });
     }
   }
@@ -272,7 +294,8 @@ export class FirestoreService {
       if (querySnapshot) {
         querySnapshot?.forEach((doc) => batch.delete(doc.ref));
         await batch.commit();
-        alert('Categorias apagadas com sucesso!');
+        this.dialogService.openDialog('Categorias apagadas com sucesso!');
+        // alert('Categorias apagadas com sucesso!');
       }
     } catch (error) {
       console.log(error);
@@ -298,6 +321,7 @@ export class FirestoreService {
         batch.set(categoryRef, newCategory);
       });
       await batch.commit();
+      this.dialogService.openDialog('Categorias padrão repostas!');
     });
   }
 
@@ -386,9 +410,11 @@ export class FirestoreService {
 
       groupRef.get().subscribe((doc) => {
         if (doc.exists) {
+          this.dialogService.openDialog(`O grupo já existe!`);
           console.log(`O grupo já existe!`);
         } else {
           groupRef.set(groupData);
+          this.dialogService.openDialog(`Novo grupo criado!`);
           console.log(`Novo grupo criado!`);
         }
       });
@@ -405,14 +431,21 @@ export class FirestoreService {
       .doc(userEmail);
     memberRef.get().subscribe((doc) => {
       if (doc.exists) {
-        alert(
+        this.dialogService.openDialog(
           `O membro com o email ${userEmail} já existe nos membros do grupo!`
         );
+
+        // alert(
+        //   `O membro com o email ${userEmail} já existe nos membros do grupo!`
+        // );
       } else {
         memberRef.set(memberData);
-        alert(
+        this.dialogService.openDialog(
           `O membro com o email ${userEmail} foi adicionado aos membros do grupo!`
         );
+        // alert(
+        //   `O membro com o email ${userEmail} foi adicionado aos membros do grupo!`
+        // );
       }
     });
   }
@@ -429,27 +462,27 @@ export class FirestoreService {
     }) as Observable<Category[]>;
   }
 
-  addGroupCategory() {
-    const newCategory: Category = {
-      id: '',
-      name: 'categoryGroup',
-      type: 'income',
-      avatar: 'TT',
-      subCategories: null,
-      userId: 'USERUID',
-    };
+  // addGroupCategory() {
+  //   const newCategory: Category = {
+  //     id: '',
+  //     name: 'categoryGroup',
+  //     type: 'income',
+  //     avatar: 'TT',
+  //     subCategories: null,
+  //     userId: 'USERUID',
+  //   };
 
-    this.groupCategoriesCollectionRef
-      ?.add(newCategory)
-      .then((documentRef) => {
-        console.log(documentRef.id);
-        alert('Categoria adicionada com Sucesso!');
-      })
-      .catch((error: Error) => {
-        console.log(error.message);
-        alert('Algo correu mal, por favor tente novamente!');
-      });
-  }
+  //   this.groupCategoriesCollectionRef
+  //     ?.add(newCategory)
+  //     .then((documentRef) => {
+  //       console.log(documentRef.id);
+  //       alert('Categoria adicionada com Sucesso!');
+  //     })
+  //     .catch((error: Error) => {
+  //       console.log(error.message);
+  //       alert('Algo correu mal, por favor tente novamente!');
+  //     });
+  // }
 
   // TEMPORÁRIO - CLONAR USER PARA GROUP CAT E MOV
   CAT: Category[] = [];

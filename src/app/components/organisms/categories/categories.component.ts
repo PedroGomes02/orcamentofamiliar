@@ -9,6 +9,7 @@ import { PaginationService } from '../../../services/pagination.service';
 import { Category, FilterAndSort } from '../../../types';
 import { defaultCategories } from 'src/assets/defaultCategories';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-categories',
@@ -26,7 +27,8 @@ export class CategoriesComponent {
   constructor(
     public firestoreService: FirestoreService,
     public paginationService: PaginationService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private dialogService: DialogService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {
@@ -69,13 +71,18 @@ export class CategoriesComponent {
   }
 
   async handlerEraseAllCategories() {
-    if (confirm('Tem a certeza que pretende apagar todas as categorias?')) {
-      try {
-        this.firestoreService.batchDeleteCategories();
-      } catch (error) {
-        console.error('Error deleting categories:', error);
-      }
-    }
+    this.dialogService.openConfirmDialog(
+      'Tem a certeza que pretende apagar todas as categorias?',
+      () => this.firestoreService.batchDeleteCategories()
+    );
+
+    // if (confirm('Tem a certeza que pretende apagar todas as categorias?')) {
+    //   try {
+    //     this.firestoreService.batchDeleteCategories();
+    //   } catch (error) {
+    //     console.error('Error deleting categories:', error);
+    //   }
+    // }
   }
 
   // handlerEraseAllCategories() {
@@ -89,18 +96,26 @@ export class CategoriesComponent {
   // }
 
   async handlerSetDefaultCategories() {
-    if (
-      confirm(
-        'Este comando vai apagar todas as categorias atuais e repor as categorias padrão, tem a certeza?'
-      )
-    ) {
-      try {
+    this.dialogService.openConfirmDialog(
+      'Este comando vai apagar todas as categorias atuais e repor as categorias padrão, tem a certeza?',
+      async () => {
         await this.firestoreService.batchDeleteCategories();
         await this.firestoreService.batchSetDefaultCategories();
-      } catch (error) {
-        console.error('Error setting default categories:', error);
       }
-    }
+    );
+
+    // if (
+    //   confirm(
+    //     'Este comando vai apagar todas as categorias atuais e repor as categorias padrão, tem a certeza?'
+    //   )
+    // ) {
+    //   try {
+    //     await this.firestoreService.batchDeleteCategories();
+    //     await this.firestoreService.batchSetDefaultCategories();
+    //   } catch (error) {
+    //     console.error('Error setting default categories:', error);
+    //   }
+    // }
   }
 
   // async handlerSetDefaultCategories() {

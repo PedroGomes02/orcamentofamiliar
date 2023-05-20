@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { DialogService } from 'src/app/services/dialog.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { SummaryService } from 'src/app/services/summary.service';
 import { Movement } from 'src/app/types';
@@ -16,10 +17,11 @@ export class MovementItemComponent {
 
   constructor(
     public firestoreService: FirestoreService,
-    public summaryService: SummaryService
+    public summaryService: SummaryService,
+    private dialogService: DialogService
   ) {}
 
- toggleShowControlButtons() {
+  toggleShowControlButtons() {
     this.showCategoryControlButtons = !this.showCategoryControlButtons;
     this.selectedMovementId = '';
   }
@@ -33,8 +35,14 @@ export class MovementItemComponent {
   }
 
   handlerMovementToDelete(movementId: string) {
-    if (confirm('Deseja apagar este movimento? Confirme por favor!')) {
-      this.firestoreService.deleteDoc('movements', movementId);
-    }
+    this.dialogService.openConfirmDialog(
+      'Deseja apagar este movimento? Confirme por favor!',
+      () => this.firestoreService.deleteDoc('movements', movementId)
+    );
+    // if (
+
+    //   confirm('Deseja apagar este movimento? Confirme por favor!')) {
+    //   this.firestoreService.deleteDoc('movements', movementId);
+    // }
   }
 }

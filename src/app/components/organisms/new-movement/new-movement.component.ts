@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Category, Movement } from '../../../types';
 import { FirestoreService } from '../../../services/firestore.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-new-movement',
@@ -25,7 +26,8 @@ export class NewMovementComponent {
   constructor(
     private firestoreService: FirestoreService,
     private fb: FormBuilder,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private dialogService: DialogService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {
@@ -59,15 +61,21 @@ export class NewMovementComponent {
       createAt: new Date().toISOString(),
     };
 
+    console.log(newMovement);
+
     this.firestoreService.groupMovementsCollectionRef
       ?.add(newMovement)
       .then((documentRef) => {
         console.log(documentRef.id);
-        alert('Movimento adicionado com Sucesso!');
+        this.dialogService.openDialog('Movimento adicionado com Sucesso!');
+        // alert('Movimento adicionado com Sucesso!');
       })
       .catch((error: Error) => {
         console.log(error.message);
-        alert('Algo correu mal, por favor tente novamente!');
+        this.dialogService.openDialog(
+          'Algo correu mal, por favor tente novamente!'
+        );
+        // alert('Algo correu mal, por favor tente novamente!');
       });
     this.movementForm.reset();
     this.currentCategorie$ = undefined;

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { combineLatest, map, Observable } from 'rxjs';
+import { DialogService } from 'src/app/services/dialog.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Movement } from 'src/app/types';
 
@@ -13,7 +14,10 @@ export class DashBoardComponent {
 
   orderedMovement$: Observable<Movement[]>;
 
-  constructor(public firestoreService: FirestoreService) {
+  constructor(
+    public firestoreService: FirestoreService,
+    public dialogService: DialogService
+  ) {
     this.movement$ = this.firestoreService.getMovements();
     this.orderedMovement$ = this.filterMovements();
   }
@@ -27,5 +31,9 @@ export class DashBoardComponent {
         )
       )
     );
+  }
+
+  testDialog() {
+    console.log('dashboard dialog works!');
   }
 }
