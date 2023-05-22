@@ -22,9 +22,7 @@
 
 <main *ngIf="!isShowingLogIn; else loginButton">
   <div class="mainContainer" *ngIf="!isLoading; else loading">
-    <div
-      *ngIf="(firestoreService.groupIdData | async)?.name; else noFamilyGroup"
-    >
+    <div *ngIf="!isShowingGroupMenu; else noFamilyGroup">
       <router-outlet></router-outlet>
     </div>
   </div>

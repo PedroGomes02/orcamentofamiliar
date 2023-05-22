@@ -10,6 +10,7 @@ import { FirestoreService } from './services/firestore.service';
 export class AppComponent {
   title: string = 'Orçamento Familiar';
   isShowingLogIn: boolean = false;
+  isShowingGroupMenu: boolean = false;
   isLoading: boolean = true;
   isPrivacyOpen: boolean = false;
 
@@ -25,6 +26,14 @@ export class AppComponent {
         this.isLoading = false;
       } else {
         this.isShowingLogIn = true;
+      }
+    });
+
+    this.firestoreService.groupIdData.subscribe((data) => {
+      if (data) {
+        this.isLoading = false;
+      } else {
+        this.isShowingGroupMenu = true;
       }
     });
   }

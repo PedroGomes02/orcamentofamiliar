@@ -15,6 +15,7 @@
     src="{{ (authService.afAuth.authState | async)?.photoURL }}"
     alt=""
     width="40"
+    height="40"
   />
   <button class="logOutButton" (click)="authService.logout()">X</button>
 </div>
