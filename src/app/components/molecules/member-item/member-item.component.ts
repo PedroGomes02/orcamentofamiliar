@@ -27,9 +27,5 @@ export class MemberItemComponent {
       'Deseja apagar este membro? Confirme por favor!',
       () => this.firestoreService.deleteDoc('members', memberId)
     );
-
-    // if (confirm('Deseja apagar este membro? Confirme por favor!')) {
-    //   this.firestoreService.deleteDoc('members', memberId);
-    // }
   }
 }

@@ -37,9 +37,5 @@ export class CategoryItemComponent {
       'Deseja apagar esta categoria? Confirme por favor!',
       () => this.firestoreService.deleteDoc('categories', categoryId)
     );
-
-    // if (confirm('Deseja apagar esta categoria? Confirme por favor!')) {
-    //   this.firestoreService.deleteDoc('categories', categoryId);
-    // }
   }
 }

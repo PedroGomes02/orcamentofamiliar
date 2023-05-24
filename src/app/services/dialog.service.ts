@@ -4,15 +4,17 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DialogService {
-  alertMessage: string = '';
-  confirmMessage: string = '';
+  dialogMessage: string = '';
+  confirmDialogMessage: string = '';
   confirmFunction: () => void = () => {};
+
+  loading: boolean = true;
 
   constructor() {}
 
   openDialog(message: string) {
     const myDialog = document.getElementById('my-dialog') as HTMLDialogElement;
-    this.alertMessage = message;
+    this.dialogMessage = message;
     myDialog.showModal();
   }
 
@@ -25,7 +27,7 @@ export class DialogService {
     const myDialog = document.getElementById(
       'my-confirm-dialog'
     ) as HTMLDialogElement;
-    this.confirmMessage = message;
+    this.confirmDialogMessage = message;
     this.confirmFunction = confirmFunction;
     myDialog.showModal();
   }
@@ -38,7 +40,7 @@ export class DialogService {
     myDialog.close();
   }
 
-  abortConfirmDialog() {
+  cancelConfirmDialog() {
     const myDialog = document.getElementById(
       'my-confirm-dialog'
     ) as HTMLDialogElement;

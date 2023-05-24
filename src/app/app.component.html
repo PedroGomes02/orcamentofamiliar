@@ -20,15 +20,29 @@
   </script>
 </aside>
 
-<main *ngIf="!isShowingLogIn; else loginButton">
-  <div class="mainContainer" *ngIf="!isLoading; else loading">
-    <div *ngIf="!isShowingGroupMenu; else noFamilyGroup">
+<main
+  *ngIf="!isShowingLogIn; else logIn"
+  (swiperight)="(navigatePrevious)"
+  (swipeleft)="(navigateNext)"
+>
+  <div
+    class="mainContainer"
+    *ngIf="!firestoreService.isShowingStartGroupMenu; else startGroupMenu"
+  >
+    <div *ngIf="!firestoreService.isLoading; else loading">
       <router-outlet></router-outlet>
     </div>
   </div>
 </main>
 
-<ng-template #loginButton>
+<!-- <div class="mainContainer" *ngIf="!isLoading; else loading"> -->
+<!-- <div *ngIf="!isShowingGroupMenu; else startGroupMenu"> -->
+<!-- <div *ngIf="firestoreService.groupIdData | async; else startGroupMenu"> -->
+<!-- <router-outlet></router-outlet> -->
+<!-- </div> -->
+<!-- </div> -->
+
+<ng-template #logIn>
   <app-login></app-login>
   <button
     class="togglePrivacyButton"
@@ -48,7 +62,7 @@
   <app-loading></app-loading>
 </ng-template>
 
-<ng-template #noFamilyGroup>
+<ng-template #startGroupMenu>
   <app-start-group-menu></app-start-group-menu>
 </ng-template>
 

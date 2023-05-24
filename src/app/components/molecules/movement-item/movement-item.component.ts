@@ -39,10 +39,5 @@ export class MovementItemComponent {
       'Deseja apagar este movimento? Confirme por favor!',
       () => this.firestoreService.deleteDoc('movements', movementId)
     );
-    // if (
-
-    //   confirm('Deseja apagar este movimento? Confirme por favor!')) {
-    //   this.firestoreService.deleteDoc('movements', movementId);
-    // }
   }
 }

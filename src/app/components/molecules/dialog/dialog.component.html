@@ -1,29 +1,24 @@
-<!-- <button id="open-dialog" (click)="dialogService.openDialog()">
-  Abrir Dialog
-</button> -->
 <dialog id="my-dialog">
   <div class="dialogContent">
-    <p>{{ dialogService.alertMessage }}</p>
+    <app-loading *ngIf="dialogService.loading"></app-loading>
+    <p>{{ dialogService.dialogMessage }}</p>
     <button id="closeDialog" (click)="dialogService.closeDialog()">
-      Fechar
+      ✅Fechar
     </button>
   </div>
 </dialog>
 
-<!-- <button id="open-dialog" (click)="dialogService.openConfirmDialog()">
-  Abrir Confirm Dialog
-</button> -->
 <dialog id="my-confirm-dialog">
   <div class="dialogContent">
-    <p>{{ dialogService.confirmMessage }}</p>
-    <button
-      id="confirmDialog"
-      (click)="dialogService.confirmDialog()"
-    >
-      Sim
+    <p>{{ dialogService.confirmDialogMessage }}</p>
+    <button id="confirmDialog" (click)="dialogService.confirmDialog()">
+      ✅Sim
     </button>
-    <button id="abortConfirmDialog" (click)="dialogService.abortConfirmDialog()">
-      Cancelar
+    <button
+      id="abortConfirmDialog"
+      (click)="dialogService.cancelConfirmDialog()"
+    >
+      🚫Cancelar
     </button>
   </div>
 </dialog>

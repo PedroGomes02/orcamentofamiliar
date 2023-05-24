@@ -43,12 +43,12 @@ app-login {
 
 app-privacy {
   overflow: auto;
-  height: calc(100vh - 70px - 100px);
+  height: calc(100dvh - 70px - 100px);
 }
 
 main {
   flex-grow: 1;
-  height: calc(100vh - 70px - 100px);
+  height: calc(100dvh - 70px - 100px);
   display: flex;
   justify-content: center;
   overflow: auto;
@@ -63,10 +63,11 @@ main {
 
 app-start-group-menu {
   flex-grow: 1;
-  height: calc(100vh - 70px - 100px);
+  height: calc(100dvh - 70px - 100px);
   display: flex;
   justify-content: center;
   overflow: auto;
+  margin: 0.5rem;
 }
 
 app-footer {
@@ -79,4 +80,3 @@ app-footer {
   color: var(--secondaryTextColor);
   margin-top: 0.2rem;
 }
-

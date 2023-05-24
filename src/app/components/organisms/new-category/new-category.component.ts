@@ -46,12 +46,17 @@ export class NewCategoryComponent {
   @Output() formSubmitted = new EventEmitter<void>();
 
   handlerSubmitCategoryForm() {
+    this.dialogService.loading = true;
+    this.dialogService.openDialog(``);
+
     if (
       this.currentCategoryNames.includes(
         this.categoryForm.value.name.toLowerCase()
       )
     ) {
-      alert('Já existe uma categoria com esse nome!');
+      this.dialogService.loading = false;
+      this.dialogService.dialogMessage =
+        'Já existe uma categoria com esse nome!';
       return;
     }
 
@@ -74,17 +79,14 @@ export class NewCategoryComponent {
       ?.add(newCategory)
       .then((documentRef) => {
         console.log(documentRef.id);
-        this.dialogService.openDialog('Categoria adicionada com Sucesso!');
-
-        // alert('Categoria adicionada com Sucesso!');
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage = 'Categoria adicionada com Sucesso!';
       })
       .catch((error: Error) => {
         console.log(error.message);
-        this.dialogService.openDialog(
-          'Algo correu mal, por favor tente novamente!'
-        );
-
-        // alert('Algo correu mal, por favor tente novamente!');
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage =
+          'Algo correu mal, por favor tente novamente!';
       });
     this.categoryForm.reset();
     this.formSubmitted.emit();

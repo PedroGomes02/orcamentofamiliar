@@ -1,11 +1,7 @@
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-// import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
-// import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
@@ -40,6 +36,29 @@ import { NewGroupComponent } from './components/organisms/new-group/new-group.co
 import { MemberItemComponent } from './components/molecules/member-item/member-item.component';
 import { StartGroupMenuComponent } from './components/templates/start-group-menu/start-group-menu.component';
 import { DialogComponent } from './components/molecules/dialog/dialog.component';
+
+import {
+  HammerGestureConfig,
+  HAMMER_GESTURE_CONFIG,
+} from '@angular/platform-browser';
+import { HammerModule } from '@angular/platform-browser';
+import * as Hammer from 'hammerjs';
+
+@Injectable()
+export class MyHammerConfig extends HammerGestureConfig {
+  override buildHammer(element: HTMLElement): HammerManager {
+    const hammer = new Hammer(element, {
+      touchAction: 'pan-y', // Habilita o scroll vertical
+    });
+
+    hammer.get('swipe').set({
+      direction: Hammer.DIRECTION_HORIZONTAL,
+    });
+
+    return hammer;
+  }
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +90,7 @@ import { DialogComponent } from './components/molecules/dialog/dialog.component'
   ],
   imports: [
     BrowserModule,
+    HammerModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
@@ -79,7 +99,12 @@ import { DialogComponent } from './components/molecules/dialog/dialog.component'
     ReactiveFormsModule,
     // AdsenseModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

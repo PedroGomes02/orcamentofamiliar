@@ -4,25 +4,25 @@ dialog {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--secondaryColor);
-  border: 0.125rem solid var(--primaryColor);
+  border: 0.5rem solid var(--primaryColor);
   color: var(--secondaryTextColor);
-
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  padding: 1rem;
-  text-align: center;
+  padding: 0.5rem;
   max-width: 80dvw;
 }
 
 .dialogContent {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 dialog p {
-  padding: 1rem;
+  padding: 0.5rem;
   overflow-wrap: break-word;
-  text-align: left;
+  text-align: center;
 }
 
 button {
@@ -42,4 +42,13 @@ button:hover {
   cursor: pointer;
   opacity: 0.8;
   transition: all 0.25s ease;
+}
+
+#confirmDialog {
+  background-color: var(--savingsColor);
+  color: var(--secondaryTextColor);
+}
+#abortConfirmDialog {
+  background-color: var(--expenseColor);
+  color: var(--secondaryTextColor);
 }

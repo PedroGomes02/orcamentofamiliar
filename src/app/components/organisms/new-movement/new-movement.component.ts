@@ -48,6 +48,9 @@ export class NewMovementComponent {
   }
 
   handlerSubmitMovementForm() {
+    this.dialogService.loading = true;
+    this.dialogService.openDialog(``);
+
     const newMovement: Movement = {
       id: '',
       value: this.movementForm.value.value.toFixed(2),
@@ -67,15 +70,14 @@ export class NewMovementComponent {
       ?.add(newMovement)
       .then((documentRef) => {
         console.log(documentRef.id);
-        this.dialogService.openDialog('Movimento adicionado com Sucesso!');
-        // alert('Movimento adicionado com Sucesso!');
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage = 'Movimento adicionado com Sucesso!';
       })
       .catch((error: Error) => {
         console.log(error.message);
-        this.dialogService.openDialog(
-          'Algo correu mal, por favor tente novamente!'
-        );
-        // alert('Algo correu mal, por favor tente novamente!');
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage =
+          'Algo correu mal, por favor tente novamente!';
       });
     this.movementForm.reset();
     this.currentCategorie$ = undefined;
