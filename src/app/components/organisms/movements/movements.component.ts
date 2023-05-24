@@ -30,7 +30,6 @@ export class MovementsComponent {
     this.summaryService.filters.month = new Date().getMonth() + 1;
 
     this.movement$ = this.firestoreService.getMovements();
-
     this.filteredMovement$ = this.summaryService.filterMovements();
 
     this.pagination = this.paginationService;
@@ -46,7 +45,6 @@ export class MovementsComponent {
   handlerMovementsFilterAndSort() {
     this.filteredMovement$ = this.firestoreService.filterAndSortDocs(
       this.summaryService.filterMovements(),
-
       this.filterAndSortBy
     );
     this.filteredMovement$

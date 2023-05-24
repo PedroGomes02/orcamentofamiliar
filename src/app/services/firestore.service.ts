@@ -139,6 +139,8 @@ export class FirestoreService {
 
     this.groupCategories = this.getCategories();
     this.groupMovements = this.getMovements();
+
+    location.reload();
   }
 
   addMember(
