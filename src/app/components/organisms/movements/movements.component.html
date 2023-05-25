@@ -2,6 +2,12 @@
   <legend class="movementsContainerTitle">Movimentos</legend>
 
   <div class="filterAndSortContainer">
+    <button
+      class="categoriesControlButton"
+      (click)="handlerEraseAllMovements()"
+    >
+      🗑️Apagar Todos
+    </button>
     <label>
       Ano:
       <select

@@ -7,6 +7,7 @@ import { PaginationService } from '../../../services/pagination.service';
 
 import { FilterAndSort, Movement } from '../../../types';
 import { SummaryService } from 'src/app/services/summary.service';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-movements',
@@ -24,7 +25,8 @@ export class MovementsComponent {
   constructor(
     public firestoreService: FirestoreService,
     public paginationService: PaginationService,
-    public summaryService: SummaryService
+    public summaryService: SummaryService,
+    private dialogService: DialogService
   ) {
     this.summaryService.filters.year = new Date().getFullYear();
     this.summaryService.filters.month = new Date().getMonth() + 1;
@@ -61,5 +63,20 @@ export class MovementsComponent {
     } else {
       this.idMovementUpdateOpen = movementId;
     }
+  }
+
+  handlerEraseAllMovements() {
+    this.dialogService.openConfirmDialog(
+      'Tem a certeza que pretende apagar todos os movimentos?',
+      () => this.firestoreService.batchDeleteMovements()
+    );
+
+    // if (confirm('Tem a certeza que pretende apagar todas as categorias?')) {
+    //   try {
+    //     this.firestoreService.batchDeleteCategories();
+    //   } catch (error) {
+    //     console.error('Error deleting categories:', error);
+    //   }
+    // }
   }
 }

@@ -42,7 +42,7 @@ export class AppComponent {
       }
     });
 
-    this.firestoreService.groupIdData
+    this.firestoreService.groupData
       .forEach(() => (this.firestoreService.isLoading = false))
       .catch(() => (this.firestoreService.isShowingStartGroupMenu = true));
   }

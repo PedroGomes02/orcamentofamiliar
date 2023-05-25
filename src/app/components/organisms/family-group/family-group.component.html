@@ -3,9 +3,9 @@
 
   <div class="groupContainer">
     <div class="groupInfoContainer">
-      <span>👨‍👩‍👧‍👦{{ (firestoreService.groupIdData | async)?.name }}</span>
-      <span> 🙍‍♂️{{ (firestoreService.groupIdData | async)?.admin }} </span>
-      <span> ✉️ {{ (firestoreService.groupIdData | async)?.id }} </span>
+      <span>👨‍👩‍👧‍👦{{ (firestoreService.groupData | async)?.name }}</span>
+      <span> 🙍‍♂️{{ (firestoreService.groupData | async)?.admin }} </span>
+      <span> ✉️ {{ (firestoreService.groupData | async)?.id }} </span>
     </div>
 
     <form

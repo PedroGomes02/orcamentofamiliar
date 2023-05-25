@@ -1,8 +1,12 @@
 <dialog id="my-dialog">
   <div class="dialogContent">
     <app-loading *ngIf="dialogService.loading"></app-loading>
-    <p>{{ dialogService.dialogMessage }}</p>
-    <button id="closeDialog" (click)="dialogService.closeDialog()">
+    <p *ngIf="!dialogService.loading">{{ dialogService.dialogMessage }}</p>
+    <button
+      *ngIf="!dialogService.loading"
+      id="closeDialog"
+      (click)="dialogService.closeDialog()"
+    >
       ✅Fechar
     </button>
   </div>

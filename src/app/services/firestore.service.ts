@@ -20,12 +20,12 @@ import { DialogService } from './dialog.service';
   providedIn: 'root',
 })
 export class FirestoreService {
-  categoriesCollectionRef: AngularFirestoreCollection<Category> | undefined;
-  movementsCollectionRef: AngularFirestoreCollection<Movement> | undefined;
+  // categoriesCollectionRef: AngularFirestoreCollection<Category> | undefined;
+  // movementsCollectionRef: AngularFirestoreCollection<Movement> | undefined;
 
   groupEmail: string | '';
   submitedGroupEmail: string | '' = '';
-  groupIdData: Observable<{ id: string; name: string; admin: string }>;
+  groupData: Observable<{ id: string; name: string; admin: string }>;
   groupMembers: Observable<{ id: string; name: string }[]>;
 
   isShowingStartGroupMenu: boolean = false;
@@ -36,8 +36,8 @@ export class FirestoreService {
     | undefined;
   groupMovementsCollectionRef: AngularFirestoreCollection<Movement> | undefined;
 
-  groupCategories: Observable<Category[]> | undefined;
-  groupMovements: Observable<Movement[]> | undefined;
+  // groupCategories: Observable<Category[]> | undefined;
+  // groupMovements: Observable<Movement[]> | undefined;
 
   constructor(
     private db: AngularFirestore,
@@ -51,7 +51,7 @@ export class FirestoreService {
     if (this.groupEmail !== 'email...') {
       this.submitedGroupEmail = this.groupEmail;
     }
-    this.groupIdData = this.getGroupIdData();
+    this.groupData = this.getGroupData();
     this.groupMembers = this.getGroupMembers();
 
     this.groupCategoriesCollectionRef = this.db.collection(
@@ -65,7 +65,7 @@ export class FirestoreService {
     );
   }
 
-  getGroupIdData(): Observable<{ id: string; name: string; admin: string }> {
+  getGroupData(): Observable<{ id: string; name: string; admin: string }> {
     return this.db
       .collection('groups')
       .doc(this.groupEmail || '')
@@ -106,41 +106,31 @@ export class FirestoreService {
 
   handlerSubmitGroupEmail() {
     localStorage.setItem('groupEmail', this.groupEmail || '');
-
-    this.submitedGroupEmail = this.groupEmail;
-
-    this.isShowingStartGroupMenu = false;
-    this.isLoading = true;
-
-    this.getGroupIdData()
-      .forEach((groupData) => (this.isLoading = false))
-      .catch(() => (this.isShowingStartGroupMenu = true));
-
-    this.groupIdData = this.getGroupIdData();
-
-    this.groupMembers = this.getGroupMembers();
-
-    this.groupIdData.subscribe((data) => {
-      if (data) {
-        this.isShowingStartGroupMenu = false;
-        this.isLoading = false;
-      }
-    });
-
-    this.groupCategoriesCollectionRef = this.db.collection(
-      `groups/${this.groupEmail}/categories`,
-      (ref) => ref.orderBy('name', 'asc')
-    );
-
-    this.groupMovementsCollectionRef = this.db.collection(
-      `groups/${this.groupEmail}/movements`,
-      (ref) => ref.orderBy('date', 'desc')
-    );
-
-    this.groupCategories = this.getCategories();
-    this.groupMovements = this.getMovements();
-
     location.reload();
+    // this.submitedGroupEmail = this.groupEmail;
+    // this.isShowingStartGroupMenu = false;
+    // this.isLoading = true;
+    // this.getGroupIdData()
+    //   .forEach((groupData) => (this.isLoading = false))
+    //   .catch(() => (this.isShowingStartGroupMenu = true));
+    // this.groupIdData = this.getGroupIdData();
+    // this.groupMembers = this.getGroupMembers();
+    // this.groupIdData.subscribe((data) => {
+    //   if (data) {
+    //     this.isShowingStartGroupMenu = false;
+    //     this.isLoading = false;
+    //   }
+    // });
+    // this.groupCategoriesCollectionRef = this.db.collection(
+    //   `groups/${this.groupEmail}/categories`,
+    //   (ref) => ref.orderBy('name', 'asc')
+    // );
+    // this.groupMovementsCollectionRef = this.db.collection(
+    //   `groups/${this.groupEmail}/movements`,
+    //   (ref) => ref.orderBy('date', 'desc')
+    // );
+    // this.groupCategories = this.getCategories();
+    // this.groupMovements = this.getMovements();
   }
 
   addMember(
@@ -380,7 +370,41 @@ export class FirestoreService {
     }
   }
 
-  //JUNTAR OS DOIS BATCHS??
+  async batchDeleteMovements() {
+    this.dialogService.openDialog(``);
+    this.dialogService.loading = true;
+
+    const batchSize = 500;
+    let batch = this.db.firestore.batch();
+    let numElements = 0;
+
+    try {
+      const querySnapshot = await this.groupMovementsCollectionRef?.ref.get();
+      if (querySnapshot) {
+        for (const doc of querySnapshot.docs) {
+          if (numElements >= batchSize) {
+            await batch.commit();
+            batch = this.db.firestore.batch();
+            numElements = 0;
+          }
+          batch.delete(doc.ref);
+          numElements++;
+        }
+        if (numElements > 0) {
+          await batch.commit();
+        }
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage = 'Movimentos apagados com sucesso!';
+      }
+    } catch (error) {
+      console.log(error);
+      this.dialogService.loading = false;
+      this.dialogService.dialogMessage =
+        'Algo correu mal, por favor tente novamente!';
+    }
+  }
+
+  //JUNTAR OS DOIS BATCHS?? DELETE CATEGORIES E ADD CATEGORIAS PADRÃO??
   // async handlerSetDefaultCategories() {
   //   if (confirm('Este comando vai apagar todas as categorias atuais e repor as categorias padrão, tem a certeza?')) {
   //     try {

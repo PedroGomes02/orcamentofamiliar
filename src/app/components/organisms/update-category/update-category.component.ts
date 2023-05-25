@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore.service';
 import { Category, Movement } from 'src/app/types';
 import { map } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 @Component({
   selector: 'app-update-category',
   templateUrl: './update-category.component.html',
@@ -16,7 +17,8 @@ export class UpdateCategoryComponent implements OnInit {
 
   constructor(
     private firestoreService: FirestoreService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private db: AngularFirestore
   ) {
     this.updateCategoryForm = this.fb.group({
       type: ['', Validators.required],
@@ -77,25 +79,65 @@ export class UpdateCategoryComponent implements OnInit {
 
     //Atualizar todos os movimentos que estavam referenciados a esta categoria!
 
-    this.firestoreService
-      .getMovements()
-      .pipe(
-        map((movements: Movement[]) =>
-          movements.filter(
-            (movement: Movement) =>
-              movement.category === this.currentCategory.name
-          )
-        )
-      )
-      .subscribe((filteredMovements: Movement[]) => {
-        filteredMovements.forEach((movement: Movement) => {
-          movement.category = newCategory.name;
-          movement.type = newCategory.type;
-          movement.categoryAvatar = newCategory.avatar;
-          this.firestoreService.movementsCollectionRef
-            ?.doc(movement.id)
-            .update(movement);
-        });
-      });
+    const updateMovements = async () => {
+      const batchSize = 500;
+      let batch = this.db.firestore.batch();
+      let numElements = 0;
+
+      try {
+        const querySnapshot =
+          await this.firestoreService.groupMovementsCollectionRef?.ref.get();
+        if (querySnapshot) {
+          for (const doc of querySnapshot.docs) {
+            if (doc.data().category === this.currentCategory.name) {
+              if (numElements >= batchSize) {
+                await batch.commit();
+                batch = this.db.firestore.batch();
+                numElements = 0;
+              }
+
+              batch.update(doc.ref, {
+                category: newCategory.name,
+                type: newCategory.type,
+                categoryAvatar: newCategory.avatar,
+              });
+
+              numElements++;
+            }
+          }
+
+          if (numElements > 0) {
+            await batch.commit();
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      console.log(`Movements updated: ${numElements}`);
+    };
+
+    updateMovements();
+
+    // this.firestoreService
+    //   .getMovements()
+    //   .pipe(
+    //     map((movements: Movement[]) =>
+    //       movements.filter(
+    //         (movement: Movement) =>
+    //           movement.category === this.currentCategory.name
+    //       )
+    //     )
+    //   )
+    //   .subscribe((filteredMovements: Movement[]) => {
+    //     filteredMovements.forEach((movement: Movement) => {
+    //       movement.category = newCategory.name;
+    //       movement.type = newCategory.type;
+    //       movement.categoryAvatar = newCategory.avatar;
+    //       this.firestoreService.groupMovementsCollectionRef
+    //         ?.doc(movement.id)
+    //         .update(movement);
+    //     });
+    //   });
   }
 }
