@@ -1,0 +1,25 @@
+<fieldset class="newGroupContainer">
+  <legend>Atualizar Grupo</legend>
+
+  <form
+    [formGroup]="updateGroupForm"
+    (ngSubmit)="handlerSubmitUpdateGroupForm()"
+  >
+    <label>
+      Nome do Grupo
+      <input type="text" formControlName="groupName" maxlength="20" size="20" />
+    </label>
+
+    <label>
+      Nome do Administrador
+      <input
+        type="text"
+        formControlName="groupAdmin"
+        maxlength="30"
+        size="30"
+      />
+    </label>
+
+    <button type="submit">🔁 Atualizar</button>
+  </form>
+</fieldset>

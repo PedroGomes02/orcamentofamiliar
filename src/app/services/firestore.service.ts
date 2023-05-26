@@ -7,22 +7,19 @@ import {
 } from '@angular/fire/compat/firestore';
 
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DialogService } from './dialog.service';
 
 import { Category, Movement } from '../types';
 
 import { defaultCategories } from 'src/assets/defaultCategories';
-import { DialogService } from './dialog.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirestoreService {
-  // categoriesCollectionRef: AngularFirestoreCollection<Category> | undefined;
-  // movementsCollectionRef: AngularFirestoreCollection<Movement> | undefined;
-
   groupEmail: string | '';
   submitedGroupEmail: string | '' = '';
   groupData: Observable<{ id: string; name: string; admin: string }>;
@@ -36,9 +33,6 @@ export class FirestoreService {
     | undefined;
   groupMovementsCollectionRef: AngularFirestoreCollection<Movement> | undefined;
 
-  // groupCategories: Observable<Category[]> | undefined;
-  // groupMovements: Observable<Movement[]> | undefined;
-
   constructor(
     private db: AngularFirestore,
     private authService: AuthenticationService,
@@ -51,6 +45,7 @@ export class FirestoreService {
     if (this.groupEmail !== 'email...') {
       this.submitedGroupEmail = this.groupEmail;
     }
+
     this.groupData = this.getGroupData();
     this.groupMembers = this.getGroupMembers();
 
@@ -86,51 +81,40 @@ export class FirestoreService {
       groupRef.get().subscribe((doc) => {
         if (doc.exists) {
           this.dialogService.openDialog(`O grupo já existe!`);
-          console.log(`O grupo já existe!`);
         } else {
           groupRef.set(groupData);
           this.dialogService.openDialog(`Novo grupo criado!`);
-          console.log(`Novo grupo criado!`);
         }
       });
     });
+  }
+
+  async updateGroup(groupData: { name: string; admin: string }) {
+    this.dialogService.loading = true;
+    this.dialogService.openDialog(``);
+
+    try {
+      await this.db.collection(`groups`).doc(this.groupEmail).set(groupData);
+      this.dialogService.loading = false;
+      this.dialogService.dialogMessage = `Dados do grupo atualizados com sucesso!`;
+    } catch (error) {
+      this.dialogService.loading = false;
+      this.dialogService.dialogMessage =
+        'Algo correu mal, por favor tente novamente!';
+    }
   }
 
   getGroupMembers(): any {
     return this.db
       .collection(`groups/${this.groupEmail}/members`)
       .valueChanges({
-        idField: 'id', //Acrescenta ids aos objectos do array quando subscribe
+        idField: 'id', //Adds ids to array objects when subscribe
       });
   }
 
   handlerSubmitGroupEmail() {
     localStorage.setItem('groupEmail', this.groupEmail || '');
     location.reload();
-    // this.submitedGroupEmail = this.groupEmail;
-    // this.isShowingStartGroupMenu = false;
-    // this.isLoading = true;
-    // this.getGroupIdData()
-    //   .forEach((groupData) => (this.isLoading = false))
-    //   .catch(() => (this.isShowingStartGroupMenu = true));
-    // this.groupIdData = this.getGroupIdData();
-    // this.groupMembers = this.getGroupMembers();
-    // this.groupIdData.subscribe((data) => {
-    //   if (data) {
-    //     this.isShowingStartGroupMenu = false;
-    //     this.isLoading = false;
-    //   }
-    // });
-    // this.groupCategoriesCollectionRef = this.db.collection(
-    //   `groups/${this.groupEmail}/categories`,
-    //   (ref) => ref.orderBy('name', 'asc')
-    // );
-    // this.groupMovementsCollectionRef = this.db.collection(
-    //   `groups/${this.groupEmail}/movements`,
-    //   (ref) => ref.orderBy('date', 'desc')
-    // );
-    // this.groupCategories = this.getCategories();
-    // this.groupMovements = this.getMovements();
   }
 
   addMember(
@@ -168,13 +152,13 @@ export class FirestoreService {
 
   getMovements(): Observable<Movement[]> {
     return this.groupMovementsCollectionRef?.valueChanges({
-      idField: 'id', //Acrescenta ids aos objectos do array quando subscribe
+      idField: 'id', //Adds ids to array objects when subscribe
     }) as Observable<Movement[]>;
   }
 
   getCategories(): Observable<Category[]> {
     return this.groupCategoriesCollectionRef?.valueChanges({
-      idField: 'id', //Acrescenta ids aos objectos do array quando subscribe
+      idField: 'id', //Adds ids to array objects when subscribe
     }) as Observable<Category[]>;
   }
 
@@ -403,66 +387,4 @@ export class FirestoreService {
         'Algo correu mal, por favor tente novamente!';
     }
   }
-
-  //JUNTAR OS DOIS BATCHS?? DELETE CATEGORIES E ADD CATEGORIAS PADRÃO??
-  // async handlerSetDefaultCategories() {
-  //   if (confirm('Este comando vai apagar todas as categorias atuais e repor as categorias padrão, tem a certeza?')) {
-  //     try {
-  //       const batch = this.firestoreService.batch();
-
-  //       // Adicionar todas as novas categorias no batch
-  //       defaultCategories.forEach((defaultCategory) => {
-  //         const newCategory: Category = {
-  //           id: '',
-  //           name: defaultCategory.name,
-  //           type: defaultCategory.type,
-  //           avatar: defaultCategory.avatar,
-  //           subCategories: null,
-  //           userId: this.userId,
-  //         };
-  //         const categoryRef = this.firestoreService.categoriesCollectionRef?.doc();
-  //         batch.set(categoryRef, newCategory);
-  //       });
-
-  //       // Apagar todas as categorias atuais no batch
-  //       const currentCategories = await this.firestoreService.categoriesCollectionRef?.get().toPromise();
-  //       currentCategories?.forEach((category) => {
-  //         const categoryRef = this.firestoreService.categoriesCollectionRef?.doc(category.id);
-  //         batch.delete(categoryRef);
-  //       });
-
-  //       // Executar o batch
-  //       await batch.commit();
-  //     } catch (error) {
-  //       console.error('Error setting default categories:', error);
-  //     }
-  //   }
-  // }
-
-  // getUserCategories(): Observable<Category[]> {
-  //   return this.authService.afAuth.authState.pipe(
-  //     switchMap((user: any) => {
-  //       this.categoriesCollectionRef = this.db.collection(
-  //         `users/${user.uid}/categories`,
-  //         (ref) => ref.orderBy('name', 'asc')
-  //       );
-  //       return this.categoriesCollectionRef.valueChanges({
-  //         idField: 'id', //Acrescenta ids aos objectos do array quando subscribe
-  //       });
-  //     })
-  //   );
-  // }
-  // getUserMovements(): Observable<Movement[]> {
-  //   return this.authService.afAuth.authState.pipe(
-  //     switchMap((user: any) => {
-  //       this.movementsCollectionRef = this.db.collection(
-  //         `users/${user.uid}/movements`,
-  //         (ref) => ref.orderBy('date', 'desc')
-  //       );
-  //       return this.movementsCollectionRef.valueChanges({
-  //         idField: 'id',
-  //       });
-  //     })
-  //   );
-  // }
 }

@@ -1,10 +1,10 @@
-<dialog id="my-dialog">
+<dialog id="dialog">
   <div class="dialogContent">
     <app-loading *ngIf="dialogService.loading"></app-loading>
     <p *ngIf="!dialogService.loading">{{ dialogService.dialogMessage }}</p>
     <button
       *ngIf="!dialogService.loading"
-      id="closeDialog"
+      id="closeDialogButton"
       (click)="dialogService.closeDialog()"
     >
       ✅Fechar
@@ -12,14 +12,14 @@
   </div>
 </dialog>
 
-<dialog id="my-confirm-dialog">
+<dialog id="confirmDialog">
   <div class="dialogContent">
     <p>{{ dialogService.confirmDialogMessage }}</p>
-    <button id="confirmDialog" (click)="dialogService.confirmDialog()">
+    <button id="confirmDialogButton" (click)="dialogService.confirmDialog()">
       ✅Sim
     </button>
     <button
-      id="abortConfirmDialog"
+      id="abortConfirmDialogButton"
       (click)="dialogService.cancelConfirmDialog()"
     >
       🚫Cancelar

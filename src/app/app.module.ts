@@ -43,6 +43,7 @@ import {
 } from '@angular/platform-browser';
 import { HammerModule } from '@angular/platform-browser';
 import * as Hammer from 'hammerjs';
+import { UpdateGroupComponent } from './components/organisms/update-group/update-group.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -87,6 +88,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     MemberItemComponent,
     StartGroupMenuComponent,
     DialogComponent,
+    UpdateGroupComponent,
   ],
   imports: [
     BrowserModule,

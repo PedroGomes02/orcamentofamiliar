@@ -6,6 +6,13 @@
       <span>👨‍👩‍👧‍👦{{ (firestoreService.groupData | async)?.name }}</span>
       <span> 🙍‍♂️{{ (firestoreService.groupData | async)?.admin }} </span>
       <span> ✉️ {{ (firestoreService.groupData | async)?.id }} </span>
+      <button
+        (click)="toogleUpdateGroup()"
+        *ngIf="userEmail == firestoreService.groupEmail"
+      >
+        Atualizar Dados do Grupo
+      </button>
+      <app-update-group *ngIf="isUpdateGroupOpen"></app-update-group>
     </div>
 
     <form

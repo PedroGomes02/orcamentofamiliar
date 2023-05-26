@@ -13,19 +13,19 @@ export class DialogService {
   constructor() {}
 
   openDialog(message: string) {
-    const myDialog = document.getElementById('my-dialog') as HTMLDialogElement;
+    const myDialog = document.getElementById('dialog') as HTMLDialogElement;
     this.dialogMessage = message;
     myDialog.showModal();
   }
 
   closeDialog() {
-    const myDialog = document.getElementById('my-dialog') as HTMLDialogElement;
+    const myDialog = document.getElementById('dialog') as HTMLDialogElement;
     myDialog.close();
   }
 
   openConfirmDialog(message: string, confirmFunction: () => void) {
     const myDialog = document.getElementById(
-      'my-confirm-dialog'
+      'confirmDialog'
     ) as HTMLDialogElement;
     this.confirmDialogMessage = message;
     this.confirmFunction = confirmFunction;
@@ -34,7 +34,7 @@ export class DialogService {
 
   confirmDialog() {
     const myDialog = document.getElementById(
-      'my-confirm-dialog'
+      'confirmDialog'
     ) as HTMLDialogElement;
     this.confirmFunction();
     myDialog.close();
@@ -42,7 +42,7 @@ export class DialogService {
 
   cancelConfirmDialog() {
     const myDialog = document.getElementById(
-      'my-confirm-dialog'
+      'confirmDialog'
     ) as HTMLDialogElement;
     myDialog.close();
   }

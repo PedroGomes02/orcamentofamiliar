@@ -2,8 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore.service';
-import { Category, Movement } from 'src/app/types';
-import { map } from 'rxjs';
+import { Category } from 'src/app/types';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 @Component({
   selector: 'app-update-category',

@@ -44,11 +44,11 @@ button:hover {
   transition: all 0.25s ease;
 }
 
-#confirmDialog {
+#confirmDialogButton {
   background-color: var(--savingsColor);
   color: var(--secondaryTextColor);
 }
-#abortConfirmDialog {
+#abortConfirmDialogButton {
   background-color: var(--expenseColor);
   color: var(--secondaryTextColor);
 }

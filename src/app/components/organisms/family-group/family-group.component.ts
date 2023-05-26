@@ -10,6 +10,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class FamilyGroupComponent {
   userEmail: string = '';
+  isUpdateGroupOpen: boolean = false;
 
   constructor(
     public authService: AuthenticationService,
@@ -18,5 +19,8 @@ export class FamilyGroupComponent {
     this.authService.afAuth.authState.subscribe((user) => {
       this.userEmail = user?.email || '';
     });
+  }
+  toogleUpdateGroup() {
+    this.isUpdateGroupOpen = !this.isUpdateGroupOpen;
   }
 }
