@@ -22,8 +22,6 @@
 
 <main
   *ngIf="!isShowingLogIn; else logIn"
-  (swiperight)="(navigatePrevious)"
-  (swipeleft)="(navigateNext)"
 >
   <div
     class="mainContainer"
@@ -34,13 +32,6 @@
     </div>
   </div>
 </main>
-
-<!-- <div class="mainContainer" *ngIf="!isLoading; else loading"> -->
-<!-- <div *ngIf="!isShowingGroupMenu; else startGroupMenu"> -->
-<!-- <div *ngIf="firestoreService.groupIdData | async; else startGroupMenu"> -->
-<!-- <router-outlet></router-outlet> -->
-<!-- </div> -->
-<!-- </div> -->
 
 <ng-template #logIn>
   <app-login></app-login>
