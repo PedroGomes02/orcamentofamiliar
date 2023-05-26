@@ -320,7 +320,8 @@ export class FirestoreService {
   }
 
   async batchSetDefaultCategories() {
-    this.dialogService.openDialog(``);
+    await this.batchDeleteCategories();
+
     this.dialogService.loading = true;
 
     try {

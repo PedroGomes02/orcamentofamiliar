@@ -99,7 +99,6 @@ export class CategoriesComponent {
     this.dialogService.openConfirmDialog(
       'Este comando vai apagar todas as categorias atuais e repor as categorias padrão, tem a certeza?',
       async () => {
-        await this.firestoreService.batchDeleteCategories();
         await this.firestoreService.batchSetDefaultCategories();
       }
     );

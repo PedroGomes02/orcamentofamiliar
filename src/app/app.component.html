@@ -22,6 +22,8 @@
 
 <main
   *ngIf="!isShowingLogIn; else logIn"
+  (swiperight)="(horizontalSwipeService.navigatePrevious)"
+  (swipeleft)="(horizontalSwipeService.navigateNext)"
 >
   <div
     class="mainContainer"
