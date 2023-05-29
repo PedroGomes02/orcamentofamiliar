@@ -31,15 +31,15 @@
   </div>
 
   <div *ngIf="showCategoryControlButtons" class="categoryListItemButtons">
-    <button
-      *ngIf="!selectedCategoryId"
-      (click)="handlerCategoryToUpdate(categoryItem.id)"
-    >
-      🔁 Atualizar
-    </button>
-    <button (click)="handlerCategoryToDelete(categoryItem.id)">
-      🗑️ Apagar
-    </button>
+    <app-action-button
+      [buttonText]="'🔁 Atualizar'"
+      [buttonAction]="handlerCategoryToUpdate.bind(this, categoryItem.id)"
+    ></app-action-button>
+
+    <app-action-button
+      [buttonText]="'🗑️ Apagar'"
+      [buttonAction]="handlerCategoryToDelete.bind(this, categoryItem.id)"
+    ></app-action-button>
   </div>
 
   <div class="categoryListItemUpdateBox">

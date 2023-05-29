@@ -20,6 +20,10 @@
       />
     </label>
 
-    <button type="submit">🔁 Atualizar</button>
+    <app-submit-form-button
+    [buttonText]="'🔁 Atualizar'"
+    [disabledButton]="!updateGroupForm.valid"
+  ></app-submit-form-button>
+
   </form>
 </fieldset>

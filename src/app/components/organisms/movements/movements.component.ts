@@ -70,13 +70,5 @@ export class MovementsComponent {
       'Tem a certeza que pretende apagar todos os movimentos?',
       () => this.firestoreService.batchDeleteMovements()
     );
-
-    // if (confirm('Tem a certeza que pretende apagar todas as categorias?')) {
-    //   try {
-    //     this.firestoreService.batchDeleteCategories();
-    //   } catch (error) {
-    //     console.error('Error deleting categories:', error);
-    //   }
-    // }
   }
 }

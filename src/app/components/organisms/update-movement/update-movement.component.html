@@ -98,12 +98,9 @@
       </label>
     </div>
 
-    <button
-      type="submit"
-      [disabled]="!updateMovementForm.valid"
-      class="fieldsetButton"
-    >
-      🔁 Atualizar
-    </button>
+    <app-submit-form-button
+      [buttonText]="'🔁 Atualizar'"
+      [disabledButton]="!updateMovementForm.valid"
+    ></app-submit-form-button>
   </form>
 </fieldset>

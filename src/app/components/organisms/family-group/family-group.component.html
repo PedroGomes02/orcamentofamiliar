@@ -6,13 +6,21 @@
       <span>👨‍👩‍👧‍👦{{ (firestoreService.groupData | async)?.name }}</span>
       <span> 🙍‍♂️{{ (firestoreService.groupData | async)?.admin }} </span>
       <span> ✉️ {{ (firestoreService.groupData | async)?.id }} </span>
-      <button
-        (click)="toogleUpdateGroup()"
-        *ngIf="userEmail == firestoreService.groupEmail"
-      >
-        Atualizar Dados do Grupo
-      </button>
-      <app-update-group *ngIf="isUpdateGroupOpen"></app-update-group>
+
+      <app-action-button
+        *ngIf="userEmail == firestoreService.submitedGroupEmail"
+        [buttonText]="
+          isUpdateGroupOpen
+            ? 'Atualizar Dados do Grupo ⬆️'
+            : 'Atualizar Dados do Grupo ⬇️'
+        "
+        [buttonAction]="toogleUpdateGroup.bind(this)"
+      ></app-action-button>
+
+      <app-update-group
+        *ngIf="isUpdateGroupOpen"
+        (formSubmitted)="onFormSubmitted()"
+      ></app-update-group>
     </div>
 
     <form
@@ -25,9 +33,13 @@
         name="myGroupEmail"
         [(ngModel)]="firestoreService.groupEmail"
       />
-      <button (click)="firestoreService.handlerSubmitGroupEmail()">
-        Mudar
-      </button>
+
+      <app-submit-form-button
+        [buttonText]="'Mudar'"
+        [disabledButton]="
+          firestoreService.groupEmail === firestoreService.submitedGroupEmail
+        "
+      ></app-submit-form-button>
     </form>
   </div>
   <hr />
@@ -39,7 +51,7 @@
       </li>
     </ul>
     <app-new-member
-      *ngIf="userEmail == firestoreService.groupEmail"
+      *ngIf="userEmail == firestoreService.submitedGroupEmail"
     ></app-new-member>
   </div>
 </fieldset>

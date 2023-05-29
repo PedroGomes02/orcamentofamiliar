@@ -1,7 +1,7 @@
 <div class="dashBoardContainer">
-  <button class="newMovementButton" routerLink="/newmovement">
+  <!-- <button class="newMovementButton" routerLink="/newmovement">
     💸Novo Movimento
-  </button>
+  </button> -->
 
   <div class="dashBoardMainContent">
     <fieldset class="recentMovementsContainer">
@@ -12,15 +12,18 @@
           [movementItem]="movement"
         ></app-movement-item>
       </ul>
-      <button routerLink="/movements" class="fieldsetButton">
-        📃Ver Todos os Movimentos
-      </button>
+
+      <app-action-button
+        [buttonText]="'📃Ver Todos os Movimentos'"
+        routerLink="/movements"
+      ></app-action-button>
     </fieldset>
 
     <app-monthly-summary>
-      <button routerLink="/summary" class="fieldsetButton">
-        📊Mais Detalhes
-      </button></app-monthly-summary
-    >
+      <app-action-button
+        [buttonText]="'📊Mais Detalhes'"
+        routerLink="/summary"
+      ></app-action-button>
+    </app-monthly-summary>
   </div>
 </div>

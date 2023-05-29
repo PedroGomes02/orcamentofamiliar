@@ -1,7 +1,7 @@
 .newCategoryContainer {
   width: 100%;
   max-width: 768px;
-  margin:auto;
+  margin: auto;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -103,26 +103,4 @@ form {
   border-radius: 5px;
   width: 50%;
   flex-grow: 1;
-}
-
-.fieldsetButton {
-  width: 50%;
-  border: 0.125rem solid var(--primaryColor);
-  background-color: var(--secondaryColor);
-  text-align: center;
-  padding: 0.25rem;
-  border-radius: 5px;
-  margin: 0 0.5rem;
-  color: var(--secondaryTextColor);
-  font-size: 1rem;
-  opacity: 1;
-  transition: all 0.25s ease;
-}
-.fieldsetButton:hover {
-  cursor: pointer;
-  opacity: 0.8;
-  transition: all 0.25s ease;
-}
-.fieldsetButton:disabled {
-  opacity: 0.2;
 }

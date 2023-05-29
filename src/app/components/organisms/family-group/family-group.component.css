@@ -6,7 +6,7 @@
   align-items: center;
   border-radius: 5px;
   border: 0.125rem solid var(--secondaryColor);
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .familyGroupContainerTitle {
@@ -30,12 +30,14 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   color: var(--primaryTextColor);
 }
 
 .changeGroupContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
   color: var(--primaryTextColor);
   gap: 0.125rem;
   margin: 0.25rem;
@@ -65,22 +67,4 @@ hr {
 input {
   border-radius: 5px;
   padding: 0.25rem;
-}
-
-button {
-  border: 0.125rem solid var(--primaryColor);
-  background-color: var(--secondaryColor);
-  text-align: center;
-  padding: 0.25rem;
-  border-radius: 5px;
-  color: var(--secondaryTextColor);
-  font-size: 0.8rem;
-  opacity: 1;
-  transition: all 0.25s ease;
-}
-
-button:hover {
-  cursor: pointer;
-  opacity: 0.8;
-  transition: all 0.25s ease;
 }

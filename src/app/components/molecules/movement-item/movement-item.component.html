@@ -26,15 +26,15 @@
   </div>
 
   <div *ngIf="showCategoryControlButtons" class="movementListItemButtons">
-    <button
-      *ngIf="!selectedMovementId"
-      (click)="handlerMovementToUpdate(movementItem.id)"
-    >
-      🔁 Atualizar
-    </button>
-    <button (click)="handlerMovementToDelete(movementItem.id)">
-      🗑️ Apagar
-    </button>
+    <app-action-button
+      [buttonText]="'🔁 Atualizar'"
+      [buttonAction]="handlerMovementToUpdate.bind(this, movementItem.id)"
+    ></app-action-button>
+
+    <app-action-button
+      [buttonText]="'🗑️ Apagar'"
+      [buttonAction]="handlerMovementToDelete.bind(this, movementItem.id)"
+    ></app-action-button>
   </div>
 
   <div class="movementListItemUpdateBox">

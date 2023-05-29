@@ -3,36 +3,28 @@
     *ngIf="showNewCategoryComponent"
     (formSubmitted)="onFormSubmitted()"
   >
-    <button
-      class="closeNewCategoryButton"
-      (click)="handlerShowNewCategoryComponent()"
-    >
-      ❌
-    </button>
+    <app-action-button
+      [buttonText]="'❌'"
+      [buttonAction]="handlerShowNewCategoryComponent.bind(this)"
+    ></app-action-button>
   </app-new-category>
 
   <fieldset class="categoriesListContainer">
     <legend class="categoriesContainerTitle">Categorias</legend>
     <div class="categoriesControlButtonsContainer">
-      <button
+      <app-action-button
         *ngIf="!showNewCategoryComponent"
-        class="categoriesControlButton"
-        (click)="handlerShowNewCategoryComponent()"
-      >
-        🎚️Nova
-      </button>
-      <button
-        class="categoriesControlButton"
-        (click)="handlerEraseAllCategories()"
-      >
-        🗑️Apagar Todas
-      </button>
-      <button
-        class="categoriesControlButton"
-        (click)="handlerSetDefaultCategories()"
-      >
-        ♻️Categorias Padrão
-      </button>
+        [buttonText]="'🎚️Nova'"
+        [buttonAction]="handlerShowNewCategoryComponent.bind(this)"
+      ></app-action-button>
+      <app-action-button
+        [buttonText]="'🗑️Apagar Todas'"
+        [buttonAction]="handlerEraseAllCategories.bind(this)"
+      ></app-action-button>
+      <app-action-button
+        [buttonText]="'♻️Categorias Padrão'"
+        [buttonAction]="handlerSetDefaultCategories.bind(this)"
+      ></app-action-button>
     </div>
     <div class="filterAndSortContainer">
       <label

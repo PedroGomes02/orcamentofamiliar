@@ -81,28 +81,3 @@
 .showControlButtonsIndicator {
   align-self: flex-end;
 }
-
-.categoryListItemButtons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-}
-
-.categoryListItemButtons button {
-  border: 0.125rem solid var(--primaryColor);
-  background-color: var(--secondaryColor);
-  text-align: center;
-  padding: 0.25rem;
-  border-radius: 5px;
-  margin: 0.5rem 0;
-  color: var(--secondaryTextColor);
-  font-size: 0.8rem;
-  opacity: 1;
-  transition: all 0.25s ease;
-}
-
-.categoryListItemButtons button:hover {
-  cursor: pointer;
-  opacity: 0.8;
-  transition: all 0.25s ease;
-}

@@ -37,12 +37,10 @@
       </label>
     </div>
 
-    <button
-      type="submit"
-      [disabled]="!categoryForm.valid"
-      class="fieldsetButton"
-    >
-      Enviar
-    </button>
+    <app-submit-form-button
+      [buttonText]="'Enviar'"
+      [disabledButton]="!categoryForm.valid"
+    ></app-submit-form-button>
+    
   </form>
 </fieldset>

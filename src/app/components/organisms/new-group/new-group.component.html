@@ -11,8 +11,10 @@
       <input type="text" formControlName="admin" maxlength="30" size="30" />
     </label>
 
-    <button type="submit" [disabled]="!groupForm.valid" class="fieldsetButton">
-      Criar
-    </button>
+    <app-submit-form-button
+      [buttonText]="'Criar Novo Grupo'"
+      [disabledButton]="!groupForm.valid"
+    ></app-submit-form-button>
+    
   </form>
 </fieldset>

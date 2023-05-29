@@ -23,4 +23,7 @@ export class FamilyGroupComponent {
   toogleUpdateGroup() {
     this.isUpdateGroupOpen = !this.isUpdateGroupOpen;
   }
+  onFormSubmitted() {
+    this.isUpdateGroupOpen = false;
+  }
 }

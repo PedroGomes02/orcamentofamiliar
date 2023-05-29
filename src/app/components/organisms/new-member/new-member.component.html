@@ -8,11 +8,12 @@
     </label>
     <label>
       Email:
-      <input type="email" formControlName="email" />
+      <input type="email" formControlName="email" maxlength="50" size="30"/>
     </label>
 
-    <button type="submit" [disabled]="!memberForm.valid" class="fieldsetButton">
-      Enviar
-    </button>
+    <app-submit-form-button
+      [buttonText]="'Enviar'"
+      [disabledButton]="!memberForm.valid"
+    ></app-submit-form-button>
   </form>
 </fieldset>

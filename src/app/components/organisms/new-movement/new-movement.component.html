@@ -96,12 +96,9 @@
       </label>
     </div>
 
-    <button
-      type="submit"
-      [disabled]="!movementForm.valid"
-      class="fieldsetButton"
-    >
-      Enviar
-    </button>
+    <app-submit-form-button
+      [buttonText]="'Enviar'"
+      [disabledButton]="!movementForm.valid"
+    ></app-submit-form-button>
   </form>
 </fieldset>

@@ -301,7 +301,6 @@ export class FirestoreService {
   async batchDeleteCategories() {
     this.dialogService.openDialog(``);
     this.dialogService.loading = true;
-
     try {
       const batch = this.db.firestore.batch();
       const querySnapshot = await this.groupCategoriesCollectionRef?.ref.get();
@@ -321,14 +320,11 @@ export class FirestoreService {
 
   async batchSetDefaultCategories() {
     await this.batchDeleteCategories();
-
     this.dialogService.loading = true;
-
     try {
       this.authService.afAuth.authState.subscribe(async (doc) => {
         const batch = this.db.firestore.batch();
         const categoriesRef = this.groupCategoriesCollectionRef?.ref;
-
         defaultCategories.forEach((defaultCategory) => {
           const newCategory: Category = {
             id: '',
@@ -338,7 +334,6 @@ export class FirestoreService {
             subCategories: defaultCategory.subCategories,
             userId: doc?.uid || '',
           };
-
           const categoryRef =
             categoriesRef?.doc() as DocumentReference<Category>;
           batch.set(categoryRef, newCategory);
@@ -358,11 +353,9 @@ export class FirestoreService {
   async batchDeleteMovements() {
     this.dialogService.openDialog(``);
     this.dialogService.loading = true;
-
     const batchSize = 500;
     let batch = this.db.firestore.batch();
     let numElements = 0;
-
     try {
       const querySnapshot = await this.groupMovementsCollectionRef?.ref.get();
       if (querySnapshot) {

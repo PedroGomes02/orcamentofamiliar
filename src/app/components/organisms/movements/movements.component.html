@@ -1,13 +1,10 @@
 <fieldset class="movementsContainer">
   <legend class="movementsContainerTitle">Movimentos</legend>
-
+  <app-action-button
+    [buttonText]="'🗑️Apagar Todos'"
+    [buttonAction]="handlerEraseAllMovements.bind(this)"
+  ></app-action-button>
   <div class="filterAndSortContainer">
-    <button
-      class="categoriesControlButton"
-      (click)="handlerEraseAllMovements()"
-    >
-      🗑️Apagar Todos
-    </button>
     <label>
       Ano:
       <select

@@ -3,13 +3,12 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DialogService } from 'src/app/services/dialog.service';
 import { FirestoreService } from '../../../services/firestore.service';
 import { PaginationService } from '../../../services/pagination.service';
 
 import { Category, FilterAndSort } from '../../../types';
-import { defaultCategories } from 'src/assets/defaultCategories';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-categories',
@@ -25,10 +24,10 @@ export class CategoriesComponent {
   userId: string = '';
 
   constructor(
-    public firestoreService: FirestoreService,
-    public paginationService: PaginationService,
     private authService: AuthenticationService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    public firestoreService: FirestoreService,
+    public paginationService: PaginationService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {
@@ -75,25 +74,7 @@ export class CategoriesComponent {
       'Tem a certeza que pretende apagar todas as categorias?',
       () => this.firestoreService.batchDeleteCategories()
     );
-
-    // if (confirm('Tem a certeza que pretende apagar todas as categorias?')) {
-    //   try {
-    //     this.firestoreService.batchDeleteCategories();
-    //   } catch (error) {
-    //     console.error('Error deleting categories:', error);
-    //   }
-    // }
   }
-
-  // handlerEraseAllCategories() {
-  //   if (confirm('Are You Sure?')) {
-  //     this.categorie$.subscribe((data) => {
-  //       data.forEach((e) =>
-  //         this.firestoreService.categoriesCollectionRef?.doc(e.id).delete()
-  //       );
-  //     });
-  //   }
-  // }
 
   async handlerSetDefaultCategories() {
     this.dialogService.openConfirmDialog(
@@ -102,43 +83,5 @@ export class CategoriesComponent {
         await this.firestoreService.batchSetDefaultCategories();
       }
     );
-
-    // if (
-    //   confirm(
-    //     'Este comando vai apagar todas as categorias atuais e repor as categorias padrão, tem a certeza?'
-    //   )
-    // ) {
-    //   try {
-    //     await this.firestoreService.batchDeleteCategories();
-    //     await this.firestoreService.batchSetDefaultCategories();
-    //   } catch (error) {
-    //     console.error('Error setting default categories:', error);
-    //   }
-    // }
   }
-
-  // async handlerSetDefaultCategories() {
-  //   if (confirm('Este comando vai apagar todas as categorias atuais e repor as categorias padrão, tem a certeza?')) {
-  //     try {
-  //       await this.firestoreService.batchDeleteCategories();
-  //       // Adicione todas as categorias padrão em paralelo
-  //       const promises = defaultCategories.map((defaultCategory) => {
-  //         const newCategory: Category = {
-  //           id: '',
-  //           name: defaultCategory.name,
-  //           type: defaultCategory.type,
-  //           avatar: defaultCategory.avatar,
-  //           subCategories: null,
-  //           userId: this.userId,
-  //         };
-  //         return this.firestoreService.categoriesCollectionRef?.add(
-  //           newCategory
-  //         );
-  //       });
-  //       await Promise.all(promises);
-  //     } catch (error) {
-  //       console.error('Error setting default categories:', error);
-  //     }
-  //   }
-  // }
 }

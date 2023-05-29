@@ -12,4 +12,7 @@ export class SettingsComponent {
     public themeService: ThemeService,
     public firestoreService: FirestoreService
   ) {}
+  toogleTheme() {
+    this.themeService.toggleTheme();
+  }
 }

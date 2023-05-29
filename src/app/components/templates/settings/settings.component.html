@@ -1,16 +1,16 @@
 <div class="settingsContainer">
   <div class="buttonsContainer">
-    <button
-      class="settingsButton"
+    <app-action-button
+      [buttonText]="'ℹ️ Política de Privacidade'"
       routerLink="/privacy"
       routerLinkActive="active-link"
-      title="Política de Privacidade"
-    >
-      ℹ️ Política de Privacidade
-    </button>
-    <button class="settingsButton" (click)="themeService.toggleTheme()">
-      {{ themeService.isDarkTheme ? "🌒 Tema Escuro" : "🌔 Tema Claro" }}
-    </button>
+    ></app-action-button>
+    <app-action-button
+      [buttonText]="
+        themeService.isDarkTheme ? '🌒 Tema Escuro' : '🌔 Tema Claro'
+      "
+      [buttonAction]="toogleTheme.bind(this)"
+    ></app-action-button>
   </div>
   <app-family-group></app-family-group>
   <app-categories></app-categories>

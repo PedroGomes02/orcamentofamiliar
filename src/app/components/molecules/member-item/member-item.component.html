@@ -3,10 +3,10 @@
     <span class="memberName">{{ memberItem.name }}</span>
     <span class="memberEmail">{{ memberItem.id }}</span>
   </div>
-  <button
+
+  <app-action-button
     *ngIf="userEmail == firestoreService.groupEmail"
-    (click)="handlerMemberToDelete(memberItem.id)"
-  >
-    🗑️
-  </button>
+    [buttonText]="'🗑️'"
+    [buttonAction]="handlerMemberToDelete.bind(this, memberItem.id)"
+  ></app-action-button>
 </div>

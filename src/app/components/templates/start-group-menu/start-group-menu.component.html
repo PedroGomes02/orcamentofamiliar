@@ -6,18 +6,17 @@
 
   <div class="enterFamilyGroup">
     <span>👉Entrar num Grupo Familiar</span>
-    <form>
+    <form (submit)="firestoreService.handlerSubmitGroupEmail()">
       (Email do Administrador do Grupo)
       <input
         type="email"
         name="groupEmail"
-        maxlength="30"
+        maxlength="50"
         size="30"
         [(ngModel)]="firestoreService.groupEmail"
       />
-      <button (click)="firestoreService.handlerSubmitGroupEmail()">
-        Entrar
-      </button>
+
+      <app-submit-form-button [buttonText]="'Entrar'"></app-submit-form-button>
     </form>
     <div *ngIf="firestoreService.submitedGroupEmail">
       O grupo familiar com o email {{ firestoreService.submitedGroupEmail }} não
