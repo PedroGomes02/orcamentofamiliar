@@ -5,7 +5,7 @@
   </div>
 
   <app-action-button
-    *ngIf="userEmail == firestoreService.groupEmail"
+    *ngIf="userEmail == firestoreService.currentGroupEmail"
     [buttonText]="'🗑️'"
     [buttonAction]="handlerMemberToDelete.bind(this, memberItem.id)"
   ></app-action-button>

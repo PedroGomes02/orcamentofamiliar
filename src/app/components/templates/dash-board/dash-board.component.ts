@@ -19,7 +19,7 @@ export class DashBoardComponent {
     public firestoreService: FirestoreService,
     public dialogService: DialogService
   ) {
-    this.movement$ = this.firestoreService.getMovements();
+    this.movement$ = this.firestoreService.getGroupMovements();
     this.orderedMovement$ = this.filterMovements();
   }
 

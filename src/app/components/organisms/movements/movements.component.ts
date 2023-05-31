@@ -15,7 +15,7 @@ import { DialogService } from 'src/app/services/dialog.service';
   styleUrls: ['./movements.component.css'],
 })
 export class MovementsComponent {
-  movement$: Observable<Movement[]>;
+
   filteredMovement$: Observable<Movement[]>;
   filterAndSortBy: FilterAndSort = { type: 'all', sortBy: 'date' };
   pagination: PaginationService;
@@ -31,7 +31,6 @@ export class MovementsComponent {
     this.summaryService.filters.year = new Date().getFullYear();
     this.summaryService.filters.month = new Date().getMonth() + 1;
 
-    this.movement$ = this.firestoreService.getMovements();
     this.filteredMovement$ = this.summaryService.filterMovements();
 
     this.pagination = this.paginationService;

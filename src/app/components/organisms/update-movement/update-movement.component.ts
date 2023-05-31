@@ -26,7 +26,7 @@ export class UpdateMovementComponent implements OnInit {
     private firestoreService: FirestoreService,
     private fb: FormBuilder
   ) {
-    this.categorie$ = this.firestoreService.getCategories();
+    this.categorie$ = this.firestoreService.groupCategories;
 
     this.currentCategorie$ = this.categorie$?.pipe(
       map((categories) =>

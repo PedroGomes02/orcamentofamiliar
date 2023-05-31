@@ -1,3 +1,14 @@
+interface Group {
+  id?: string;
+  name: string;
+  admin: string;
+}
+
+interface Member {
+  id?: string;
+  name: string;
+}
+
 interface Category {
   id: string;
   name: string;
@@ -25,4 +36,4 @@ interface FilterAndSort {
   sortBy: string;
 }
 
-export type { Category, Movement, FilterAndSort };
+export type { Group, Member, Category, Movement, FilterAndSort };

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, combineLatest, map, reduce } from 'rxjs';
+import { Observable, combineLatest, from, map, reduce } from 'rxjs';
 
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Movement } from '../types';
@@ -8,7 +8,7 @@ import { Movement } from '../types';
   providedIn: 'root',
 })
 export class SummaryService {
-  movement$: Observable<Movement[]>;
+  summaryMovement$: Observable<Movement[]>;
 
   incomeMovement$: Observable<Movement[]>;
   savingsMovement$: Observable<Movement[]>;
@@ -45,7 +45,9 @@ export class SummaryService {
   expenseSummaryByCategorie$: Observable<any>;
 
   constructor(public firestoreService: FirestoreService) {
-    this.movement$ = this.firestoreService.getMovements();
+    // this.summaryMovement$ = this.getGroupMovementsQuerySnapshot();//QUERYSNAPSHOT!
+    this.summaryMovement$ = this.firestoreService.getGroupMovements();
+
     this.filteredMovement$ = this.filterMovements();
 
     this.years = this.getYears();
@@ -73,7 +75,7 @@ export class SummaryService {
   }
 
   getYears(): Observable<number[]> {
-    return this.movement$.pipe(
+    return this.summaryMovement$.pipe(
       map((movements: Movement[]) => {
         const yearsSet = movements.reduce((acc, movement) => {
           const year = new Date(movement.date).getFullYear();
@@ -86,7 +88,7 @@ export class SummaryService {
   }
 
   filterMovements() {
-    return this.movement$.pipe(
+    return this.summaryMovement$.pipe(
       map((movements: Movement[]) =>
         movements
           .filter(
@@ -123,18 +125,12 @@ export class SummaryService {
 
   getFilteredMovementsTypeSummaryByCategories(movementType: string) {
     const selectedTypeCategories$ = this.firestoreService
-      .getCategories()
+      .getGroupCategories()
       .pipe(
         map((categories) =>
           categories.filter((category) => category.type === movementType)
         )
       );
-
-    // const selectedCategorySubCategorie$ = selectedTypeCategories$.pipe(
-    //   map((categories) =>
-    //     categories.filter((category) => category.subCategories)
-    //   )
-    // );
 
     const selectedTypeMovement$ = this.filteredMovement$.pipe(
       map((movements) =>
@@ -205,5 +201,22 @@ export class SummaryService {
       this.getFilteredMovementsTypeSummaryByCategories('savings');
     this.expenseSummaryByCategorie$ =
       this.getFilteredMovementsTypeSummaryByCategories('expense');
+  }
+
+  getGroupMovementsQuerySnapshot(): Observable<Movement[]> {
+    if (this.firestoreService.groupMovementsCollectionRef) {
+      return from(this.firestoreService.groupMovementsCollectionRef.get()).pipe(
+        map((querySnapshot) => {
+          const movements: Movement[] = [];
+          querySnapshot.forEach((doc) => {
+            const movement = doc.data() as Movement;
+            movement.id = doc.id;
+            movements.push(movement);
+          });
+          return movements;
+        })
+      );
+    }
+    throw new Error('groupMovementsCollectionRef is not defined');
   }
 }

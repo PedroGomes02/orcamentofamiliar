@@ -55,6 +55,20 @@
     <ul class="categoriesList">
       <app-category-item
         *ngFor="
+          let category of (
+            firestoreService.filteredGroupCategories | async
+          )?.slice(
+            (paginationService.currentPage - 1) * paginationService.numberDocsByPage,
+            paginationService.numberDocsByPage * paginationService.currentPage
+          )
+        "
+        [categoryItem]="category"
+      ></app-category-item>
+    </ul>
+
+    <!-- <ul class="categoriesList">
+      <app-category-item
+        *ngFor="
           let category of (filteredCategorie$ | async)?.slice(
             (pagination.currentPage - 1) * pagination.numberDocsByPage,
             pagination.numberDocsByPage * pagination.currentPage
@@ -62,7 +76,7 @@
         "
         [categoryItem]="category"
       ></app-category-item>
-    </ul>
+    </ul> -->
 
     <app-pagination></app-pagination>
   </fieldset>

@@ -33,12 +33,11 @@ export class NewMemberComponent {
   }
 
   handlerSubmitMemberForm() {
-    const memberData = { name: this.memberForm.value.name };
-    this.firestoreService.addMember(
-      this.firestoreService.groupEmail,
-      this.memberForm.value.email,
-      memberData
-    );
+    const memberData = {
+      name: this.memberForm.value.name,
+      id: this.memberForm.value.email,
+    };
+    this.firestoreService.addGroupMember(memberData);
     this.memberForm.reset();
   }
 }

@@ -6,6 +6,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 
 import { Category } from 'src/app/types';
 import { DialogService } from 'src/app/services/dialog.service';
+import { PaginationService } from 'src/app/services/pagination.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-new-category',
@@ -21,7 +23,8 @@ export class NewCategoryComponent {
     private firestoreService: FirestoreService,
     private authService: AuthenticationService,
     private fb: FormBuilder,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private paginationService: PaginationService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {
@@ -29,7 +32,7 @@ export class NewCategoryComponent {
       }
     });
 
-    this.firestoreService.getCategories().subscribe((categories) => {
+    this.firestoreService.groupCategories.subscribe((categories) => {
       categories.forEach((category) =>
         this.currentCategoryNames.push(category.name)
       );
@@ -81,6 +84,16 @@ export class NewCategoryComponent {
         console.log(documentRef.id);
         this.dialogService.loading = false;
         this.dialogService.dialogMessage = 'Categoria adicionada com Sucesso!';
+        this.firestoreService.groupCategories =
+          this.firestoreService.getGroupCategories();
+        this.firestoreService.filteredGroupCategories =
+          this.firestoreService.groupCategories;
+        this.firestoreService.filteredGroupCategories
+          .pipe(map((array) => array.length))
+          .subscribe((arrayLength) => {
+            this.paginationService.calculateNumberOfPages(arrayLength);
+          });
+        this.paginationService.currentPage = 1;
       })
       .catch((error: Error) => {
         console.log(error.message);

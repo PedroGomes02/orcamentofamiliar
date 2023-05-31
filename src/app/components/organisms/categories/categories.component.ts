@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -8,7 +7,7 @@ import { DialogService } from 'src/app/services/dialog.service';
 import { FirestoreService } from '../../../services/firestore.service';
 import { PaginationService } from '../../../services/pagination.service';
 
-import { Category, FilterAndSort } from '../../../types';
+import { FilterAndSort } from '../../../types';
 
 @Component({
   selector: 'app-categories',
@@ -16,10 +15,8 @@ import { Category, FilterAndSort } from '../../../types';
   styleUrls: ['./categories.component.css'],
 })
 export class CategoriesComponent {
-  categorie$: Observable<Category[]>;
-  filteredCategorie$: Observable<Category[]>;
   filterAndSortBy: FilterAndSort = { type: 'all', sortBy: 'name' };
-  pagination: PaginationService;
+
   showNewCategoryComponent: boolean = false;
   userId: string = '';
 
@@ -35,30 +32,17 @@ export class CategoriesComponent {
       }
     });
 
-    this.categorie$ = this.firestoreService.getCategories();
-    this.filteredCategorie$ = this.categorie$;
-    this.pagination = this.paginationService;
+    this.paginationService.currentPage = 1;
 
-    this.pagination.currentPage = 1;
-
-    this.filteredCategorie$
+    this.firestoreService.filteredGroupCategories
       .pipe(map((array) => array.length))
       .subscribe((arrayLength) => {
-        this.pagination.calculateNumberOfPages(arrayLength);
+        this.paginationService.calculateNumberOfPages(arrayLength);
       });
   }
 
   handlerCategoriesFilterAndSort() {
-    this.filteredCategorie$ = this.firestoreService.filterAndSortDocs(
-      this.categorie$,
-      this.filterAndSortBy
-    );
-    this.filteredCategorie$
-      .pipe(map((array) => array.length))
-      .subscribe((arrayLength) => {
-        this.pagination.calculateNumberOfPages(arrayLength);
-      });
-    this.pagination.currentPage = 1;
+    this.firestoreService.filterAndSortCategories(this.filterAndSortBy);
   }
 
   handlerShowNewCategoryComponent() {

@@ -35,7 +35,7 @@ export class NewMovementComponent {
       }
     });
 
-    this.categorie$ = this.firestoreService.getCategories();
+    this.categorie$ = this.firestoreService.groupCategories;
 
     this.movementForm = this.fb.group({
       value: [, Validators.required],

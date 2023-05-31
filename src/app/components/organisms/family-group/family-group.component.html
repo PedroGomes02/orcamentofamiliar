@@ -8,7 +8,7 @@
       <span> ✉️ {{ (firestoreService.groupData | async)?.id }} </span>
 
       <app-action-button
-        *ngIf="userEmail == firestoreService.submitedGroupEmail"
+        *ngIf="userEmail == firestoreService.currentGroupEmail"
         [buttonText]="
           isUpdateGroupOpen
             ? 'Atualizar Dados do Grupo ⬆️'
@@ -31,13 +31,13 @@
       <input
         type="email"
         name="myGroupEmail"
-        [(ngModel)]="firestoreService.groupEmail"
+        [(ngModel)]="firestoreService.nextGroupEmail"
       />
 
       <app-submit-form-button
         [buttonText]="'Mudar'"
         [disabledButton]="
-          firestoreService.groupEmail === firestoreService.submitedGroupEmail
+          firestoreService.currentGroupEmail === firestoreService.nextGroupEmail
         "
       ></app-submit-form-button>
     </form>
@@ -51,7 +51,7 @@
       </li>
     </ul>
     <app-new-member
-      *ngIf="userEmail == firestoreService.submitedGroupEmail"
+      *ngIf="userEmail == firestoreService.currentGroupEmail"
     ></app-new-member>
   </div>
 </fieldset>

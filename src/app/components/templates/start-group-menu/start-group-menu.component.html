@@ -13,13 +13,13 @@
         name="groupEmail"
         maxlength="50"
         size="30"
-        [(ngModel)]="firestoreService.groupEmail"
+        [(ngModel)]="firestoreService.nextGroupEmail"
       />
 
       <app-submit-form-button [buttonText]="'Entrar'"></app-submit-form-button>
     </form>
-    <div *ngIf="firestoreService.submitedGroupEmail">
-      O grupo familiar com o email {{ firestoreService.submitedGroupEmail }} não
+    <div *ngIf="firestoreService.currentGroupEmail">
+      O grupo familiar com o email {{ firestoreService.currentGroupEmail }} não
       existe ou voçe não faz parte dos seus membros, por favor contacte o
       administrador do grupo!
     </div>

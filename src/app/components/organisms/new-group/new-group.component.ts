@@ -38,7 +38,7 @@ export class NewGroupComponent {
       admin: this.groupForm.value.admin,
     };
     this.firestoreService.addGroup(groupData);
-    this.firestoreService.groupEmail = this.userEmail;
+    this.firestoreService.currentGroupEmail = this.userEmail;
     this.firestoreService.batchSetDefaultCategories();
 
     // this.groupForm.reset();
