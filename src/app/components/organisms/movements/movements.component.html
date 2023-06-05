@@ -8,13 +8,13 @@
     <label>
       Ano:
       <select
-        [(ngModel)]="summaryService.filters.year"
-        (ngModelChange)="summaryService.filters.year = +$event"
-        (change)="this.handlerMovementsFilterAndSort()"
+        [(ngModel)]="movementsService.dateFilters.year"
+        (ngModelChange)="movementsService.dateFilters.year = +$event"
+        (change)="movementsService.handlerFilterAndSortMovementsBy()"
       >
         <option
-          *ngFor="let year of summaryService.years | async"
-          [selected]="summaryService.filters.year === year"
+          *ngFor="let year of movementsService.years | async"
+          [selected]="movementsService.dateFilters.year === year"
         >
           {{ year }}
         </option>
@@ -24,13 +24,13 @@
     <label>
       Mês:
       <select
-        [(ngModel)]="summaryService.filters.month"
-        (ngModelChange)="summaryService.filters.month = +$event"
-        (change)="this.handlerMovementsFilterAndSort()"
+        [(ngModel)]="movementsService.dateFilters.month"
+        (ngModelChange)="movementsService.dateFilters.month = +$event"
+        (change)="movementsService.handlerFilterAndSortMovementsBy()"
       >
         <option
-          *ngFor="let month of summaryService.months; let i = index"
-          [selected]="summaryService.filters.month === i + 1"
+          *ngFor="let month of movementsService.months; let i = index"
+          [selected]="movementsService.dateFilters.month === i + 1"
           [value]="i + 1"
         >
           {{ month }}
@@ -41,8 +41,8 @@
     <label
       >Tipo:
       <select
-        [(ngModel)]="filterAndSortBy.type"
-        (change)="handlerMovementsFilterAndSort()"
+        [(ngModel)]="movementsService.filterAndSortMovementsBy.type"
+        (change)="movementsService.handlerFilterAndSortMovementsBy()"
       >
         <option value="all">Todos</option>
         <option value="income">Receitas</option>
@@ -53,8 +53,8 @@
     <label>
       Ordenar:
       <select
-        [(ngModel)]="filterAndSortBy.sortBy"
-        (change)="handlerMovementsFilterAndSort()"
+        [(ngModel)]="movementsService.filterAndSortMovementsBy.sortBy"
+        (change)="movementsService.handlerFilterAndSortMovementsBy()"
       >
         <option value="description">Descrição</option>
         <option value="date">Data</option>
@@ -67,9 +67,10 @@
   <ul class="movementsList">
     <app-movement-item
       *ngFor="
-        let movement of (filteredMovement$ | async)?.slice(
-          (pagination.currentPage - 1) * pagination.numberDocsByPage,
-          pagination.numberDocsByPage * pagination.currentPage
+        let movement of (movementsService.filteredMovements | async)?.slice(
+          (paginationService.currentPage - 1) *
+            paginationService.numberDocsByPage,
+          paginationService.numberDocsByPage * paginationService.currentPage
         )
       "
       [movementItem]="movement"

@@ -19,19 +19,20 @@
       ></app-action-button>
       <app-action-button
         [buttonText]="'🗑️Apagar Todas'"
-        [buttonAction]="handlerEraseAllCategories.bind(this)"
+        [buttonAction]="handlerDeleteAllCategories.bind(this)"
       ></app-action-button>
       <app-action-button
         [buttonText]="'♻️Categorias Padrão'"
         [buttonAction]="handlerSetDefaultCategories.bind(this)"
       ></app-action-button>
     </div>
+
     <div class="filterAndSortContainer">
       <label
         >Tipo:
         <select
-          [(ngModel)]="filterAndSortBy.type"
-          (change)="handlerCategoriesFilterAndSort()"
+          [(ngModel)]="categoriesService.filterAndSortCategoriesBy.type"
+          (change)="categoriesService.handlerFilterAndSortCategoriesBy()"
         >
           <option value="all">Todas</option>
           <option value="income">Receitas</option>
@@ -42,8 +43,8 @@
       <label
         >Ordenar:
         <select
-          [(ngModel)]="filterAndSortBy.sortBy"
-          (change)="handlerCategoriesFilterAndSort()"
+          [(ngModel)]="categoriesService.filterAndSortCategoriesBy.sortBy"
+          (change)="categoriesService.handlerFilterAndSortCategoriesBy()"
         >
           <option value="name">Nome</option>
         </select>
@@ -55,28 +56,15 @@
     <ul class="categoriesList">
       <app-category-item
         *ngFor="
-          let category of (
-            firestoreService.filteredGroupCategories | async
-          )?.slice(
-            (paginationService.currentPage - 1) * paginationService.numberDocsByPage,
+          let category of (categoriesService.filteredCategories | async)?.slice(
+            (paginationService.currentPage - 1) *
+              paginationService.numberDocsByPage,
             paginationService.numberDocsByPage * paginationService.currentPage
           )
         "
         [categoryItem]="category"
       ></app-category-item>
     </ul>
-
-    <!-- <ul class="categoriesList">
-      <app-category-item
-        *ngFor="
-          let category of (filteredCategorie$ | async)?.slice(
-            (pagination.currentPage - 1) * pagination.numberDocsByPage,
-            pagination.numberDocsByPage * pagination.currentPage
-          )
-        "
-        [categoryItem]="category"
-      ></app-category-item>
-    </ul> -->
 
     <app-pagination></app-pagination>
   </fieldset>

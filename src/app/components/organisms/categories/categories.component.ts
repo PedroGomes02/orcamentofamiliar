@@ -8,6 +8,7 @@ import { FirestoreService } from '../../../services/firestore.service';
 import { PaginationService } from '../../../services/pagination.service';
 
 import { FilterAndSort } from '../../../types';
+import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
   selector: 'app-categories',
@@ -24,7 +25,8 @@ export class CategoriesComponent {
     private authService: AuthenticationService,
     private dialogService: DialogService,
     public firestoreService: FirestoreService,
-    public paginationService: PaginationService
+    public paginationService: PaginationService,
+    public categoriesService: CategoriesService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {
@@ -34,16 +36,16 @@ export class CategoriesComponent {
 
     this.paginationService.currentPage = 1;
 
-    this.firestoreService.filteredGroupCategories
+    this.categoriesService.filteredCategories
       .pipe(map((array) => array.length))
       .subscribe((arrayLength) => {
         this.paginationService.calculateNumberOfPages(arrayLength);
       });
   }
 
-  handlerCategoriesFilterAndSort() {
-    this.firestoreService.filterAndSortCategories(this.filterAndSortBy);
-  }
+  // handlerCategoriesFilterAndSort() {
+  //   this.firestoreService.filterAndSortCategories(this.filterAndSortBy);
+  // }
 
   handlerShowNewCategoryComponent() {
     this.showNewCategoryComponent = !this.showNewCategoryComponent;
@@ -53,18 +55,18 @@ export class CategoriesComponent {
     this.showNewCategoryComponent = false;
   }
 
-  async handlerEraseAllCategories() {
+  handlerDeleteAllCategories() {
     this.dialogService.openConfirmDialog(
       'Tem a certeza que pretende apagar todas as categorias?',
-      () => this.firestoreService.batchDeleteCategories()
+      () => this.categoriesService.deleteAllCategories()
     );
   }
 
-  async handlerSetDefaultCategories() {
+  handlerSetDefaultCategories() {
     this.dialogService.openConfirmDialog(
       'Este comando vai apagar todas as categorias atuais e repor as categorias padrão, tem a certeza?',
-      async () => {
-        await this.firestoreService.batchSetDefaultCategories();
+      () => {
+        this.categoriesService.setDefaultCategories();
       }
     );
   }

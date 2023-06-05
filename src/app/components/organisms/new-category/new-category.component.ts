@@ -1,13 +1,11 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FirestoreService } from '../../../services/firestore.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 import { Category } from 'src/app/types';
 import { DialogService } from 'src/app/services/dialog.service';
-import { PaginationService } from 'src/app/services/pagination.service';
-import { map } from 'rxjs';
+import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
   selector: 'app-new-category',
@@ -20,11 +18,10 @@ export class NewCategoryComponent {
   categoryForm: FormGroup;
 
   constructor(
-    private firestoreService: FirestoreService,
     private authService: AuthenticationService,
+    private categoriesService: CategoriesService,
     private fb: FormBuilder,
-    private dialogService: DialogService,
-    private paginationService: PaginationService
+    private dialogService: DialogService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {
@@ -32,7 +29,7 @@ export class NewCategoryComponent {
       }
     });
 
-    this.firestoreService.groupCategories.subscribe((categories) => {
+    this.categoriesService.categories.subscribe((categories) => {
       categories.forEach((category) =>
         this.currentCategoryNames.push(category.name)
       );
@@ -48,18 +45,14 @@ export class NewCategoryComponent {
 
   @Output() formSubmitted = new EventEmitter<void>();
 
-  handlerSubmitCategoryForm() {
-    this.dialogService.loading = true;
-    this.dialogService.openDialog(``);
-
+  async handlerSubmitCategoryForm() {
     if (
       this.currentCategoryNames.includes(
         this.categoryForm.value.name.toLowerCase()
       )
     ) {
       this.dialogService.loading = false;
-      this.dialogService.dialogMessage =
-        'Já existe uma categoria com esse nome!';
+      this.dialogService.openDialog(`Já existe uma categoria com esse nom`);
       return;
     }
 
@@ -78,30 +71,68 @@ export class NewCategoryComponent {
         : null,
       userId: this.userId,
     };
-    this.firestoreService.groupCategoriesCollectionRef
-      ?.add(newCategory)
-      .then((documentRef) => {
-        console.log(documentRef.id);
-        this.dialogService.loading = false;
-        this.dialogService.dialogMessage = 'Categoria adicionada com Sucesso!';
-        this.firestoreService.groupCategories =
-          this.firestoreService.getGroupCategories();
-        this.firestoreService.filteredGroupCategories =
-          this.firestoreService.groupCategories;
-        this.firestoreService.filteredGroupCategories
-          .pipe(map((array) => array.length))
-          .subscribe((arrayLength) => {
-            this.paginationService.calculateNumberOfPages(arrayLength);
-          });
-        this.paginationService.currentPage = 1;
-      })
-      .catch((error: Error) => {
-        console.log(error.message);
-        this.dialogService.loading = false;
-        this.dialogService.dialogMessage =
-          'Algo correu mal, por favor tente novamente!';
-      });
+
+    await this.categoriesService.addNewCategory(newCategory);
+
     this.categoryForm.reset();
     this.formSubmitted.emit();
   }
+
+  // handlerSubmitCategoryForm() {
+  //   this.dialogService.loading = true;
+  //   this.dialogService.openDialog(``);
+
+  //   if (
+  //     this.currentCategoryNames.includes(
+  //       this.categoryForm.value.name.toLowerCase()
+  //     )
+  //   ) {
+  //     this.dialogService.loading = false;
+  //     this.dialogService.dialogMessage =
+  //       'Já existe uma categoria com esse nome!';
+  //     return;
+  //   }
+
+  //   const newCategory: Category = {
+  //     id: '',
+  //     name: this.categoryForm.value.name.toLowerCase(),
+  //     type: this.categoryForm.value.type,
+  //     avatar: this.categoryForm.value.avatar,
+  //     subCategories: this.categoryForm.value.subCategories
+  //       ? this.categoryForm.value.subCategories
+  //           .toLowerCase()
+  //           .trim()
+  //           .split(',')
+  //           .map((e: string) => e.trim())
+  //           .sort()
+  //       : null,
+  //     userId: this.userId,
+  //   };
+
+  //   this.firestoreService.groupCategoriesCollectionRef
+  //     ?.add(newCategory)
+  //     .then((documentRef) => {
+  //       console.log(documentRef.id);
+  //       this.dialogService.loading = false;
+  //       this.dialogService.dialogMessage = 'Categoria adicionada com Sucesso!';
+  //       this.firestoreService.groupCategories =
+  //         this.firestoreService.getGroupCategories();
+  //       this.firestoreService.filteredGroupCategories =
+  //         this.firestoreService.groupCategories;
+  //       this.firestoreService.filteredGroupCategories
+  //         .pipe(map((array) => array.length))
+  //         .subscribe((arrayLength) => {
+  //           this.paginationService.calculateNumberOfPages(arrayLength);
+  //         });
+  //       this.paginationService.currentPage = 1;
+  //     })
+  //     .catch((error: Error) => {
+  //       console.log(error.message);
+  //       this.dialogService.loading = false;
+  //       this.dialogService.dialogMessage =
+  //         'Algo correu mal, por favor tente novamente!';
+  //     });
+  //   this.categoryForm.reset();
+  //   this.formSubmitted.emit();
+  // }
 }

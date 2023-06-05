@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore.service';
 import { Category } from 'src/app/types';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { CategoriesService } from 'src/app/services/categories.service';
 @Component({
   selector: 'app-update-category',
   templateUrl: './update-category.component.html',
@@ -17,7 +18,8 @@ export class UpdateCategoryComponent implements OnInit {
   constructor(
     private firestoreService: FirestoreService,
     private fb: FormBuilder,
-    private db: AngularFirestore
+    private db: AngularFirestore,
+    private categoriesService: CategoriesService
   ) {
     this.updateCategoryForm = this.fb.group({
       type: ['', Validators.required],
@@ -69,14 +71,11 @@ export class UpdateCategoryComponent implements OnInit {
         .sort();
     }
 
-    this.firestoreService.updateDoc(
-      'categories',
-      this.currentCategory.id,
-      newCategory
-    );
+    this.categoriesService.updateCategory(this.currentCategory.id, newCategory);
+
     this.updateCategoryForm.reset();
 
-    //Atualizar todos os movimentos que estavam referenciados a esta categoria!
+    //Update all the movements associated with current category update!
 
     const updateMovements = async () => {
       const batchSize = 500;

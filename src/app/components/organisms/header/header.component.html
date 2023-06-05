@@ -1,6 +1,6 @@
 <div>👨‍👩‍👧‍👦</div>
 
-<h1>{{ (firestoreService.groupData | async)?.name ?? title }}</h1>
+<h1>{{ (firestoreService.currentGroup | async)?.name ?? title }}</h1>
 
 <ng-content></ng-content>
 <!-- //Onde renderiza p que for passado como children no template onde for usado -->

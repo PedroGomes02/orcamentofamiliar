@@ -8,6 +8,7 @@ import { Category, Movement } from '../../../types';
 import { FirestoreService } from '../../../services/firestore.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DialogService } from 'src/app/services/dialog.service';
+import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
   selector: 'app-new-movement',
@@ -27,7 +28,8 @@ export class NewMovementComponent {
     private firestoreService: FirestoreService,
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private categoriesService: CategoriesService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {
@@ -35,7 +37,7 @@ export class NewMovementComponent {
       }
     });
 
-    this.categorie$ = this.firestoreService.groupCategories;
+    this.categorie$ = this.categoriesService.categories;
 
     this.movementForm = this.fb.group({
       value: [, Validators.required],
@@ -117,5 +119,14 @@ export class NewMovementComponent {
 
   onFormSubmitted() {
     this.showNewCategoryComponent = false;
+    this.categorie$ = this.categoriesService.categories;
+    this.currentCategorie$ = this.categorie$?.pipe(
+      map((categories) =>
+        categories.filter(
+          (category) => category.type === this.currentMovementType
+        )
+      )
+    );
+    this.movementForm.controls['subCategory'].reset();
   }
 }

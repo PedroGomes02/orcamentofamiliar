@@ -3,9 +3,9 @@
 
   <div class="groupContainer">
     <div class="groupInfoContainer">
-      <span>👨‍👩‍👧‍👦{{ (firestoreService.groupData | async)?.name }}</span>
-      <span> 🙍‍♂️{{ (firestoreService.groupData | async)?.admin }} </span>
-      <span> ✉️ {{ (firestoreService.groupData | async)?.id }} </span>
+      <span>👨‍👩‍👧‍👦{{ (firestoreService.currentGroup | async)?.name }}</span>
+      <span> 🙍‍♂️{{ (firestoreService.currentGroup | async)?.admin }} </span>
+      <span> ✉️ {{ (firestoreService.currentGroup | async)?.id }} </span>
 
       <app-action-button
         *ngIf="userEmail == firestoreService.currentGroupEmail"
@@ -46,7 +46,7 @@
   <div class="membersInfoContainer">
     <ul class="membersList">
       👩‍👧‍👦Membros:
-      <li *ngFor="let member of firestoreService.groupMembers | async">
+      <li *ngFor="let member of membersService.members | async">
         <app-member-item [memberItem]="member"></app-member-item>
       </li>
     </ul>

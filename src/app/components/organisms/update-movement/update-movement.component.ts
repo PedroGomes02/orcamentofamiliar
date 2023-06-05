@@ -5,6 +5,7 @@ import { FirestoreService } from '../../../services/firestore.service';
 
 import { Category, Movement } from 'src/app/types';
 import { Observable, map } from 'rxjs';
+import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
   selector: 'app-update-movement',
@@ -24,9 +25,10 @@ export class UpdateMovementComponent implements OnInit {
 
   constructor(
     private firestoreService: FirestoreService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private categoriesService: CategoriesService
   ) {
-    this.categorie$ = this.firestoreService.groupCategories;
+    this.categorie$ = this.categoriesService.categories;
 
     this.currentCategorie$ = this.categorie$?.pipe(
       map((categories) =>
@@ -104,6 +106,15 @@ export class UpdateMovementComponent implements OnInit {
 
   onFormSubmitted() {
     this.showNewCategoryComponent = false;
+    this.categorie$ = this.categoriesService.categories;
+    this.currentCategorie$ = this.categorie$?.pipe(
+      map((categories) =>
+        categories.filter(
+          (category) => category.type === this.currentMovementType
+        )
+      )
+    );
+    this.updateMovementForm.controls['subCategory'].reset();
   }
 
   handlerSubmitUpdateMovementForm() {

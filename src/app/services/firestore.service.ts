@@ -6,16 +6,13 @@ import {
   DocumentReference,
 } from '@angular/fire/compat/firestore';
 
-import { Observable, from } from 'rxjs';
+import { Observable, firstValueFrom, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DialogService } from './dialog.service';
-import { PaginationService } from './pagination.service';
 
 import { Category, Group, Member, Movement } from '../types';
-
-import { defaultCategories } from 'src/assets/defaultCategories';
 
 @Injectable({
   providedIn: 'root',
@@ -28,14 +25,14 @@ export class FirestoreService {
   isLoading: boolean = true;
 
   groupsCollectionRef: AngularFirestoreCollection<Group>;
-  groupData: Observable<Group>;
+  currentGroup: Observable<Group>;
 
   groupMembersCollectionRef: AngularFirestoreCollection<Member>;
-  groupMembers: Observable<Member[]>;
-
   groupCategoriesCollectionRef: AngularFirestoreCollection<Category>;
-  groupCategories: Observable<Category[]>;
-  filteredGroupCategories: Observable<Category[]>;
+
+  // groupMembers: Observable<Member[]>;
+  // groupCategories: Observable<Category[]>;
+  // filteredGroupCategories: Observable<Category[]>;
 
   groupMovementsCollectionRef: AngularFirestoreCollection<Movement>;
   groupMovements: Observable<Movement[]>;
@@ -43,9 +40,7 @@ export class FirestoreService {
   constructor(
     private db: AngularFirestore,
     private authService: AuthenticationService,
-    private dialogService: DialogService,
-    private paginationService: PaginationService,
-   
+    private dialogService: DialogService
   ) {
     this.currentGroupEmail = 'email...';
     if (localStorage.getItem('groupEmail')) {
@@ -55,19 +50,15 @@ export class FirestoreService {
     this.nextGroupEmail = this.currentGroupEmail;
 
     this.groupsCollectionRef = this.db.collection(`groups`);
-    this.groupData = this.getGroup();
+    this.currentGroup = this.getCurrentGroup();
 
     this.groupMembersCollectionRef = this.db.collection(
       `groups/${this.currentGroupEmail}/members`
     );
-    this.groupMembers = this.getGroupMembers();
-
     this.groupCategoriesCollectionRef = this.db.collection(
       `groups/${this.currentGroupEmail}/categories`,
       (ref) => ref.orderBy('name', 'asc')
     );
-    this.groupCategories = this.getGroupCategories();
-    this.filteredGroupCategories = this.groupCategories;
 
     this.groupMovementsCollectionRef = this.db.collection(
       `groups/${this.currentGroupEmail}/movements`,
@@ -81,20 +72,7 @@ export class FirestoreService {
     location.reload();
   }
 
-  getGroup(): Observable<Group> {
-    return this.groupsCollectionRef
-      .doc(this.currentGroupEmail || '')
-      .snapshotChanges()
-      .pipe(
-        map((doc) => {
-          const data = doc.payload.data() as any;
-          const id = doc.payload.id;
-          return { id, ...data };
-        })
-      );
-  }
-
-  addGroup(groupData: Group) {
+  startNewGroup(groupData: Group) {
     this.authService.afAuth.authState.subscribe((user) => {
       const groupRef = this.groupsCollectionRef.doc(user?.email || '');
 
@@ -109,64 +87,7 @@ export class FirestoreService {
     });
   }
 
-  async updateGroup(groupData: { name: string; admin: string }) {
-    this.dialogService.loading = true;
-    this.dialogService.openDialog(``);
-
-    try {
-      await this.groupsCollectionRef.doc(this.currentGroupEmail).set(groupData);
-      this.dialogService.loading = false;
-      this.dialogService.dialogMessage = `Dados do grupo atualizados com sucesso!`;
-      this.groupData = this.getGroup();
-    } catch (error) {
-      this.dialogService.loading = false;
-      this.dialogService.dialogMessage =
-        'Algo correu mal, por favor tente novamente!';
-    }
-  }
-
-  getGroupMembers(): Observable<Member[]> {
-    return from(this.groupMembersCollectionRef.get()).pipe(
-      map((querySnapshot) => {
-        const members: any[] = [];
-        querySnapshot.forEach((doc) => {
-          const member = doc.data() as any;
-          member.id = doc.id;
-          members.push(member);
-        });
-        return members;
-      })
-    );
-  }
-
-  addGroupMember(memberData: Member) {
-    this.dialogService.loading = true;
-    this.dialogService.openDialog(``);
-
-    const memberRef = this.groupMembersCollectionRef.doc(memberData.id);
-
-    memberRef.get().subscribe((doc) => {
-      if (doc.exists) {
-        this.dialogService.loading = false;
-        this.dialogService.dialogMessage = `O membro com o email ${memberData.id} já existe no grupo!`;
-      } else {
-        memberRef
-          .set({ name: memberData.name })
-          .then(() => {
-            this.dialogService.loading = false;
-            this.dialogService.dialogMessage = `O membro com o email ${memberData.id} foi adicionado ao grupo!`;
-            this.groupMembers = this.getGroupMembers();
-          })
-          .catch((error: Error) => {
-            console.log(error.message);
-            this.dialogService.loading = false;
-            this.dialogService.dialogMessage =
-              'Algo correu mal, por favor tente novamente!';
-          });
-      }
-    });
-  }
-
+  // USED IN SUMMARY...
   getGroupCategories(): Observable<Category[]> {
     return this.groupCategoriesCollectionRef?.valueChanges({
       idField: 'id', //Adds ids to array objects when subscribe
@@ -197,45 +118,10 @@ export class FirestoreService {
     }) as Observable<Movement[]>;
   }
 
-  // Use get() to make only one read of all docs of a collection, needs to get call again if something is change! (photo)
-  // getGroupMovementsQuerySnapshot(): Observable<Movement[]> {
-  //   if (this.groupMovementsCollectionRef) {
-  //     return from(this.groupMovementsCollectionRef.get()).pipe(
-  //       map((querySnapshot) => {
-  //         const movements: Movement[] = [];
-  //         querySnapshot.forEach((doc) => {
-  //           const movement = doc.data() as Movement;
-  //           movement.id = doc.id;
-  //           movements.push(movement);
-  //         });
-  //         return movements;
-  //       })
-  //     );
-  //   }
-  //   throw new Error('groupMovementsCollectionRef is not defined');
-  // }
-
   updateDoc(collection: string, docID: string, doc: any) {
     this.dialogService.openDialog(``);
     this.dialogService.loading = true;
 
-    if (collection === 'categories') {
-      this.groupCategoriesCollectionRef
-        ?.doc(docID)
-        .update(doc)
-        .then(() => {
-          console.log(`Category with id ${docID} is updated`);
-          this.dialogService.loading = false;
-          this.dialogService.dialogMessage =
-            'Categoria atualizada com Sucesso!';
-        })
-        .catch((error: Error) => {
-          console.log(error.message);
-          this.dialogService.loading = false;
-          this.dialogService.dialogMessage =
-            'Algo correu mal, por favor tente novamente!';
-        });
-    }
     if (collection === 'movements') {
       this.groupMovementsCollectionRef
         ?.doc(docID)
@@ -259,23 +145,6 @@ export class FirestoreService {
     this.dialogService.openDialog(``);
     this.dialogService.loading = true;
 
-    if (collection === 'categories') {
-      this.groupCategoriesCollectionRef
-        ?.doc(docID)
-        .delete()
-        .then(() => {
-          console.log(`Category with id ${docID} is deleted`);
-          this.dialogService.loading = false;
-          this.dialogService.dialogMessage = 'Categoria apagada com Sucesso!';
-          this.paginationService.currentPage = 1;
-        })
-        .catch((error: Error) => {
-          console.log(error.message);
-          this.dialogService.loading = false;
-          this.dialogService.dialogMessage =
-            'Algo correu mal, por favor tente novamente!';
-        });
-    }
     if (collection === 'movements') {
       this.groupMovementsCollectionRef
         ?.doc(docID)
@@ -284,25 +153,6 @@ export class FirestoreService {
           console.log(`Movement with id ${docID} is deleted`);
           this.dialogService.loading = false;
           this.dialogService.dialogMessage = 'Movimento apagado com Sucesso!';
-        })
-        .catch((error: Error) => {
-          console.log(error.message);
-          this.dialogService.loading = false;
-          this.dialogService.dialogMessage =
-            'Algo correu mal, por favor tente novamente!';
-        });
-    }
-
-    if (collection === 'members') {
-      this.db
-        .collection(`groups/${this.currentGroupEmail}/members`)
-        .doc(docID)
-        .delete()
-        .then(() => {
-          console.log(`Member with id ${docID} is deleted`);
-          this.dialogService.loading = false;
-          this.dialogService.dialogMessage = 'Membro apagado com sucesso!';
-          this.groupMembers = this.getGroupMembers();
         })
         .catch((error: Error) => {
           console.log(error.message);
@@ -353,73 +203,6 @@ export class FirestoreService {
     }
   }
 
-  filterAndSortCategories(filterAndSortBy: { type: string; sortBy: string }) {
-    this.filteredGroupCategories = this.filterAndSortDocs(
-      this.groupCategories,
-      filterAndSortBy
-    );
-    this.filteredGroupCategories
-      .pipe(map((array) => array.length))
-      .subscribe((arrayLength) => {
-        this.paginationService.calculateNumberOfPages(arrayLength);
-      });
-    this.paginationService.currentPage = 1;
-  }
-
-  async batchDeleteCategories() {
-    this.dialogService.openDialog(``);
-    this.dialogService.loading = true;
-    try {
-      const batch = this.db.firestore.batch();
-      const querySnapshot = await this.groupCategoriesCollectionRef?.ref.get();
-      if (querySnapshot) {
-        querySnapshot?.forEach((doc) => batch.delete(doc.ref));
-        await batch.commit();
-        this.dialogService.loading = false;
-        this.dialogService.dialogMessage = 'Categorias apagadas com sucesso!';
-        this.groupCategories = this.getGroupCategories();
-      }
-    } catch (error) {
-      console.log(error);
-      this.dialogService.loading = false;
-      this.dialogService.dialogMessage =
-        'Algo correu mal, por favor tente novamente!';
-    }
-  }
-
-  async batchSetDefaultCategories() {
-    await this.batchDeleteCategories();
-    this.dialogService.loading = true;
-    try {
-      this.authService.afAuth.authState.subscribe(async (doc) => {
-        const batch = this.db.firestore.batch();
-        const categoriesRef = this.groupCategoriesCollectionRef?.ref;
-        defaultCategories.forEach((defaultCategory) => {
-          const newCategory: Category = {
-            id: '',
-            name: defaultCategory.name,
-            type: defaultCategory.type,
-            avatar: defaultCategory.avatar,
-            subCategories: defaultCategory.subCategories,
-            userId: doc?.uid || '',
-          };
-          const categoryRef =
-            categoriesRef?.doc() as DocumentReference<Category>;
-          batch.set(categoryRef, newCategory);
-        });
-        await batch.commit();
-        this.dialogService.loading = false;
-        this.dialogService.dialogMessage = 'Categorias padrão repostas!';
-        this.groupCategories = this.getGroupCategories();
-      });
-    } catch (error) {
-      console.log(error);
-      this.dialogService.loading = false;
-      this.dialogService.dialogMessage =
-        'Algo correu mal, por favor tente novamente!';
-    }
-  }
-
   async batchDeleteMovements() {
     this.dialogService.openDialog(``);
     this.dialogService.loading = true;
@@ -444,6 +227,207 @@ export class FirestoreService {
         this.dialogService.loading = false;
         this.dialogService.dialogMessage = 'Movimentos apagados com sucesso!';
       }
+    } catch (error) {
+      console.log(error);
+      this.dialogService.loading = false;
+      this.dialogService.dialogMessage =
+        'Algo correu mal, por favor tente novamente!';
+    }
+  }
+
+  //NEW FUNCTIONS
+
+  getCurrentGroup(): Observable<Group> {
+    return this.groupsCollectionRef
+      .doc(this.currentGroupEmail || '')
+      .get()
+      .pipe(
+        map((doc) => {
+          const data = doc.data() as any;
+          const id = doc.id;
+          return { id, ...data };
+        })
+      );
+  }
+
+  async updateCurrentGroup(updatedGroup: { name: string; admin: string }) {
+    await this.updateDocOnCollection(
+      this.groupsCollectionRef,
+      this.currentGroupEmail,
+      updatedGroup
+    );
+    this.currentGroup = this.getCurrentGroup();
+  }
+
+  getCollectionDocs<T>(
+    collectionRef: AngularFirestoreCollection<T>
+  ): Observable<T[]> {
+    return from(collectionRef.get()).pipe(
+      map((querySnapshot) => {
+        const collectionDocs: T[] = [];
+        querySnapshot.forEach((collectionDoc) => {
+          const doc = collectionDoc.data() as any;
+          doc.id = collectionDoc.id;
+          collectionDocs.push(doc);
+        });
+        return collectionDocs;
+      })
+    );
+  }
+
+  async addNewDocToCollection<T>(
+    collectionRef: AngularFirestoreCollection<T>,
+    newDoc: T
+  ): Promise<void> {
+    this.dialogService.loading = true;
+    this.dialogService.openDialog(``);
+
+    await collectionRef
+      .add(newDoc)
+      .then((newDocRef) => {
+        console.log(`Document with id:${newDocRef.id} added to collection!`);
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage = 'Documento adicionado com sucesso!';
+      })
+      .catch((error: Error) => {
+        console.log(error.message);
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage =
+          'Algo correu mal, por favor tente novamente!';
+      });
+  }
+
+  async setDocWithIdToCollection<T>(
+    collectionRef: AngularFirestoreCollection<T>,
+    newDoc: any
+  ) {
+    this.dialogService.loading = true;
+    this.dialogService.openDialog(``);
+
+    const docRef = collectionRef.doc(newDoc.id);
+    docRef
+      .set(newDoc)
+      .then(() => {
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage = `Adicionado com sucesso!`;
+      })
+      .catch((error: Error) => {
+        console.log(error.message);
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage =
+          'Algo correu mal, por favor tente novamente!';
+      });
+  }
+
+  async updateDocOnCollection<T>(
+    collectionRef: AngularFirestoreCollection<T>,
+    docId: string,
+    updatedDoc: T
+  ): Promise<void> {
+    this.dialogService.openDialog(``);
+    this.dialogService.loading = true;
+
+    await collectionRef
+      .doc(docId)
+      .update(updatedDoc)
+      .then(() => {
+        console.log(`Document with id ${docId} is updated`);
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage = 'Atualizado com sucesso!';
+      })
+      .catch((error: Error) => {
+        console.log(error.message);
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage =
+          'Algo correu mal, por favor tente novamente!';
+      });
+  }
+
+  async deleteDocFromCollection<T>(
+    collectionRef: AngularFirestoreCollection<T>,
+    docId: string
+  ): Promise<void> {
+    this.dialogService.openDialog(``);
+    this.dialogService.loading = true;
+
+    await collectionRef
+      .doc(docId)
+      .delete()
+      .then(() => {
+        console.log(`Document with id ${docId} is deleted`);
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage = 'Documento apagado com sucesso!';
+      })
+      .catch((error: Error) => {
+        console.log(error.message);
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage =
+          'Algo correu mal, por favor tente novamente!';
+      });
+  }
+
+  async batchDeleteAllCollectionDocs<T>(
+    collectionRef: AngularFirestoreCollection<T>
+  ) {
+    this.dialogService.openDialog(``);
+    this.dialogService.loading = true;
+
+    const batchMaxSize = 500;
+    let batch = this.db.firestore.batch();
+    let numDocs = 0;
+
+    try {
+      const querySnapshot = await collectionRef.ref.get();
+      if (querySnapshot) {
+        for (const doc of querySnapshot.docs) {
+          if (numDocs >= batchMaxSize) {
+            await batch.commit();
+            batch = this.db.firestore.batch();
+            numDocs = 0;
+          }
+          batch.delete(doc.ref);
+          numDocs++;
+        }
+        if (numDocs > 0) {
+          await batch.commit();
+        }
+        this.dialogService.loading = false;
+        this.dialogService.dialogMessage = 'Documentos apagados com sucesso!';
+      }
+    } catch (error) {
+      console.log(error);
+      this.dialogService.loading = false;
+      this.dialogService.dialogMessage =
+        'Algo correu mal, por favor tente novamente!';
+    }
+  }
+
+  async batchSetDefaultCollectionDocs<T>(
+    collectionRef: AngularFirestoreCollection<T>,
+    defaultDocs: any[]
+  ) {
+    this.dialogService.closeDialog();
+    this.dialogService.openDialog(``);
+    this.dialogService.loading = true;
+    try {
+      const user = await firstValueFrom(this.authService.afAuth.authState);
+      const batch = this.db.firestore.batch();
+      const docsRef = collectionRef.ref;
+
+      defaultDocs.forEach((defaultDoc) => {
+        const newDoc: T = {
+          id: '',
+          userId: user?.uid || '',
+          ...defaultDoc,
+        };
+
+        const docRef = docsRef.doc() as DocumentReference<T>;
+        batch.set(docRef, newDoc);
+      });
+
+      await batch.commit();
+      this.dialogService.loading = false;
+      this.dialogService.dialogMessage = 'Categorias padrão repostas!';
     } catch (error) {
       console.log(error);
       this.dialogService.loading = false;

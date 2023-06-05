@@ -27,7 +27,7 @@ export class AppComponent {
       }
     });
 
-    this.firestoreService.groupData
+    this.firestoreService.currentGroup
       .forEach(() => {
         this.firestoreService.isLoading = false;
       })

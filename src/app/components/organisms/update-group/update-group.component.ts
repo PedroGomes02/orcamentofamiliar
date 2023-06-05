@@ -25,7 +25,7 @@ export class UpdateGroupComponent {
   }
 
   ngOnInit() {
-    this.firestoreService.groupData.subscribe((data) => {
+    this.firestoreService.currentGroup.subscribe((data) => {
       this.updateGroupForm.controls['groupName'].setValue(data.name);
       this.updateGroupForm.controls['groupAdmin'].setValue(data.admin);
     });
@@ -34,10 +34,15 @@ export class UpdateGroupComponent {
   @Output() formSubmitted = new EventEmitter<void>();
 
   handlerSubmitUpdateGroupForm() {
-    this.firestoreService.updateGroup({
-      name: this.updateGroupForm.value.groupName,
-      admin: this.updateGroupForm.value.groupAdmin,
-    });
+
+    this.firestoreService.updateCurrentGroup({
+        name: this.updateGroupForm.value.groupName,
+        admin: this.updateGroupForm.value.groupAdmin,
+      })
+    // this.firestoreService.updateGroup({
+    //   name: this.updateGroupForm.value.groupName,
+    //   admin: this.updateGroupForm.value.groupAdmin,
+    // });
     this.updateGroupForm.reset();
     this.formSubmitted.emit();
   }

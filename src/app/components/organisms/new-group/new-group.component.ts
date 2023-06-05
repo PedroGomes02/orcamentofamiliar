@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { defaultCategories } from 'src/assets/defaultCategories';
 
 @Component({
   selector: 'app-new-group',
@@ -33,13 +34,16 @@ export class NewGroupComponent {
   }
 
   handlerSubmitGroupForm() {
-    const groupData = {
+    const newGroup = {
       name: this.groupForm.value.name,
       admin: this.groupForm.value.admin,
     };
-    this.firestoreService.addGroup(groupData);
+    this.firestoreService.startNewGroup(newGroup);
     this.firestoreService.currentGroupEmail = this.userEmail;
-    this.firestoreService.batchSetDefaultCategories();
+    this.firestoreService.batchSetDefaultCollectionDocs(
+      this.firestoreService.groupCategoriesCollectionRef,
+      defaultCategories
+    );
 
     // this.groupForm.reset();
   }

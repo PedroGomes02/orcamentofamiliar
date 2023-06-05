@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { MembersService } from 'src/app/services/members.service';
 
 @Component({
   selector: 'app-new-member',
@@ -17,7 +18,8 @@ export class NewMemberComponent {
   constructor(
     private firestoreService: FirestoreService,
     private authService: AuthenticationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private membersService: MembersService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {
@@ -33,11 +35,11 @@ export class NewMemberComponent {
   }
 
   handlerSubmitMemberForm() {
-    const memberData = {
+    const newMember = {
       name: this.memberForm.value.name,
       id: this.memberForm.value.email,
     };
-    this.firestoreService.addGroupMember(memberData);
+    this.membersService.addNewMember(newMember)
     this.memberForm.reset();
   }
 }
