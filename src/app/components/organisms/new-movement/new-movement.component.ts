@@ -5,10 +5,9 @@ import { map } from 'rxjs/operators';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Category, Movement } from '../../../types';
-import { FirestoreService } from '../../../services/firestore.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { DialogService } from 'src/app/services/dialog.service';
 import { CategoriesService } from 'src/app/services/categories.service';
+import { MovementsService } from 'src/app/services/movements.service';
 
 @Component({
   selector: 'app-new-movement',
@@ -25,11 +24,10 @@ export class NewMovementComponent {
   showNewCategoryComponent: boolean = false;
 
   constructor(
-    private firestoreService: FirestoreService,
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    private dialogService: DialogService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private movementsService: MovementsService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {
@@ -50,9 +48,6 @@ export class NewMovementComponent {
   }
 
   handlerSubmitMovementForm() {
-    this.dialogService.loading = true;
-    this.dialogService.openDialog(``);
-
     const newMovement: Movement = {
       id: '',
       value: this.movementForm.value.value.toFixed(2),
@@ -66,21 +61,8 @@ export class NewMovementComponent {
       createAt: new Date().toISOString(),
     };
 
-    console.log(newMovement);
+    this.movementsService.addNewMovement(newMovement);
 
-    this.firestoreService.groupMovementsCollectionRef
-      ?.add(newMovement)
-      .then((documentRef) => {
-        console.log(documentRef.id);
-        this.dialogService.loading = false;
-        this.dialogService.dialogMessage = 'Movimento adicionado com Sucesso!';
-      })
-      .catch((error: Error) => {
-        console.log(error.message);
-        this.dialogService.loading = false;
-        this.dialogService.dialogMessage =
-          'Algo correu mal, por favor tente novamente!';
-      });
     this.movementForm.reset();
     this.currentCategorie$ = undefined;
     this.currentCategory = undefined;

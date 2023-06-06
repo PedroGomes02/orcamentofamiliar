@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MovementsService } from 'src/app/services/movements.service';
 import { SummaryService } from 'src/app/services/summary.service';
 
 @Component({
@@ -9,7 +10,10 @@ import { SummaryService } from 'src/app/services/summary.service';
 export class SummaryComponent {
   showMovementsList: string = '';
 
-  constructor(public summaryService: SummaryService) {}
+  constructor(
+    // public summaryService: SummaryService,
+    public movementsService: MovementsService
+  ) {}
 
   toogleShowCategoryList(categoryName: string) {
     if (this.showMovementsList === categoryName) {

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MovementsService } from 'src/app/services/movements.service';
 import { SummaryService } from 'src/app/services/summary.service';
 
 @Component({
@@ -6,13 +7,12 @@ import { SummaryService } from 'src/app/services/summary.service';
   templateUrl: './monthly-summary.component.html',
   styleUrls: ['./monthly-summary.component.css'],
 })
-export class MonthlySummaryComponent implements OnInit {
-  constructor(public summaryService: SummaryService) {
+export class MonthlySummaryComponent {
+  constructor(
+    public summaryService: SummaryService,
+    public movementsService: MovementsService
+  ) {
     this.summaryService.filters.year = new Date().getFullYear();
     this.summaryService.filters.month = new Date().getMonth() + 1;
   }
-
-  ngOnInit() {}
-  //   this.summaryService.getfilteredMovementsSummary();
-  // }
 }

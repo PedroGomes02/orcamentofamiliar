@@ -8,7 +8,7 @@
       <legend>Movimentos Recentes</legend>
       <ul class="recentMovementsList">
         <app-movement-item
-          *ngFor="let movement of (orderedMovement$ | async)?.slice(0, 3)"
+          *ngFor="let movement of (movementsService.movements| async)?.slice(0, 3)"
           [movementItem]="movement"
         ></app-movement-item>
       </ul>

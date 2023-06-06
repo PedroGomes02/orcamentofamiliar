@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, combineLatest, from, map, reduce } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
 
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Movement } from '../types';
@@ -45,7 +45,6 @@ export class SummaryService {
   expenseSummaryByCategorie$: Observable<any>;
 
   constructor(public firestoreService: FirestoreService) {
-    // this.summaryMovement$ = this.getGroupMovementsQuerySnapshot();//QUERYSNAPSHOT!
     this.summaryMovement$ = this.firestoreService.getGroupMovements();
 
     this.filteredMovement$ = this.filterMovements();
@@ -201,22 +200,5 @@ export class SummaryService {
       this.getFilteredMovementsTypeSummaryByCategories('savings');
     this.expenseSummaryByCategorie$ =
       this.getFilteredMovementsTypeSummaryByCategories('expense');
-  }
-
-  getGroupMovementsQuerySnapshot(): Observable<Movement[]> {
-    if (this.firestoreService.groupMovementsCollectionRef) {
-      return from(this.firestoreService.groupMovementsCollectionRef.get()).pipe(
-        map((querySnapshot) => {
-          const movements: Movement[] = [];
-          querySnapshot.forEach((doc) => {
-            const movement = doc.data() as Movement;
-            movement.id = doc.id;
-            movements.push(movement);
-          });
-          return movements;
-        })
-      );
-    }
-    throw new Error('groupMovementsCollectionRef is not defined');
   }
 }

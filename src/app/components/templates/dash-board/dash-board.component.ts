@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-import { map, Observable } from 'rxjs';
-
-import { DialogService } from 'src/app/services/dialog.service';
-import { FirestoreService } from 'src/app/services/firestore.service';
-
-import { Movement } from 'src/app/types';
+import { MovementsService } from 'src/app/services/movements.service';
 
 @Component({
   selector: 'app-dash-board',
@@ -12,25 +7,5 @@ import { Movement } from 'src/app/types';
   styleUrls: ['./dash-board.component.css'],
 })
 export class DashBoardComponent {
-  movement$: Observable<Movement[]>;
-  orderedMovement$: Observable<Movement[]>;
-
-  constructor(
-    public firestoreService: FirestoreService,
-    public dialogService: DialogService
-  ) {
-    this.movement$ = this.firestoreService.getGroupMovements();
-    this.orderedMovement$ = this.filterMovements();
-  }
-
-  filterMovements() {
-    return this.movement$.pipe(
-      map((movements: Movement[]) =>
-        movements.sort(
-          (a: any, b: any) =>
-            new Date(b.createAt).getTime() - new Date(a.createAt).getTime()
-        )
-      )
-    );
-  }
+  constructor(public movementsService: MovementsService) {}
 }

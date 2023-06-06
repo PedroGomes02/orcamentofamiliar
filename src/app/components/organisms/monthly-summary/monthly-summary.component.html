@@ -5,13 +5,13 @@
       Ano:
       <select
         class="selectElement"
-        [(ngModel)]="summaryService.filters.year"
-        (ngModelChange)="summaryService.filters.year = +$event"
-        (change)="summaryService.handlerChangeFilters()"
+        [(ngModel)]="movementsService.dateFilters.year"
+        (ngModelChange)="movementsService.dateFilters.year = +$event"
+        (change)="movementsService.handlerFilterAndSortMovementsBy()"
       >
         <option
-          *ngFor="let year of summaryService.years | async"
-          [selected]="summaryService.filters.year === year"
+          *ngFor="let year of movementsService.years | async"
+          [selected]="movementsService.dateFilters.year === year"
         >
           {{ year }}
         </option>
@@ -22,13 +22,13 @@
       Mês:
       <select
         class="selectElement"
-        [(ngModel)]="summaryService.filters.month"
-        (ngModelChange)="summaryService.filters.month = +$event"
-        (change)="summaryService.handlerChangeFilters()"
+        [(ngModel)]="movementsService.dateFilters.month"
+        (ngModelChange)="movementsService.dateFilters.month = +$event"
+        (change)="movementsService.handlerFilterAndSortMovementsBy()"
       >
         <option
-          *ngFor="let month of summaryService.months; let i = index"
-          [selected]="summaryService.filters.month === i + 1"
+          *ngFor="let month of movementsService.months; let i = index"
+          [selected]="movementsService.dateFilters.month === i + 1"
           [value]="i + 1"
         >
           {{ month }}
@@ -39,13 +39,14 @@
 
   <div class="balanceValueContainer">
     <span>Saldo</span>
-    <span
+    <span>{{ movementsService.monthlySummaryTotals.balance | currency : "€"}}</span>
+    <!-- <span
       >{{
         ((this.summaryService.incomeTotal | async) || 0) -
           (((this.summaryService.savingsTotal | async) || 0) +
             ((this.summaryService.expenseTotal | async) || 0)) | currency : "€"
       }}
-    </span>
+    </span> -->
   </div>
   <progress
     class="progressBalance"
@@ -59,21 +60,27 @@
   <ul class="monthlySummary">
     <li class="income">
       <span>Receitas</span>
-      <span>{{
+      <span>{{ movementsService.monthlySummaryTotals.income | currency : "€"}}</span>
+
+      <!-- <span>{{
         this.summaryService.incomeTotal | async | currency : "€"
-      }}</span>
+      }}</span> -->
     </li>
     <li class="savings">
       <span>Poupanças</span>
-      <span>{{
+      <span>{{ movementsService.monthlySummaryTotals.savings | currency : "€"}}</span>
+
+      <!-- <span>{{
         this.summaryService.savingsTotal | async | currency : "€"
-      }}</span>
+      }}</span> -->
     </li>
     <li class="expense">
       <span>Despesas</span>
-      <span>{{
+      <span>{{ movementsService.monthlySummaryTotals.expense | currency : "€"}}</span>
+
+      <!-- <span>{{
         this.summaryService.expenseTotal | async | currency : "€"
-      }}</span>
+      }}</span> -->
     </li>
   </ul>
 
