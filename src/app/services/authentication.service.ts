@@ -7,6 +7,7 @@ import { GoogleAuthProvider } from 'firebase/auth';
 })
 export class AuthenticationService {
   constructor(public afAuth: AngularFireAuth) {}
+  
   async loginWithGoogle() {
     try {
       await this.afAuth.signInWithRedirect(new GoogleAuthProvider());

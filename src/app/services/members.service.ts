@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 
-import { Member } from '../types';
-import { FirestoreService } from './firestore.service';
 import { DialogService } from './dialog.service';
+import { FirestoreService } from './firestore.service';
+
+import { Member } from '../types';
 
 @Injectable({
   providedIn: 'root',

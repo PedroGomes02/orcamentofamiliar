@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FirestoreService } from '../../../services/firestore.service';
+
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MembersService } from 'src/app/services/members.service';
 
@@ -16,7 +16,6 @@ export class NewMemberComponent {
   memberForm: FormGroup;
 
   constructor(
-    private firestoreService: FirestoreService,
     private authService: AuthenticationService,
     private fb: FormBuilder,
     private membersService: MembersService
@@ -39,7 +38,7 @@ export class NewMemberComponent {
       name: this.memberForm.value.name,
       id: this.memberForm.value.email,
     };
-    this.membersService.addNewMember(newMember)
+    this.membersService.addNewMember(newMember);
     this.memberForm.reset();
   }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
@@ -9,8 +10,8 @@ import { ThemeService } from 'src/app/services/theme.service';
 })
 export class SettingsComponent {
   constructor(
-    public themeService: ThemeService,
-    public firestoreService: FirestoreService
+    public firestoreService: FirestoreService,
+    public themeService: ThemeService
   ) {}
   toogleTheme() {
     this.themeService.toggleTheme();

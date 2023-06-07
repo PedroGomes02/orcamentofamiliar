@@ -39,48 +39,37 @@
 
   <div class="balanceValueContainer">
     <span>Saldo</span>
-    <span>{{ movementsService.monthlySummaryTotals.balance | currency : "€"}}</span>
-    <!-- <span
-      >{{
-        ((this.summaryService.incomeTotal | async) || 0) -
-          (((this.summaryService.savingsTotal | async) || 0) +
-            ((this.summaryService.expenseTotal | async) || 0)) | currency : "€"
-      }}
-    </span> -->
+    <span>{{
+      movementsService.monthlySummaryTotals.balance | currency : "€"
+    }}</span>
   </div>
   <progress
     class="progressBalance"
     value="{{
-      ((this.summaryService.savingsTotal | async) || 0) +
-        ((this.summaryService.expenseTotal | async) || 0)
+      +movementsService.monthlySummaryTotals.savings +
+        +movementsService.monthlySummaryTotals.expense
     }}"
-    max="{{ (this.summaryService.incomeTotal | async) || 0 }}"
+    max="{{ +movementsService.monthlySummaryTotals.income }}"
   ></progress>
 
   <ul class="monthlySummary">
     <li class="income">
       <span>Receitas</span>
-      <span>{{ movementsService.monthlySummaryTotals.income | currency : "€"}}</span>
-
-      <!-- <span>{{
-        this.summaryService.incomeTotal | async | currency : "€"
-      }}</span> -->
+      <span>{{
+        movementsService.monthlySummaryTotals.income | currency : "€"
+      }}</span>
     </li>
     <li class="savings">
       <span>Poupanças</span>
-      <span>{{ movementsService.monthlySummaryTotals.savings | currency : "€"}}</span>
-
-      <!-- <span>{{
-        this.summaryService.savingsTotal | async | currency : "€"
-      }}</span> -->
+      <span>{{
+        movementsService.monthlySummaryTotals.savings | currency : "€"
+      }}</span>
     </li>
     <li class="expense">
       <span>Despesas</span>
-      <span>{{ movementsService.monthlySummaryTotals.expense | currency : "€"}}</span>
-
-      <!-- <span>{{
-        this.summaryService.expenseTotal | async | currency : "€"
-      }}</span> -->
+      <span>{{
+        movementsService.monthlySummaryTotals.expense | currency : "€"
+      }}</span>
     </li>
   </ul>
 

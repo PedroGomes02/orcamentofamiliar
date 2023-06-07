@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -12,13 +13,14 @@ import { MembersService } from 'src/app/services/members.service';
 export class MemberItemComponent {
   @Input()
   memberItem: any;
+
   userEmail: string = '';
 
   constructor(
-    public firestoreService: FirestoreService,
     public authService: AuthenticationService,
-    private membersService: MembersService,
     private dialogService: DialogService,
+    public firestoreService: FirestoreService,
+    private membersService: MembersService
   ) {
     this.authService.afAuth.authState.subscribe((user) => {
       this.userEmail = user?.email || '';

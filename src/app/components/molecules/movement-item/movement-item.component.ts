@@ -1,8 +1,10 @@
 import { Component, Input } from '@angular/core';
+
 import { DialogService } from 'src/app/services/dialog.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { MovementsService } from 'src/app/services/movements.service';
 import { SummaryService } from 'src/app/services/summary.service';
+
 import { Movement } from 'src/app/types';
 
 @Component({
@@ -13,14 +15,15 @@ import { Movement } from 'src/app/types';
 export class MovementItemComponent {
   @Input()
   movementItem!: Movement;
+
   selectedMovementId: string = '';
   showCategoryControlButtons: boolean = false;
 
   constructor(
-    public firestoreService: FirestoreService,
-    public summaryService: SummaryService,
     private dialogService: DialogService,
-    public movementsService: MovementsService
+    public firestoreService: FirestoreService,
+    public movementsService: MovementsService,
+    public summaryService: SummaryService
   ) {}
 
   toggleShowControlButtons() {

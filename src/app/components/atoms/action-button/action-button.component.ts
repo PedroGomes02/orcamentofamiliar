@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
 export class ActionButtonComponent {
   @Input()
   buttonText!: string;
+
   @Input()
-  buttonAction!: () => void;
+  buttonAction: () => void = () => {};
 }

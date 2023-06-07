@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+
 import { MovementsService } from 'src/app/services/movements.service';
-import { SummaryService } from 'src/app/services/summary.service';
+// import { SummaryService } from 'src/app/services/summary.service';
 
 @Component({
   selector: 'app-summary',

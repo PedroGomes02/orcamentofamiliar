@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Observable, map } from 'rxjs';
-
-import { FirestoreService } from './firestore.service';
-
-import { Category, FilterAndSort } from '../types';
+import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 
 import { defaultCategories } from 'src/assets/defaultCategories';
+import { FirestoreService } from './firestore.service';
 import { PaginationService } from './pagination.service';
 
+import { Category, FilterAndSort } from '../types';
 @Injectable({
   providedIn: 'root',
 })

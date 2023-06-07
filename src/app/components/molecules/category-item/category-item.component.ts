@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+
 import { CategoriesService } from 'src/app/services/categories.service';
 import { DialogService } from 'src/app/services/dialog.service';
 
@@ -12,6 +13,7 @@ import { Category } from 'src/app/types';
 export class CategoryItemComponent {
   @Input()
   categoryItem!: Category;
+  
   selectedCategoryId: string = '';
   showCategoryControlButtons: boolean = false;
 

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Observable, combineLatest, map } from 'rxjs';
-import { Category, FilterAndSort, Movement } from '../types';
+
+import { CategoriesService } from './categories.service';
 import { FirestoreService } from './firestore.service';
 import { PaginationService } from './pagination.service';
-import { CategoriesService } from './categories.service';
+
+import { Category, FilterAndSort, Movement } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -250,7 +252,6 @@ export class MovementsService {
   // }
   // Monthly Summary Stuff...
 
-  monthlySummaryByCategories: any;
   getMonthlySummaryByCategories(movementType: string) {
     const selectedTypeCategories: Observable<Category[]> =
       this.categoriesService.categories.pipe(

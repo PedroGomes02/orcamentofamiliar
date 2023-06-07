@@ -1,11 +1,12 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { CategoriesService } from 'src/app/services/categories.service';
+import { DialogService } from 'src/app/services/dialog.service';
 
 import { Category } from 'src/app/types';
-import { DialogService } from 'src/app/services/dialog.service';
-import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
   selector: 'app-new-category',
@@ -20,8 +21,8 @@ export class NewCategoryComponent {
   constructor(
     private authService: AuthenticationService,
     private categoriesService: CategoriesService,
-    private fb: FormBuilder,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private fb: FormBuilder
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {

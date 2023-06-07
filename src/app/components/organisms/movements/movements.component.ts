@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 
-import { map, Observable } from 'rxjs';
+import { map } from 'rxjs';
 
-import { FirestoreService } from '../../../services/firestore.service';
-import { PaginationService } from '../../../services/pagination.service';
-
-import { FilterAndSort, Movement } from '../../../types';
-import { SummaryService } from 'src/app/services/summary.service';
 import { DialogService } from 'src/app/services/dialog.service';
+import { FirestoreService } from '../../../services/firestore.service';
 import { MovementsService } from 'src/app/services/movements.service';
+import { PaginationService } from '../../../services/pagination.service';
+import { SummaryService } from 'src/app/services/summary.service';
 
 @Component({
   selector: 'app-movements',
@@ -16,7 +14,6 @@ import { MovementsService } from 'src/app/services/movements.service';
   styleUrls: ['./movements.component.css'],
 })
 export class MovementsComponent {
-
   // filteredMovement$: Observable<Movement[]>;
   // filterAndSortBy: FilterAndSort = { type: 'all', sortBy: 'date' };
   // pagination: PaginationService;
@@ -24,14 +21,17 @@ export class MovementsComponent {
   idMovementUpdateOpen: string = '';
 
   constructor(
-    public firestoreService: FirestoreService,
-    public paginationService: PaginationService,
-    public summaryService: SummaryService,
     private dialogService: DialogService,
-    public movementsService: MovementsService
+    public firestoreService: FirestoreService,
+    public movementsService: MovementsService,
+    public paginationService: PaginationService,
+    public summaryService: SummaryService
   ) {
-    this.summaryService.filters.year = new Date().getFullYear();
-    this.summaryService.filters.month = new Date().getMonth() + 1;
+    this.movementsService.dateFilters.year = new Date().getFullYear();
+    this.movementsService.dateFilters.month = new Date().getMonth() + 1;
+
+    // this.summaryService.filters.year = new Date().getFullYear();
+    // this.summaryService.filters.month = new Date().getMonth() + 1;
 
     // this.filteredMovement$ = this.summaryService.filterMovements();
 
@@ -39,10 +39,10 @@ export class MovementsComponent {
     this.paginationService.currentPage = 1;
 
     this.movementsService.filteredMovements
-    .pipe(map((array) => array.length))
-    .subscribe((arrayLength) => {
-      this.paginationService.calculateNumberOfPages(arrayLength);
-    });
+      .pipe(map((array) => array.length))
+      .subscribe((arrayLength) => {
+        this.paginationService.calculateNumberOfPages(arrayLength);
+      });
   }
 
   // handlerMovementsFilterAndSort() {

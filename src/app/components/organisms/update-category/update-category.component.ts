@@ -1,10 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FirestoreService } from '../../../services/firestore.service';
-import { Category } from 'src/app/types';
+
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { CategoriesService } from 'src/app/services/categories.service';
+import { FirestoreService } from '../../../services/firestore.service';
+
+import { Category } from 'src/app/types';
+
 @Component({
   selector: 'app-update-category',
   templateUrl: './update-category.component.html',
@@ -16,10 +19,10 @@ export class UpdateCategoryComponent implements OnInit {
   updateCategoryForm: FormGroup;
 
   constructor(
-    private firestoreService: FirestoreService,
-    private fb: FormBuilder,
+    private categoriesService: CategoriesService,
     private db: AngularFirestore,
-    private categoriesService: CategoriesService
+    private fb: FormBuilder,
+    private firestoreService: FirestoreService
   ) {
     this.updateCategoryForm = this.fb.group({
       type: ['', Validators.required],

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FirestoreService } from '../../../services/firestore.service';
+
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { FirestoreService } from '../../../services/firestore.service';
+
 import { defaultCategories } from 'src/assets/defaultCategories';
 
 @Component({
@@ -16,9 +18,9 @@ export class NewGroupComponent {
   groupForm: FormGroup;
 
   constructor(
-    private firestoreService: FirestoreService,
     private authService: AuthenticationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private firestoreService: FirestoreService,
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {

@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { Observable, map } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FirestoreService } from '../../../services/firestore.service';
+
+import { CategoriesService } from 'src/app/services/categories.service';
+import { MovementsService } from 'src/app/services/movements.service';
 
 import { Category, Movement } from 'src/app/types';
-import { Observable, map } from 'rxjs';
-import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
   selector: 'app-update-movement',
@@ -24,9 +25,9 @@ export class UpdateMovementComponent implements OnInit {
   showNewCategoryComponent: boolean = false;
 
   constructor(
-    private firestoreService: FirestoreService,
+    private categoriesService: CategoriesService,
     private fb: FormBuilder,
-    private categoriesService: CategoriesService
+    private movementsService: MovementsService
   ) {
     this.categorie$ = this.categoriesService.categories;
 
@@ -104,7 +105,7 @@ export class UpdateMovementComponent implements OnInit {
     this.showNewCategoryComponent = !this.showNewCategoryComponent;
   }
 
-  onFormSubmitted() {
+  onNewCategoryFormSubmitted() {
     this.showNewCategoryComponent = false;
     this.categorie$ = this.categoriesService.categories;
     this.currentCategorie$ = this.categorie$?.pipe(
@@ -118,7 +119,7 @@ export class UpdateMovementComponent implements OnInit {
   }
 
   handlerSubmitUpdateMovementForm() {
-    const newMovement: any = {
+    const updatedMovement: any = {
       value: this.updateMovementForm.value.value.toFixed(2),
       date: this.updateMovementForm.value.date,
       type: this.updateMovementForm.value.type,
@@ -127,12 +128,10 @@ export class UpdateMovementComponent implements OnInit {
       subCategory: this.updateMovementForm.value.subCategory,
       description: this.updateMovementForm.value.description.toLowerCase(),
     };
-    console.log(newMovement);
 
-    this.firestoreService.updateDoc(
-      'movements',
+    this.movementsService.updateMovement(
       this.currentMovement.id,
-      newMovement
+      updatedMovement
     );
     this.updateMovementForm.reset();
   }

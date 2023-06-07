@@ -3,12 +3,12 @@ import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { CategoriesService } from 'src/app/services/categories.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { FirestoreService } from '../../../services/firestore.service';
 import { PaginationService } from '../../../services/pagination.service';
 
 import { FilterAndSort } from '../../../types';
-import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
   selector: 'app-categories',
@@ -23,10 +23,10 @@ export class CategoriesComponent {
 
   constructor(
     private authService: AuthenticationService,
+    public categoriesService: CategoriesService,
     private dialogService: DialogService,
     public firestoreService: FirestoreService,
-    public paginationService: PaginationService,
-    public categoriesService: CategoriesService
+    public paginationService: PaginationService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {

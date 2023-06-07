@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -15,8 +16,8 @@ export class UpdateGroupComponent {
   groupAdmin: string = '';
 
   constructor(
-    private firestoreService: FirestoreService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private firestoreService: FirestoreService
   ) {
     this.updateGroupForm = this.fb.group({
       groupName: ['', Validators.required],
@@ -34,11 +35,10 @@ export class UpdateGroupComponent {
   @Output() formSubmitted = new EventEmitter<void>();
 
   handlerSubmitUpdateGroupForm() {
-
     this.firestoreService.updateCurrentGroup({
-        name: this.updateGroupForm.value.groupName,
-        admin: this.updateGroupForm.value.groupAdmin,
-      })
+      name: this.updateGroupForm.value.groupName,
+      admin: this.updateGroupForm.value.groupAdmin,
+    });
     // this.firestoreService.updateGroup({
     //   name: this.updateGroupForm.value.groupName,
     //   admin: this.updateGroupForm.value.groupAdmin,

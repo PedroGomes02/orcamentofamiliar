@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { PaginationService } from 'src/app/services/pagination.service';
 
 @Component({

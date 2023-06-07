@@ -4,10 +4,12 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Category, Movement } from '../../../types';
+
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { MovementsService } from 'src/app/services/movements.service';
+
+import { Category, Movement } from '../../../types';
 
 @Component({
   selector: 'app-new-movement',
@@ -24,9 +26,9 @@ export class NewMovementComponent {
   showNewCategoryComponent: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
     private authService: AuthenticationService,
     private categoriesService: CategoriesService,
+    private fb: FormBuilder,
     private movementsService: MovementsService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
@@ -47,7 +49,7 @@ export class NewMovementComponent {
     });
   }
 
-  handlerSubmitMovementForm() {
+  handlerSubmitNewMovementForm() {
     const newMovement: Movement = {
       id: '',
       value: this.movementForm.value.value.toFixed(2),
