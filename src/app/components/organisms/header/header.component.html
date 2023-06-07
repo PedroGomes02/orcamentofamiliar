@@ -6,10 +6,9 @@
 <!-- //Onde renderiza p que for passado como children no template onde for usado -->
 
 <div
-  *ngIf="(authService.afAuth.authState | async)?.photoURL"
+  *ngIf="(authService.afAuth.authState | async)?.photoURL; else logIn"
   class="avatarContainer"
 >
-  <!-- <p>Olá, {{ (authService.afAuth.authState | async)?.displayName }}!</p> -->
   <img
     class="avatar"
     src="{{ (authService.afAuth.authState | async)?.photoURL }}"
@@ -19,3 +18,8 @@
   />
   <button class="logOutButton" (click)="authService.logout()">X</button>
 </div>
+
+<!-- REMOVE LOGIN STUFF -->
+<ng-template #logIn>
+  <button class="loginButton" class="avatarContainer" (click)="authService.loginWithGoogle()">Entrar</button>
+</ng-template>
