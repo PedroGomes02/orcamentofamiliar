@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { Observable, combineLatest, map } from 'rxjs';
+import { Observable, combineLatest, from, map, of } from 'rxjs';
 
 import { CategoriesService } from './categories.service';
 import { FirestoreService } from './firestore.service';
@@ -83,16 +83,18 @@ export class MovementsService {
   }
 
   getYears(): Observable<number[]> {
-    return this.movements.pipe(
-      map((movements: Movement[]) => {
-        const yearsSet = movements.reduce((acc, movement) => {
-          const year = new Date(movement.date).getFullYear();
-          acc.add(year);
-          return acc;
-        }, new Set<number>());
-        return [...yearsSet];
-      })
-    );
+    return of([2023, 2024, 2025]);
+    // Below I have to read all the documents...
+    // return this.movements.pipe(
+    //   map((movements: Movement[]) => {
+    //     const yearsSet = movements.reduce((acc, movement) => {
+    //       const year = new Date(movement.date).getFullYear();
+    //       acc.add(year);
+    //       return acc;
+    //     }, new Set<number>());
+    //     return [...yearsSet];
+    //   })
+    // );
   }
 
   getMovements() {
