@@ -27,9 +27,12 @@ export class CategoriesService {
   }
 
   getCategories() {
-    return this.firestoreService.getCollectionDocs<Category>(
+    return this.firestoreService.valueChangesCollectionDocs<Category>(
       this.categoriesCollectionRef
     );
+    // return this.firestoreService.getCollectionDocs<Category>(
+    //   this.categoriesCollectionRef
+    // );
   }
 
   getFilteredCategories() {
@@ -40,14 +43,14 @@ export class CategoriesService {
   }
 
   refreshCategories() {
-    this.categories = this.getCategories();
-    this.filteredCategories = this.getFilteredCategories();
-    this.filteredCategories
-      .pipe(map((array) => array.length))
-      .subscribe((arrayLength) => {
-        this.paginationService.calculateNumberOfPages(arrayLength);
-      });
-    this.paginationService.currentPage = 1;
+    // this.categories = this.getCategories();
+    // this.filteredCategories = this.getFilteredCategories();
+    // this.filteredCategories
+    //   .pipe(map((array) => array.length))
+    //   .subscribe((arrayLength) => {
+    //     this.paginationService.calculateNumberOfPages(arrayLength);
+    //   });
+    // this.paginationService.currentPage = 1;
   }
 
   handlerFilterAndSortCategoriesBy() {

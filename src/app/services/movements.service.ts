@@ -14,6 +14,7 @@ import { Category, FilterAndSort, Movement } from '../types';
 export class MovementsService {
   movementsCollectionRef: AngularFirestoreCollection<Movement>;
   movements: Observable<Movement[]>;
+  lastMovements: Observable<Movement[]>;
 
   years: Observable<number[]>;
   months: string[] = [
@@ -64,7 +65,9 @@ export class MovementsService {
   ) {
     this.movementsCollectionRef =
       this.firestoreService.groupMovementsCollectionRef;
+
     this.movements = this.getMovements();
+    this.lastMovements = this.getLastMovements();
 
     this.years = this.getYears();
 
@@ -93,16 +96,21 @@ export class MovementsService {
   }
 
   getMovements() {
-    return this.firestoreService
-      .getCollectionDocs<Movement>(this.movementsCollectionRef)
-      .pipe(
-        map((movements: Movement[]) =>
-          movements.sort(
-            (a: any, b: any) =>
-              new Date(b.createAt).getTime() - new Date(a.createAt).getTime()
-          )
-        )
-      );
+    return this.firestoreService.valueChangesCollectionDocs<Movement>(
+      this.movementsCollectionRef
+    );
+    // .pipe(
+    //   map((movements: Movement[]) =>
+    //     movements.sort(
+    //       (a: any, b: any) =>
+    //         new Date(b.createAt).getTime() - new Date(a.createAt).getTime()
+    //     )
+    //   )
+    // );
+  }
+
+  getLastMovements() {
+    return this.firestoreService.valueChangesLastMovements(5);
   }
 
   dateFilterMovements() {
@@ -123,7 +131,13 @@ export class MovementsService {
 
   getFilteredMovements() {
     return this.firestoreService.filterAndSortDocs<Movement>(
-      this.dateFilterMovements(),
+      this.firestoreService.valueChangesMonthlyMovements(
+        this.dateFilters.year,
+        this.dateFilters.month > 9
+          ? this.dateFilters.month
+          : `0${this.dateFilters.month}`
+      ),
+      // this.dateFilterMovements(),
       this.filterAndSortMovementsBy
     );
   }

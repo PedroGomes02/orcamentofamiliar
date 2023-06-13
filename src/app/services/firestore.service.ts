@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
+  CollectionReference,
   DocumentReference,
 } from '@angular/fire/compat/firestore';
 
@@ -129,15 +130,28 @@ export class FirestoreService {
   getCurrentGroup(): Observable<Group> {
     return this.groupsCollectionRef
       .doc(this.currentGroupEmail || '')
-      .get()
+      .snapshotChanges()
       .pipe(
         map((doc) => {
-          const data = doc.data() as any;
-          const id = doc.id;
+          const data = doc.payload.data() as any;
+          const id = doc.payload.id;
           return { id, ...data };
         })
       );
   }
+
+  // getCurrentGroup(): Observable<Group> {
+  //   return this.groupsCollectionRef
+  //     .doc(this.currentGroupEmail || '')
+  //     .get()
+  //     .pipe(
+  //       map((doc) => {
+  //         const data = doc.data() as any;
+  //         const id = doc.id;
+  //         return { id, ...data };
+  //       })
+  //     );
+  // }
 
   async updateCurrentGroup(updatedGroup: { name: string; admin: string }) {
     await this.updateDocOnCollection(
@@ -146,6 +160,43 @@ export class FirestoreService {
       updatedGroup
     );
     this.currentGroup = this.getCurrentGroup();
+  }
+
+  // CHANGE AGAIN TO VALUECHANGES - NEED TO CHANGE SERVICES REFRESH FUNCTIONS (DONT NEED TO BE CALLED ON EVERY REFRESH)
+  valueChangesCollectionDocs<T>(
+    collectionRef: AngularFirestoreCollection<T>
+  ): Observable<T[]> {
+    return collectionRef.valueChanges({
+      idField: 'id', //Adds ids to array objects when subscribe
+    }) as Observable<T[]>;
+  }
+
+  valueChangesLastMovements(numberOfDocs: number): Observable<Movement[]> {
+    return this.db
+      .collection<Movement>(
+        `groups/${this.currentGroupEmail}/movements`,
+        (ref) => ref.orderBy('createAt', 'desc').limit(numberOfDocs)
+      )
+      .valueChanges({ idField: 'id' });
+  }
+
+  valueChangesMonthlyMovements(
+    year: string,
+    month: string
+  ): Observable<Movement[]> {
+    const startDate = `${year}-${month}-01`;
+    const endDate = `${year}-${month}-31`;
+
+    return this.db
+      .collection<Movement>(
+        `groups/${this.currentGroupEmail}/movements`,
+        (ref) =>
+          ref
+            .orderBy('date', 'desc')
+            .where('date', '>=', startDate)
+            .where('date', '<=', endDate)
+      )
+      .valueChanges({ idField: 'id' });
   }
 
   getCollectionDocs<T>(

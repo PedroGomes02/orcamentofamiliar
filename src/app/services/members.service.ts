@@ -31,18 +31,18 @@ export class MembersService {
   }
 
   getMembers() {
-    return this.firestoreService.getCollectionDocs<Member>(
+    return this.firestoreService.valueChangesCollectionDocs<Member>(
       this.membersCollectionRef
     );
   }
 
   refreshMembers() {
-    this.members = this.getMembers();
-    this.members.subscribe((members: Member[]) => {
-      members.forEach((member: Member) => {
-        this.currentMembersEmails.push(member.id || '');
-      });
-    });
+    // this.members = this.getMembers();
+    // this.members.subscribe((members: Member[]) => {
+    //   members.forEach((member: Member) => {
+    //     this.currentMembersEmails.push(member.id || '');
+    //   });
+    // });
   }
 
   async addNewMember(newMember: Member) {
@@ -75,6 +75,7 @@ export class MembersService {
       this.membersCollectionRef,
       memberId
     );
+    this.currentMembersEmails = []
     this.refreshMembers();
   }
 }

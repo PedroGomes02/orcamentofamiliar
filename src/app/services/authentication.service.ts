@@ -19,6 +19,7 @@ export class AuthenticationService {
   async logout() {
     try {
       await this.afAuth.signOut();
+      location.reload();
     } catch (error) {
       console.log('Error on logout:', error);
     }
