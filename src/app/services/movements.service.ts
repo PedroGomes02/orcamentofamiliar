@@ -203,45 +203,36 @@ export class MovementsService {
 
   // Monthly Summary Stuff...
   getMonthlyMovementsByTypeAndSummaryTotals() {
-    this.movements.forEach((movements) =>
-      movements
-        .filter(
-          (movement: Movement) =>
-            new Date(movement.date).getFullYear() === this.dateFilters.year
-        )
-        .filter(
-          (movement: Movement) =>
-            new Date(movement.date).getMonth() + 1 === this.dateFilters.month
-        )
-        .forEach((movement) => {
-          if (movement.type === 'income') {
-            this.monthlyMovementsByType.income.push(movement);
-            this.monthlySummaryTotals.income = (
-              Number(this.monthlySummaryTotals.income) + Number(movement.value)
-            ).toFixed(2);
-            this.monthlySummaryTotals.balance = (
-              Number(this.monthlySummaryTotals.balance) + Number(movement.value)
-            ).toFixed(2);
-          }
-          if (movement.type === 'savings') {
-            this.monthlyMovementsByType.savings.push(movement);
-            this.monthlySummaryTotals.savings = (
-              Number(this.monthlySummaryTotals.savings) + Number(movement.value)
-            ).toFixed(2);
-            this.monthlySummaryTotals.balance = (
-              Number(this.monthlySummaryTotals.balance) - Number(movement.value)
-            ).toFixed(2);
-          }
-          if (movement.type === 'expense') {
-            this.monthlyMovementsByType.expense.push(movement);
-            this.monthlySummaryTotals.expense = (
-              Number(this.monthlySummaryTotals.expense) + Number(movement.value)
-            ).toFixed(2);
-            this.monthlySummaryTotals.balance = (
-              Number(this.monthlySummaryTotals.balance) - Number(movement.value)
-            ).toFixed(2);
-          }
-        })
+    this.filteredMovements.forEach((movements) =>
+      movements.forEach((movement) => {
+        if (movement.type === 'income') {
+          this.monthlyMovementsByType.income.push(movement);
+          this.monthlySummaryTotals.income = (
+            Number(this.monthlySummaryTotals.income) + Number(movement.value)
+          ).toFixed(2);
+          this.monthlySummaryTotals.balance = (
+            Number(this.monthlySummaryTotals.balance) + Number(movement.value)
+          ).toFixed(2);
+        }
+        if (movement.type === 'savings') {
+          this.monthlyMovementsByType.savings.push(movement);
+          this.monthlySummaryTotals.savings = (
+            Number(this.monthlySummaryTotals.savings) + Number(movement.value)
+          ).toFixed(2);
+          this.monthlySummaryTotals.balance = (
+            Number(this.monthlySummaryTotals.balance) - Number(movement.value)
+          ).toFixed(2);
+        }
+        if (movement.type === 'expense') {
+          this.monthlyMovementsByType.expense.push(movement);
+          this.monthlySummaryTotals.expense = (
+            Number(this.monthlySummaryTotals.expense) + Number(movement.value)
+          ).toFixed(2);
+          this.monthlySummaryTotals.balance = (
+            Number(this.monthlySummaryTotals.balance) - Number(movement.value)
+          ).toFixed(2);
+        }
+      })
     );
     // console.log(this.monthlySummaryTotals);
     // console.log(this.monthlyMovementsByType);
@@ -275,20 +266,14 @@ export class MovementsService {
           )
         )
       );
-    const selectedTypeMovements: Observable<Movement[]> = this.movements.pipe(
-      map((movements: Movement[]) =>
-        movements
-          .filter(
-            (movement: Movement) =>
-              new Date(movement.date).getFullYear() === this.dateFilters.year
+    const selectedTypeMovements: Observable<Movement[]> =
+      this.filteredMovements.pipe(
+        map((movements: Movement[]) =>
+          movements.filter(
+            (movement: Movement) => movement.type === movementType
           )
-          .filter(
-            (movement: Movement) =>
-              new Date(movement.date).getMonth() + 1 === this.dateFilters.month
-          )
-          .filter((movement: Movement) => movement.type === movementType)
-      )
-    );
+        )
+      );
 
     return combineLatest([selectedTypeCategories, selectedTypeMovements]).pipe(
       map(([categories, movements]) =>
