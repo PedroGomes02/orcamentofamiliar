@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { Observable, combineLatest, from, map, of } from 'rxjs';
+import { Observable, combineLatest, map, of } from 'rxjs';
 
 import { CategoriesService } from './categories.service';
 import { FirestoreService } from './firestore.service';
@@ -145,7 +145,36 @@ export class MovementsService {
   }
 
   refreshMovements() {
-    this.movements = this.getMovements();
+    // this.movements = this.getMovements();
+    // this.filteredMovements = this.getFilteredMovements();
+    // this.filteredMovements
+    //   .pipe(map((array) => array.length))
+    //   .subscribe((arrayLength) => {
+    //     this.paginationService.calculateNumberOfPages(arrayLength);
+    //   });
+    // this.paginationService.currentPage = 1;
+    // this.monthlySummaryTotals.income = 0;
+    // this.monthlySummaryTotals.savings = 0;
+    // this.monthlySummaryTotals.expense = 0;
+    // this.monthlySummaryTotals.balance = 0;
+    // this.getMonthlyMovementsByTypeAndSummaryTotals();
+    // this.incomeSummaryByCategorie$ =
+    //   this.getMonthlySummaryByCategories('income');
+    // this.savingsSummaryByCategorie$ =
+    //   this.getMonthlySummaryByCategories('savings');
+    // this.expenseSummaryByCategorie$ =
+    //   this.getMonthlySummaryByCategories('expense');
+
+    this.filteredMovements
+      .pipe(map((array) => array.length))
+      .subscribe((arrayLength) => {
+        this.paginationService.calculateNumberOfPages(arrayLength);
+      });
+    this.paginationService.currentPage = 1;
+  }
+
+  handlerFilterAndSortMovementsBy() {
+    // this.refreshMovements();
     this.filteredMovements = this.getFilteredMovements();
     this.filteredMovements
       .pipe(map((array) => array.length))
@@ -153,22 +182,6 @@ export class MovementsService {
         this.paginationService.calculateNumberOfPages(arrayLength);
       });
     this.paginationService.currentPage = 1;
-
-    this.monthlySummaryTotals.income = 0;
-    this.monthlySummaryTotals.savings = 0;
-    this.monthlySummaryTotals.expense = 0;
-    this.monthlySummaryTotals.balance = 0;
-    this.getMonthlyMovementsByTypeAndSummaryTotals();
-    this.incomeSummaryByCategorie$ =
-      this.getMonthlySummaryByCategories('income');
-    this.savingsSummaryByCategorie$ =
-      this.getMonthlySummaryByCategories('savings');
-    this.expenseSummaryByCategorie$ =
-      this.getMonthlySummaryByCategories('expense');
-  }
-
-  handlerFilterAndSortMovementsBy() {
-    this.refreshMovements();
   }
 
   async addNewMovement(newMovement: Movement) {
@@ -205,7 +218,11 @@ export class MovementsService {
 
   // Monthly Summary Stuff...
   getMonthlyMovementsByTypeAndSummaryTotals() {
-    this.filteredMovements.forEach((movements) =>
+    this.filteredMovements.forEach((movements) => {
+      this.monthlySummaryTotals.income = 0;
+      this.monthlySummaryTotals.savings = 0;
+      this.monthlySummaryTotals.expense = 0;
+      this.monthlySummaryTotals.balance = 0;
       movements.forEach((movement) => {
         if (movement.type === 'income') {
           this.monthlyMovementsByType.income.push(movement);
@@ -234,8 +251,8 @@ export class MovementsService {
             Number(this.monthlySummaryTotals.balance) - Number(movement.value)
           ).toFixed(2);
         }
-      })
-    );
+      });
+    });
     // console.log(this.monthlySummaryTotals);
     // console.log(this.monthlyMovementsByType);
   }
