@@ -1,20 +1,20 @@
 .newGroupContainer {
   width: 100%;
   max-width: 768px;
-  margin: auto;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
   border: 0.125rem solid var(--secondaryColor);
+  border-radius: 5px;
+  margin: auto;
   color: var(--primaryTextColor);
 }
 
 legend {
-  margin: 0 0.25rem;
   padding: 0 0.25rem;
-  color: var(--primaryTextColor);
+  margin: 0 0.25rem;
   font-size: 0.8rem;
+  color: var(--primaryTextColor);
 }
 
 form {
@@ -26,6 +26,7 @@ form {
   gap: 0.5rem;
   margin: 0.25rem;
 }
+
 label {
   display: flex;
   flex-wrap: wrap;
@@ -34,6 +35,6 @@ label {
 }
 
 input {
-  border-radius: 5px;
   padding: 0.25rem;
+  border-radius: 5px;
 }

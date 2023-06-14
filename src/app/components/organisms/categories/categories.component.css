@@ -17,13 +17,13 @@
 }
 
 .categoriesControlButton {
-  border: 0.125rem solid var(--primaryColor);
-  background-color: var(--secondaryColor);
-  text-align: center;
   padding: 0.125rem;
+  border: 0.125rem solid var(--primaryColor);
   border-radius: 5px;
-  color: var(--secondaryTextColor);
+  background-color: var(--secondaryColor);
   font-size: 0.8rem;
+  text-align: center;
+  color: var(--secondaryTextColor);
   opacity: 1;
   transition: all 0.25s ease;
 }
@@ -40,13 +40,13 @@ app-new-category {
 
 .closeNewCategoryButton {
   align-self: flex-end;
-  border: 0.125rem solid var(--primaryColor);
-  background-color: var(--secondaryColor);
-  text-align: center;
   padding: 0.25rem;
+  border: 0.125rem solid var(--primaryColor);
   border-radius: 5px;
   margin: 0.5rem;
+  background-color: var(--secondaryColor);
   font-size: 1rem;
+  text-align: center;
   opacity: 1;
   transition: all 0.25s ease;
 }
@@ -62,15 +62,15 @@ app-new-category {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 5px;
   border: 0.125rem solid var(--secondaryColor);
+  border-radius: 5px;
 }
 
 .categoriesContainerTitle {
-  margin: 0.25rem;
   padding: 0 0.25rem;
-  color: var(--primaryTextColor);
+  margin: 0.25rem;
   font-size: 0.8rem;
+  color: var(--primaryTextColor);
 }
 
 .filterAndSortContainer {

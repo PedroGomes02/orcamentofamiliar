@@ -1,8 +1,8 @@
 h2,
 h3,
 p {
-  color: var(--primaryTextColor);
   margin: 1rem;
+  color: var(--primaryTextColor);
 }
 
 a {

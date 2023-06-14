@@ -1,8 +1,8 @@
 .movementListItem {
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
   padding: 0.25rem;
+  border-radius: 5px;
 }
 
 .movementListItemContainer {
@@ -65,8 +65,8 @@
 
 .categoryAvatar {
   border-radius: 5px;
-  font-size: 1.25rem;
   background-color: var(--whiteOpacity);
+  font-size: 1.25rem;
 }
 
 .showControlButtonsIndicator {

@@ -9,10 +9,10 @@
 }
 
 .monthlySummaryContainer legend {
-  margin: 0.25rem;
   padding: 0 0.25rem;
-  color: var(--primaryTextColor);
+  margin: 0.25rem;
   font-size: 0.8rem;
+  color: var(--primaryTextColor);
 }
 
 .labelElement {
@@ -28,17 +28,17 @@
 
 .balanceValueContainer {
   width: 80%;
-  border: 0.125rem solid var(--primaryColor);
-  background-color: var(--secondaryColor);
-  text-align: center;
-  padding: 0.25rem;
-  border-radius: 5px;
-  margin-top: 0.5rem;
-  color: var(--secondaryTextColor);
-  font-size: 1.2rem;
-  font-weight: bold;
   display: flex;
   justify-content: space-evenly;
+  padding: 0.25rem;
+  border: 0.125rem solid var(--primaryColor);
+  border-radius: 5px;
+  margin-top: 0.5rem;
+  background-color: var(--secondaryColor);
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: bold;
+  color: var(--secondaryTextColor);
 }
 
 .progressBalance {
@@ -74,7 +74,7 @@
   align-items: center;
   justify-content: space-evenly;
   gap: 0.5rem;
-  margin:0.5rem;
+  margin: 0.5rem;
 }
 
 .monthlySummary li {

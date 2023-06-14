@@ -1,13 +1,12 @@
 .submitFormtButton {
-  /* width: 50%; */
-  border: 0.125rem solid var(--primaryColor);
-  background-color: var(--secondaryColor);
-  text-align: center;
   padding: 0.25rem;
-  border-radius: 5px;
   margin: 0 0.5rem;
-  color: var(--secondaryTextColor);
+  border: 0.125rem solid var(--primaryColor);
+  border-radius: 5px;
+  background-color: var(--secondaryColor);
   font-size: 1rem;
+  text-align: center;
+  color: var(--secondaryTextColor);
   opacity: 1;
   transition: all 0.25s ease;
 }

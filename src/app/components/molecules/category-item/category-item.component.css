@@ -1,9 +1,9 @@
 .categoryListItem {
-  margin: 0rem 0.125rem;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
   padding: 0.25rem;
+  border-radius: 5px;
+  margin: 0rem 0.125rem;
 }
 
 .categoryListItemContainer {
@@ -13,8 +13,8 @@
 }
 
 .categoryListItemContainer:hover {
-  background-color: var(--whiteOpacity);
   border-radius: 5px;
+  background-color: var(--whiteOpacity);
 }
 
 .categoryListMain {
@@ -30,9 +30,9 @@
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
-  background-color: var(--whiteOpacity);
   padding: 0.25rem;
   border-radius: 5px;
+  background-color: var(--whiteOpacity);
 }
 
 @media (min-width: 769px) {
@@ -66,16 +66,16 @@
 }
 
 .subCategoriesContainer span {
-  background-color: var(--whiteOpacity);
   padding: 0.125rem;
   border-radius: 5px;
+  background-color: var(--whiteOpacity);
 }
 
 .categoryAvatar {
-  font-size: 1.5rem;
-  border-radius: 5px;
   padding: 0.125rem;
+  border-radius: 5px;
   background-color: var(--whiteOpacity);
+  font-size: 1.5rem;
 }
 
 .showControlButtonsIndicator {

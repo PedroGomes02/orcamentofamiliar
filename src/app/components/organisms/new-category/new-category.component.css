@@ -1,19 +1,19 @@
 .newCategoryContainer {
   width: 100%;
   max-width: 768px;
-  margin: auto;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
   border: 0.125rem solid var(--secondaryColor);
+  border-radius: 5px;
+  margin: auto;
 }
 
 legend {
   margin: 0 0.25rem;
   padding: 0 0.25rem;
-  color: var(--primaryTextColor);
   font-size: 0.8rem;
+  color: var(--primaryTextColor);
 }
 
 form {
@@ -35,12 +35,12 @@ form {
 
 .nameAndSymbolContainer label {
   width: 90%;
-  padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
+  padding: 0.5rem;
   font-size: 0.8rem;
   color: var(--primaryTextColor);
 }
@@ -48,10 +48,10 @@ form {
 .nameAndSymbolContainer label input {
   width: 50%;
   flex-grow: 1;
-  text-align: center;
-  font-size: 1.5rem;
   padding: 0.5rem;
   border-radius: 5px;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 .categoryTypeContainer {
@@ -64,16 +64,16 @@ form {
 }
 
 .categoryTypeContainer label {
-  padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  border-radius: 5px;
-  text-align: center;
-  font-size: 1.25rem;
   flex-grow: 1;
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 1.25rem;
+  text-align: center;
 }
 
 .categoryTypeContainer label input {
@@ -88,19 +88,20 @@ form {
 
 .subCategoriesContainer label {
   width: 90%;
-  padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
+  padding: 0.5rem;
   font-size: 0.8rem;
   color: var(--primaryTextColor);
 }
+
 .subCategoriesContainer label textarea {
-  text-align: center;
-  font-size: 1.25rem;
-  border-radius: 5px;
   width: 50%;
   flex-grow: 1;
+  border-radius: 5px;
+  font-size: 1.25rem;
+  text-align: center;
 }

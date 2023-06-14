@@ -1,15 +1,16 @@
 .loginButton {
-  border: 0.125rem solid var(--primaryColor);
-  background-color: var(--secondaryColor);
-  text-align: center;
   padding: 0.75rem;
+  border: 0.125rem solid var(--primaryColor);
   border-radius: 5px;
-  color: var(--secondaryTextColor);
+  margin-top: 1rem;
+  background-color: var(--secondaryColor);
   font-size: 1.2rem;
+  text-align: center;
+  color: var(--secondaryTextColor);
   opacity: 1;
   transition: all 0.25s ease;
-  margin-top: 1rem;
 }
+
 .loginButton:hover {
   cursor: pointer;
   opacity: 0.8;

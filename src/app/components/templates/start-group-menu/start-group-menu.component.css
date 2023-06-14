@@ -13,10 +13,10 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  background-color: var(--blackOpacity);
   padding: 1rem;
   border: 0.125rem solid var(--primaryColor);
   border-radius: 5px;
+  background-color: var(--blackOpacity);
 }
 
 .enterFamilyGroup {
@@ -24,11 +24,11 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  text-align: center;
-  background-color: var(--blackOpacity);
   padding: 1rem;
   border: 0.125rem solid var(--primaryColor);
   border-radius: 5px;
+  background-color: var(--blackOpacity);
+  text-align: center;
 }
 
 .enterFamilyGroup form {
@@ -39,6 +39,6 @@
 }
 
 input {
-  border-radius: 5px;
   padding: 0.25rem;
+  border-radius: 5px;
 }

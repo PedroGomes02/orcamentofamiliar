@@ -11,8 +11,8 @@
   align-items: center;
   justify-content: center;
   width: calc(100% / 6);
-  border-radius: 5px;
   padding: 0.25rem;
+  border-radius: 5px;
   margin: 0.5rem;
   font-size: 1.8rem;
   text-decoration: none;
@@ -35,11 +35,10 @@
 }
 
 .navContainer a.active-link span {
-  background-color: var(--whiteOpacity);
   padding-right: 0.25rem;
   padding-left: 0.25rem;
-  background-color: var(--backgroundColor);
-  opacity: 0.9;
-  color: var(--primaryTextColor);
   border-radius: 5px;
+  background-color: var(--backgroundColor);
+  color: var(--primaryTextColor);
+  opacity: 0.9;
 }

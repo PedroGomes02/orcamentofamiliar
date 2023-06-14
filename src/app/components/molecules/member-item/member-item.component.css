@@ -2,9 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--incomeColor);
-  border-radius: 5px;
   padding: 0.25rem;
+  border-radius: 5px;
+  background-color: var(--incomeColor);
   color: black;
 }
 
@@ -12,11 +12,11 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap:0.25rem;
+  gap: 0.25rem;
 }
 
 .memberName {
-  background-color: var(--whiteOpacity);
-  border-radius: 5px;
   padding: 0.25rem;
+  border-radius: 5px;
+  background-color: var(--whiteOpacity);
 }

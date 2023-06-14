@@ -12,11 +12,11 @@ app-monthly-summary {
 
 .monthlySummaryByCategoriesContainer {
   width: 100%;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
   border: 0.125rem solid var(--secondaryColor);
+  border-radius: 5px;
 }
 
 @media (min-width: 769px) {
@@ -27,10 +27,10 @@ app-monthly-summary {
 }
 
 .monthlySummaryByCategoriesContainer legend {
-  margin: 0 0.25rem;
   padding: 0 0.25rem;
-  color: var(--primaryTextColor);
+  margin: 0 0.25rem;
   font-size: 0.8rem;
+  color: var(--primaryTextColor);
 }
 
 .monthlySummaryByCategoriesContainer ul {
@@ -40,21 +40,20 @@ app-monthly-summary {
   justify-content: center;
   gap: 0.2rem;
   border-radius: 5px;
-  list-style-type: none;
   margin: 0.5rem;
+  list-style-type: none;
 }
 
 .monthlySummaryByCategoriesContainer ul li {
-  padding: 0.25rem;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  border-radius: 5px;
-  padding: 0.25rem;
   gap: 0.5rem;
   flex-grow: 1;
+  padding: 0.25rem;
+  border-radius: 5px;
 }
 
 .categorySummaryContainer {
@@ -65,8 +64,8 @@ app-monthly-summary {
 }
 
 .categorySummaryContainer:hover {
-  background-color: rgba(255, 255, 255, 0.2);
   border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .avatarAndNameContainer {
@@ -78,10 +77,10 @@ app-monthly-summary {
 }
 
 .categoryAvatar {
-  font-size: 1.5rem;
-  border-radius: 5px;
   padding: 0.125rem;
+  border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.25);
+  font-size: 1.5rem;
 }
 
 .categoryName {
@@ -99,10 +98,10 @@ app-monthly-summary {
 
 .subCategorySummary {
   display: flex;
-  background-color: var(--whiteOpacity);
-  border-radius: 5px;
   padding: 0.25rem;
+  border-radius: 5px;
   margin: 0.125rem;
+  background-color: var(--whiteOpacity);
 }
 
 .showMovementsList {

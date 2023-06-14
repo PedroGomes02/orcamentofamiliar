@@ -1,18 +1,18 @@
 .movementsContainer {
   width: 100%;
   height: 100%;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
   border: 0.125rem solid var(--secondaryColor);
+  border-radius: 5px;
 }
 
 .movementsContainerTitle {
-  margin: 0.25rem;
   padding: 0 0.25rem;
-  color: var(--primaryTextColor);
+  margin: 0.25rem;
   font-size: 0.8rem;
+  color: var(--primaryTextColor);
 }
 
 app-action-button {
@@ -34,8 +34,8 @@ app-action-button {
 }
 
 .filterAndSortContainer select {
-  text-align: center;
   border-radius: 5px;
+  text-align: center;
 }
 
 .movementsList {

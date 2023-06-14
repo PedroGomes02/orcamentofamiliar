@@ -10,9 +10,9 @@
 
 .paginationButton {
   padding: 0.125rem 0.5rem;
-  margin: 0.125rem;
   border: 1px solid var(--secondaryColor);
   border-radius: 5px;
+  margin: 0.125rem;
   background-color: transparent;
   font-weight: bold;
   color: var(--primaryTextColor);

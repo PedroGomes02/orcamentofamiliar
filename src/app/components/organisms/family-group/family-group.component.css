@@ -4,26 +4,26 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
-  border: 0.125rem solid var(--secondaryColor);
   gap: 0.5rem;
+  border: 0.125rem solid var(--secondaryColor);
+  border-radius: 5px;
 }
 
 .familyGroupContainerTitle {
-  margin: 0.25rem;
   padding: 0 0.25rem;
-  color: var(--primaryTextColor);
+  margin: 0.25rem;
   font-size: 0.8rem;
+  color: var(--primaryTextColor);
 }
 
 .groupContainer {
   width: 95%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  color: var(--primaryTextColor);
-  flex-wrap: wrap;
   gap: 0.5rem;
+  color: var(--primaryTextColor);
 }
 
 .groupInfoContainer {
@@ -38,9 +38,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--primaryTextColor);
   gap: 0.125rem;
   margin: 0.25rem;
+  color: var(--primaryTextColor);
 }
 hr {
   width: 95%;
@@ -51,9 +51,9 @@ hr {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  color: var(--primaryTextColor);
-  margin: 0.5rem 0;
   gap: 0.5rem;
+  margin: 0.5rem 0;
+  color: var(--primaryTextColor);
 }
 
 .membersList {
@@ -65,6 +65,6 @@ hr {
 }
 
 input {
-  border-radius: 5px;
   padding: 0.25rem;
+  border-radius: 5px;
 }
