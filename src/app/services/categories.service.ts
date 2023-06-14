@@ -30,31 +30,27 @@ export class CategoriesService {
     return this.firestoreService.valueChangesCollectionDocs<Category>(
       this.categoriesCollectionRef
     );
-    // return this.firestoreService.getCollectionDocs<Category>(
-    //   this.categoriesCollectionRef
-    // );
   }
 
   getFilteredCategories() {
     return this.firestoreService.filterAndSortDocs<Category>(
-      this.categories,
+      this.getCategories(),
       this.filterAndSortCategoriesBy
     );
   }
 
-  refreshCategories() {
-    // this.categories = this.getCategories();
-    // this.filteredCategories = this.getFilteredCategories();
-    // this.filteredCategories
-    //   .pipe(map((array) => array.length))
-    //   .subscribe((arrayLength) => {
-    //     this.paginationService.calculateNumberOfPages(arrayLength);
-    //   });
-    // this.paginationService.currentPage = 1;
+  refreshPagination() {
+    this.filteredCategories
+      .pipe(map((array) => array.length))
+      .subscribe((arrayLength) => {
+        this.paginationService.calculateNumberOfPages(arrayLength);
+      });
+    this.paginationService.currentPage = 1;
   }
 
   handlerFilterAndSortCategoriesBy() {
     this.filteredCategories = this.getFilteredCategories();
+    this.refreshPagination();
   }
 
   async addNewCategory(newCategory: Category) {
@@ -62,7 +58,7 @@ export class CategoriesService {
       this.categoriesCollectionRef,
       newCategory
     );
-    this.refreshCategories();
+    this.refreshPagination();
   }
 
   async updateCategory(categoryId: string, updatedCategory: Category) {
@@ -71,7 +67,7 @@ export class CategoriesService {
       categoryId,
       updatedCategory
     );
-    this.refreshCategories();
+    this.refreshPagination();
   }
 
   async deleteCategory(categoryId: string) {
@@ -79,7 +75,7 @@ export class CategoriesService {
       this.categoriesCollectionRef,
       categoryId
     );
-    this.refreshCategories();
+    this.refreshPagination();
   }
 
   async setDefaultCategories() {
@@ -90,13 +86,13 @@ export class CategoriesService {
       this.categoriesCollectionRef,
       defaultCategories
     );
-    this.refreshCategories();
+    this.refreshPagination();
   }
 
   async deleteAllCategories() {
     await this.firestoreService.batchDeleteAllCollectionDocs<Category>(
       this.categoriesCollectionRef
     );
-    this.refreshCategories();
+    this.refreshPagination();
   }
 }

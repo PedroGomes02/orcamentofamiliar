@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
-  CollectionReference,
   DocumentReference,
 } from '@angular/fire/compat/firestore';
 
@@ -13,7 +12,14 @@ import { map } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DialogService } from './dialog.service';
 
-import { Category, Group, Member, Movement } from '../types';
+import {
+  Category,
+  FilterAndSort,
+  Group,
+  Member,
+  Movement,
+  UpdatedGroup,
+} from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -25,17 +31,12 @@ export class FirestoreService {
   currentGroupEmail: string;
   nextGroupEmail: string;
 
+  groupsCollectionRef: AngularFirestoreCollection<Group>;
   currentGroup: Observable<Group>;
 
-  groupsCollectionRef: AngularFirestoreCollection<Group>;
   groupMembersCollectionRef: AngularFirestoreCollection<Member>;
   groupCategoriesCollectionRef: AngularFirestoreCollection<Category>;
   groupMovementsCollectionRef: AngularFirestoreCollection<Movement>;
-
-  // groupMembers: Observable<Member[]>;
-  // groupCategories: Observable<Category[]>;
-  // filteredGroupCategories: Observable<Category[]>;
-  // groupMovements: Observable<Movement[]>;
 
   constructor(
     private db: AngularFirestore,
@@ -63,7 +64,6 @@ export class FirestoreService {
       `groups/${this.currentGroupEmail}/movements`,
       (ref) => ref.orderBy('date', 'desc')
     );
-    // this.groupMovements = this.getGroupMovements();
   }
 
   handlerSubmitGroupEmail() {
@@ -87,10 +87,7 @@ export class FirestoreService {
 
   filterAndSortDocs<T>(
     collection: Observable<T[]>,
-    filterAndSortBy: {
-      type: string;
-      sortBy: string;
-    }
+    filterAndSortBy: FilterAndSort
   ): Observable<T[]> {
     if (filterAndSortBy.type === 'all') {
       return collection.pipe(
@@ -125,8 +122,6 @@ export class FirestoreService {
     }
   }
 
-  //NEW FUNCTIONS
-
   getCurrentGroup(): Observable<Group> {
     return this.groupsCollectionRef
       .doc(this.currentGroupEmail || '')
@@ -140,20 +135,7 @@ export class FirestoreService {
       );
   }
 
-  // getCurrentGroup(): Observable<Group> {
-  //   return this.groupsCollectionRef
-  //     .doc(this.currentGroupEmail || '')
-  //     .get()
-  //     .pipe(
-  //       map((doc) => {
-  //         const data = doc.data() as any;
-  //         const id = doc.id;
-  //         return { id, ...data };
-  //       })
-  //     );
-  // }
-
-  async updateCurrentGroup(updatedGroup: { name: string; admin: string }) {
+  async updateCurrentGroup(updatedGroup: UpdatedGroup) {
     await this.updateDocOnCollection(
       this.groupsCollectionRef,
       this.currentGroupEmail,
@@ -162,12 +144,11 @@ export class FirestoreService {
     this.currentGroup = this.getCurrentGroup();
   }
 
-  // CHANGE AGAIN TO VALUECHANGES - NEED TO CHANGE SERVICES REFRESH FUNCTIONS (DONT NEED TO BE CALLED ON EVERY REFRESH)
   valueChangesCollectionDocs<T>(
     collectionRef: AngularFirestoreCollection<T>
   ): Observable<T[]> {
     return collectionRef.valueChanges({
-      idField: 'id', //Adds ids to array objects when subscribe
+      idField: 'id',
     }) as Observable<T[]>;
   }
 
@@ -199,22 +180,6 @@ export class FirestoreService {
       .valueChanges({ idField: 'id' });
   }
 
-  getCollectionDocs<T>(
-    collectionRef: AngularFirestoreCollection<T>
-  ): Observable<T[]> {
-    return from(collectionRef.get()).pipe(
-      map((querySnapshot) => {
-        const collectionDocs: T[] = [];
-        querySnapshot.forEach((collectionDoc) => {
-          const doc = collectionDoc.data() as any;
-          doc.id = collectionDoc.id;
-          collectionDocs.push(doc);
-        });
-        return collectionDocs;
-      })
-    );
-  }
-
   async addNewDocToCollection<T>(
     collectionRef: AngularFirestoreCollection<T>,
     newDoc: T
@@ -227,7 +192,7 @@ export class FirestoreService {
       .then((newDocRef) => {
         console.log(`Document with id:${newDocRef.id} added to collection!`);
         this.dialogService.loading = false;
-        this.dialogService.dialogMessage = 'Documento adicionado com sucesso!';
+        this.dialogService.dialogMessage = 'Adicionado com sucesso!';
       })
       .catch((error: Error) => {
         console.log(error.message);
@@ -296,7 +261,7 @@ export class FirestoreService {
       .then(() => {
         console.log(`Document with id ${docId} is deleted`);
         this.dialogService.loading = false;
-        this.dialogService.dialogMessage = 'Documento apagado com sucesso!';
+        this.dialogService.dialogMessage = 'Apagado com sucesso!';
       })
       .catch((error: Error) => {
         console.log(error.message);
@@ -332,7 +297,7 @@ export class FirestoreService {
           await batch.commit();
         }
         this.dialogService.loading = false;
-        this.dialogService.dialogMessage = 'Documentos apagados com sucesso!';
+        this.dialogService.dialogMessage = 'Apagados com sucesso!';
       }
     } catch (error) {
       console.log(error);
@@ -375,112 +340,4 @@ export class FirestoreService {
         'Algo correu mal, por favor tente novamente!';
     }
   }
-
-  // OLD STUFF
-  // getGroupCategories(): Observable<Category[]> {
-  //   return this.groupCategoriesCollectionRef?.valueChanges({
-  //     idField: 'id', //Adds ids to array objects when subscribe
-  //   }) as Observable<Category[]>;
-  // }
-
-  // Use get() to make only one read of all docs of a collection, needs to get call again if something is change! (photo)
-  // getGroupCategories(): Observable<Category[]> {
-  //   if (this.groupCategoriesCollectionRef) {
-  //     return from(this.groupCategoriesCollectionRef.get()).pipe(
-  //       map((querySnapshot) => {
-  //         const categories: Category[] = [];
-  //         querySnapshot.forEach((doc) => {
-  //           const category = doc.data() as Category;
-  //           category.id = doc.id;
-  //           categories.push(category);
-  //         });
-  //         return categories;
-  //       })
-  //     );
-  //   }
-  //   throw new Error('groupCategoriesCollectionRef is not defined');
-  // }
-
-  // getGroupMovements(): Observable<Movement[]> {
-  //   return this.groupMovementsCollectionRef?.valueChanges({
-  //     idField: 'id', //Adds ids to array objects when subscribe
-  //   }) as Observable<Movement[]>;
-  // }
-
-  // updateDoc(collection: string, docID: string, doc: any) {
-  //   this.dialogService.openDialog(``);
-  //   this.dialogService.loading = true;
-
-  //   if (collection === 'movements') {
-  //     this.groupMovementsCollectionRef
-  //       ?.doc(docID)
-  //       .update(doc)
-  //       .then(() => {
-  //         console.log(`Movement with id ${docID} is updated`);
-  //         this.dialogService.loading = false;
-  //         this.dialogService.dialogMessage =
-  //           'Movimento atualizado com Sucesso!';
-  //       })
-  //       .catch((error: Error) => {
-  //         console.log(error.message);
-  //         this.dialogService.loading = false;
-  //         this.dialogService.dialogMessage =
-  //           'Algo correu mal, por favor tente novamente!';
-  //       });
-  //   }
-  // }
-
-  // deleteDoc(collection: string, docID: string) {
-  //   this.dialogService.openDialog(``);
-  //   this.dialogService.loading = true;
-
-  //   if (collection === 'movements') {
-  //     this.groupMovementsCollectionRef
-  //       ?.doc(docID)
-  //       .delete()
-  //       .then(() => {
-  //         console.log(`Movement with id ${docID} is deleted`);
-  //         this.dialogService.loading = false;
-  //         this.dialogService.dialogMessage = 'Movimento apagado com Sucesso!';
-  //       })
-  //       .catch((error: Error) => {
-  //         console.log(error.message);
-  //         this.dialogService.loading = false;
-  //         this.dialogService.dialogMessage =
-  //           'Algo correu mal, por favor tente novamente!';
-  //       });
-  //   }
-  // }
-
-  // async batchDeleteMovements() {
-  //   this.dialogService.openDialog(``);
-  //   this.dialogService.loading = true;
-  //   const batchSize = 500;
-  //   let batch = this.db.firestore.batch();
-  //   let numElements = 0;
-  //   try {
-  //     const querySnapshot = await this.groupMovementsCollectionRef?.ref.get();
-  //     if (querySnapshot) {
-  //       for (const doc of querySnapshot.docs) {
-  //         if (numElements >= batchSize) {
-  //           await batch.commit();
-  //           batch = this.db.firestore.batch();
-  //           numElements = 0;
-  //         }
-  //         batch.delete(doc.ref);
-  //         numElements++;
-  //       }
-  //       if (numElements > 0) {
-  //         await batch.commit();
-  //       }
-  //       this.dialogService.loading = false;
-  //       this.dialogService.dialogMessage = 'Movimentos apagados com sucesso!';
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     this.dialogService.loading = false;
-  //     this.dialogService.dialogMessage =
-  //       'Algo correu mal, por favor tente novamente!';
-  //   }
-  // }
 }

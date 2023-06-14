@@ -36,8 +36,8 @@
 
 .navContainer a.active-link span {
   background-color: var(--whiteOpacity);
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
   background-color: var(--backgroundColor);
   opacity: 0.9;
   color: var(--primaryTextColor);

@@ -13,7 +13,7 @@ import { Category, FilterAndSort, Movement } from '../types';
 })
 export class MovementsService {
   movementsCollectionRef: AngularFirestoreCollection<Movement>;
-  movements: Observable<Movement[]>;
+
   lastMovements: Observable<Movement[]>;
 
   years: Observable<number[]>;
@@ -41,22 +41,19 @@ export class MovementsService {
     type: 'all',
     sortBy: 'date',
   };
+
   filteredMovements: Observable<Movement[]>;
 
-  // Monthly Summary Stuff...
   monthlyMovementsByType: any = { income: [], savings: [], expense: [] };
-
   monthlySummaryTotals: any = {
     income: 0,
     expense: 0,
     savings: 0,
     balance: 0,
   };
-
   incomeSummaryByCategorie$: Observable<any>;
   savingsSummaryByCategorie$: Observable<any>;
   expenseSummaryByCategorie$: Observable<any>;
-  // Monthly Summary Stuff...
 
   constructor(
     private firestoreService: FirestoreService,
@@ -66,7 +63,6 @@ export class MovementsService {
     this.movementsCollectionRef =
       this.firestoreService.groupMovementsCollectionRef;
 
-    this.movements = this.getMovements();
     this.lastMovements = this.getLastMovements();
 
     this.years = this.getYears();
@@ -101,34 +97,10 @@ export class MovementsService {
     return this.firestoreService.valueChangesCollectionDocs<Movement>(
       this.movementsCollectionRef
     );
-    // .pipe(
-    //   map((movements: Movement[]) =>
-    //     movements.sort(
-    //       (a: any, b: any) =>
-    //         new Date(b.createAt).getTime() - new Date(a.createAt).getTime()
-    //     )
-    //   )
-    // );
   }
 
   getLastMovements() {
     return this.firestoreService.valueChangesLastMovements(5);
-  }
-
-  dateFilterMovements() {
-    return this.movements.pipe(
-      map((movements: Movement[]) =>
-        movements
-          .filter(
-            (movement: Movement) =>
-              new Date(movement.date).getFullYear() === this.dateFilters.year
-          )
-          .filter(
-            (movement: Movement) =>
-              new Date(movement.date).getMonth() + 1 === this.dateFilters.month
-          )
-      )
-    );
   }
 
   getFilteredMovements() {
@@ -139,32 +111,11 @@ export class MovementsService {
           ? this.dateFilters.month
           : `0${this.dateFilters.month}`
       ),
-      // this.dateFilterMovements(),
       this.filterAndSortMovementsBy
     );
   }
 
-  refreshMovements() {
-    // this.movements = this.getMovements();
-    // this.filteredMovements = this.getFilteredMovements();
-    // this.filteredMovements
-    //   .pipe(map((array) => array.length))
-    //   .subscribe((arrayLength) => {
-    //     this.paginationService.calculateNumberOfPages(arrayLength);
-    //   });
-    // this.paginationService.currentPage = 1;
-    // this.monthlySummaryTotals.income = 0;
-    // this.monthlySummaryTotals.savings = 0;
-    // this.monthlySummaryTotals.expense = 0;
-    // this.monthlySummaryTotals.balance = 0;
-    // this.getMonthlyMovementsByTypeAndSummaryTotals();
-    // this.incomeSummaryByCategorie$ =
-    //   this.getMonthlySummaryByCategories('income');
-    // this.savingsSummaryByCategorie$ =
-    //   this.getMonthlySummaryByCategories('savings');
-    // this.expenseSummaryByCategorie$ =
-    //   this.getMonthlySummaryByCategories('expense');
-
+  refreshPagination() {
     this.filteredMovements
       .pipe(map((array) => array.length))
       .subscribe((arrayLength) => {
@@ -174,14 +125,8 @@ export class MovementsService {
   }
 
   handlerFilterAndSortMovementsBy() {
-    // this.refreshMovements();
     this.filteredMovements = this.getFilteredMovements();
-    this.filteredMovements
-      .pipe(map((array) => array.length))
-      .subscribe((arrayLength) => {
-        this.paginationService.calculateNumberOfPages(arrayLength);
-      });
-    this.paginationService.currentPage = 1;
+    this.refreshPagination();
   }
 
   async addNewMovement(newMovement: Movement) {
@@ -189,7 +134,7 @@ export class MovementsService {
       this.movementsCollectionRef,
       newMovement
     );
-    this.refreshMovements();
+    this.refreshPagination();
   }
 
   async updateMovement(movementId: string, updatedMovement: Movement) {
@@ -198,7 +143,7 @@ export class MovementsService {
       movementId,
       updatedMovement
     );
-    this.refreshMovements();
+    this.refreshPagination();
   }
 
   async deleteMovement(movementId: string) {
@@ -206,17 +151,16 @@ export class MovementsService {
       this.movementsCollectionRef,
       movementId
     );
-    this.refreshMovements();
+    this.refreshPagination();
   }
 
   async deleteAllMovements() {
     await this.firestoreService.batchDeleteAllCollectionDocs<Movement>(
       this.movementsCollectionRef
     );
-    this.refreshMovements();
+    this.refreshPagination();
   }
 
-  // Monthly Summary Stuff...
   getMonthlyMovementsByTypeAndSummaryTotals() {
     this.filteredMovements.forEach((movements) => {
       this.monthlySummaryTotals.income = 0;
@@ -253,28 +197,7 @@ export class MovementsService {
         }
       });
     });
-    // console.log(this.monthlySummaryTotals);
-    // console.log(this.monthlyMovementsByType);
   }
-
-  // async getMonthlyMovementsByCategoriesSummary() {
-  //   let incomeArray: any = [];
-  //   await this.categoriesService.categories
-  //     .forEach((categories) =>
-  //       categories.forEach((category) => {
-  //         if (category.type === 'income') {
-  //           this.monthlyMovementsByType.income.forEach((movement: any) => {
-  //             console.log('yes');
-  //             if (movement.category === category.name) {
-  //               incomeArray[category.name] = [movement, ...incomeArray];
-  //             }
-  //           });
-  //         }
-  //       })
-  //     )
-  //     .then(()=>console.log(incomeArray));
-  // }
-  // Monthly Summary Stuff...
 
   getMonthlySummaryByCategories(movementType: string) {
     const selectedTypeCategories: Observable<Category[]> =

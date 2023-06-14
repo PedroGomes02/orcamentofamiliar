@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 
 import { DialogService } from './dialog.service';
 import { FirestoreService } from './firestore.service';
@@ -14,20 +14,12 @@ export class MembersService {
   membersCollectionRef: AngularFirestoreCollection<Member>;
   members: Observable<Member[]>;
 
-  currentMembersEmails: string[] = [];
-
   constructor(
     private firestoreService: FirestoreService,
     private dialogService: DialogService
   ) {
     this.membersCollectionRef = this.firestoreService.groupMembersCollectionRef;
     this.members = this.getMembers();
-
-    this.members.subscribe((members: Member[]) => {
-      members.forEach((member: Member) => {
-        this.currentMembersEmails.push(member.id || '');
-      });
-    });
   }
 
   getMembers() {
@@ -36,17 +28,11 @@ export class MembersService {
     );
   }
 
-  refreshMembers() {
-    // this.members = this.getMembers();
-    // this.members.subscribe((members: Member[]) => {
-    //   members.forEach((member: Member) => {
-    //     this.currentMembersEmails.push(member.id || '');
-    //   });
-    // });
-  }
-
   async addNewMember(newMember: Member) {
-    if (this.currentMembersEmails.includes(newMember.id || '')) {
+    if (
+      (await firstValueFrom(this.membersCollectionRef.doc(newMember.id).get()))
+        .exists
+    ) {
       this.dialogService.loading = false;
       this.dialogService.openDialog(
         `O membro com o email: ${newMember.id} já existe no grupo!`
@@ -57,7 +43,6 @@ export class MembersService {
       this.membersCollectionRef,
       newMember
     );
-    this.refreshMembers();
   }
 
   //UPDATE MEMBER NOT IMPLEMENT YET
@@ -67,7 +52,6 @@ export class MembersService {
       memberId,
       updatedMember
     );
-    this.refreshMembers();
   }
 
   async deleteMember(memberId: string) {
@@ -75,7 +59,5 @@ export class MembersService {
       this.membersCollectionRef,
       memberId
     );
-    this.currentMembersEmails = []
-    this.refreshMembers();
   }
 }

@@ -81,3 +81,9 @@
 .showControlButtonsIndicator {
   align-self: flex-end;
 }
+
+.categoryListItemButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}

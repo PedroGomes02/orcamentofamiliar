@@ -13,9 +13,18 @@ export class HorizontalSwipeService {
     '/settings',
   ];
   constructor(private router: Router) {
-    const hammer = new Hammer(document.documentElement);
-    hammer.on('swiperight', () => this.navigatePrevious());
-    hammer.on('swipeleft', () => this.navigateNext());
+    if (this.isMobileDevice()) {
+      const hammer = new Hammer(document.documentElement);
+      hammer.on('swiperight', () => this.navigatePrevious());
+      hammer.on('swipeleft', () => this.navigateNext());
+    }
+  }
+
+  isMobileDevice(): boolean {
+    return (
+      'ontouchstart' in window ||
+      (window.matchMedia && window.matchMedia('(max-width: 767px)').matches)
+    );
   }
 
   navigateNext() {
