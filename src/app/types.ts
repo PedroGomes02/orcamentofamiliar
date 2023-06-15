@@ -4,11 +4,6 @@ interface Group {
   admin: string;
 }
 
-interface UpdatedGroup {
-  name: string;
-  admin: string;
-}
-
 interface Member {
   id?: string;
   name: string;
@@ -41,4 +36,4 @@ interface FilterAndSort {
   sortBy: string;
 }
 
-export type { Group, UpdatedGroup, Member, Category, Movement, FilterAndSort };
+export type { Group, Member, Category, Movement, FilterAndSort };

@@ -6,20 +6,13 @@ import {
   DocumentReference,
 } from '@angular/fire/compat/firestore';
 
-import { Observable, firstValueFrom, from } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DialogService } from './dialog.service';
 
-import {
-  Category,
-  FilterAndSort,
-  Group,
-  Member,
-  Movement,
-  UpdatedGroup,
-} from '../types';
+import { Category, FilterAndSort, Group, Member, Movement } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -135,7 +128,7 @@ export class FirestoreService {
       );
   }
 
-  async updateCurrentGroup(updatedGroup: UpdatedGroup) {
+  async updateCurrentGroup(updatedGroup: Group) {
     await this.updateDocOnCollection(
       this.groupsCollectionRef,
       this.currentGroupEmail,
