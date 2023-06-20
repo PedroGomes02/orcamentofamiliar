@@ -20,16 +20,16 @@
   </script>
 </aside>
 
-<!-- Remove login page, for adsense purposes -->
-<!--*ngIf="!isShowingLogIn; else logIn"-->
 <main
+  *ngIf="!isShowingLogIn; else logIn"
   (swiperight)="(horizontalSwipeService.navigatePrevious)"
   (swipeleft)="(horizontalSwipeService.navigateNext)"
 >
-  <!-- *ngIf="!firestoreService.isShowingStartGroupMenu; else startGroupMenu" -->
-  <div class="mainContainer">
-    <!--*ngIf="!firestoreService.isLoading; else loading"  -->
-    <div>
+  <div
+    class="mainContainer"
+    *ngIf="!firestoreService.isShowingStartGroupMenu; else startGroupMenu"
+  >
+    <div *ngIf="!firestoreService.isLoading; else loading">
       <router-outlet></router-outlet>
     </div>
   </div>

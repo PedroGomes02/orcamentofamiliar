@@ -8,7 +8,7 @@
 <!-- Where render componentes pass as children in template -->
 
 <div
-  *ngIf="(authService.afAuth.authState | async)?.photoURL; else logIn"
+  *ngIf="(authService.afAuth.authState | async)?.photoURL"
   class="avatarContainer"
 >
   <img
@@ -20,14 +20,3 @@
   />
   <button class="logOutButton" (click)="authService.logout()">X</button>
 </div>
-
-<!-- REMOVE LOGIN STUFF -->
-<ng-template #logIn>
-  <button
-    class="loginButton"
-    class="avatarContainer"
-    (click)="authService.loginWithGoogle()"
-  >
-    Entrar
-  </button>
-</ng-template>
