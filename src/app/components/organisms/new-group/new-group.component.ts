@@ -20,7 +20,7 @@ export class NewGroupComponent {
   constructor(
     private authService: AuthenticationService,
     private fb: FormBuilder,
-    private firestoreService: FirestoreService,
+    private firestoreService: FirestoreService
   ) {
     this.authService.afAuth.authState.subscribe((user: any) => {
       if (user) {
@@ -35,17 +35,17 @@ export class NewGroupComponent {
     });
   }
 
-  handlerSubmitGroupForm() {
+  async handlerSubmitGroupForm() {
     const newGroup = {
       name: this.groupForm.value.name,
       admin: this.groupForm.value.admin,
     };
-    this.firestoreService.startNewGroup(newGroup);
-    this.firestoreService.currentGroupEmail = this.userEmail;
-    this.firestoreService.batchSetDefaultCollectionDocs(
-      this.firestoreService.groupCategoriesCollectionRef,
-      defaultCategories
-    );
+    await this.firestoreService.startNewGroup(newGroup);
+
+    // await this.firestoreService.batchSetDefaultCollectionDocs(
+    //   this.firestoreService.groupCategoriesCollectionRef,
+    //   defaultCategories
+    // );
 
     // this.groupForm.reset();
   }

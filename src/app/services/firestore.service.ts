@@ -64,15 +64,23 @@ export class FirestoreService {
     location.reload();
   }
 
-  startNewGroup(groupData: Group) {
+  async startNewGroup(groupData: Group) {
+    this.dialogService.openDialog(``);
+    this.dialogService.loading = true;
+
     this.authService.afAuth.authState.subscribe((user) => {
       const groupRef = this.groupsCollectionRef.doc(user?.email || '');
-      groupRef.get().subscribe((doc) => {
+      groupRef.get().subscribe(async (doc) => {
         if (doc.exists) {
-          this.dialogService.openDialog(`O grupo já existe!`);
+          this.dialogService.loading = false;
+          this.dialogService.dialogMessage = 'Grupo já existe!';
         } else {
-          groupRef.set(groupData);
-          this.dialogService.openDialog(`Novo grupo criado!`);
+          await groupRef.set(groupData);
+          this.dialogService.loading = false;
+          this.dialogService.dialogMessage = `Novo grupo criado!`;
+          this.currentGroupEmail = user?.email || '';
+          localStorage.setItem('groupEmail', user?.email || '');
+          location.reload();
         }
       });
     });

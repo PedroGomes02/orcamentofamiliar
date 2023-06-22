@@ -7,7 +7,7 @@ import { GoogleAuthProvider } from 'firebase/auth';
 })
 export class AuthenticationService {
   constructor(public afAuth: AngularFireAuth) {}
-  
+
   async loginWithGoogle() {
     try {
       await this.afAuth.signInWithRedirect(new GoogleAuthProvider());
@@ -19,6 +19,7 @@ export class AuthenticationService {
   async logout() {
     try {
       await this.afAuth.signOut();
+      localStorage.removeItem('groupEmail');
       location.reload();
     } catch (error) {
       console.log('Error on logout:', error);
