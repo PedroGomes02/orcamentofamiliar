@@ -5,8 +5,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FirestoreService } from '../../../services/firestore.service';
 
-import { defaultCategories } from 'src/assets/defaultCategories';
-
 @Component({
   selector: 'app-new-group',
   templateUrl: './new-group.component.html',
@@ -41,12 +39,5 @@ export class NewGroupComponent {
       admin: this.groupForm.value.admin,
     };
     await this.firestoreService.startNewGroup(newGroup);
-
-    // await this.firestoreService.batchSetDefaultCollectionDocs(
-    //   this.firestoreService.groupCategoriesCollectionRef,
-    //   defaultCategories
-    // );
-
-    // this.groupForm.reset();
   }
 }

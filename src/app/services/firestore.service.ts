@@ -13,6 +13,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DialogService } from './dialog.service';
 
 import { Category, FilterAndSort, Group, Member, Movement } from '../types';
+import { defaultCategories } from 'src/assets/defaultCategories';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +56,7 @@ export class FirestoreService {
     );
     this.groupMovementsCollectionRef = this.db.collection(
       `groups/${this.currentGroupEmail}/movements`,
-      (ref) => ref.orderBy('date', 'desc')
+      (ref) => ref.orderBy('date', 'desc').orderBy('createAt', 'desc')
     );
   }
 
@@ -80,6 +81,13 @@ export class FirestoreService {
           this.dialogService.dialogMessage = `Novo grupo criado!`;
           this.currentGroupEmail = user?.email || '';
           localStorage.setItem('groupEmail', user?.email || '');
+          await this.batchSetDefaultCollectionDocs(
+            this.db.collection(
+              `groups/${this.currentGroupEmail}/categories`,
+              (ref) => ref.orderBy('name', 'asc')
+            ),
+            defaultCategories
+          );
           location.reload();
         }
       });
@@ -90,6 +98,7 @@ export class FirestoreService {
     collection: Observable<T[]>,
     filterAndSortBy: FilterAndSort
   ): Observable<T[]> {
+   
     if (filterAndSortBy.type === 'all') {
       return collection.pipe(
         map((docs: T[]) =>
@@ -108,6 +117,7 @@ export class FirestoreService {
       return collection.pipe(
         map((docs: T[]) =>
           docs
+            .filter((doc: any) => doc.type === filterAndSortBy.type)
             .sort((a: any, b: any) =>
               filterAndSortBy.sortBy === 'date'
                 ? b[filterAndSortBy.sortBy].localeCompare(
@@ -117,7 +127,6 @@ export class FirestoreService {
                     b[filterAndSortBy.sortBy]
                   )
             )
-            .filter((doc: any) => doc.type === filterAndSortBy.type)
         )
       );
     }
@@ -177,6 +186,7 @@ export class FirestoreService {
             .orderBy('date', 'desc')
             .where('date', '>=', startDate)
             .where('date', '<=', endDate)
+            .orderBy('createAt', 'desc')
       )
       .valueChanges({ idField: 'id' });
   }
