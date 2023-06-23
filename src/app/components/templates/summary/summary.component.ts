@@ -14,7 +14,14 @@ export class SummaryComponent {
   constructor(
     // public summaryService: SummaryService,
     public movementsService: MovementsService
-  ) {}
+  ) {
+    this.movementsService.incomeSummaryByCategorie$ =
+      this.movementsService.getMonthlySummaryByCategories('income');
+    this.movementsService.savingsSummaryByCategorie$ =
+      this.movementsService.getMonthlySummaryByCategories('savings');
+    this.movementsService.expenseSummaryByCategorie$ =
+      this.movementsService.getMonthlySummaryByCategories('expense');
+  }
 
   toogleShowCategoryList(categoryName: string) {
     if (this.showMovementsList === categoryName) {

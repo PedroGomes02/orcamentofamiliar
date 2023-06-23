@@ -126,6 +126,13 @@ export class MovementsService {
 
   handlerFilterAndSortMovementsBy() {
     this.filteredMovements = this.getFilteredMovements();
+    this.getMonthlyMovementsByTypeAndSummaryTotals();
+    this.incomeSummaryByCategorie$ =
+      this.getMonthlySummaryByCategories('income');
+    this.savingsSummaryByCategorie$ =
+      this.getMonthlySummaryByCategories('savings');
+    this.expenseSummaryByCategorie$ =
+      this.getMonthlySummaryByCategories('expense');
     this.refreshPagination();
   }
 

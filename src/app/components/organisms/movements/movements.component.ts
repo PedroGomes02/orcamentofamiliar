@@ -27,17 +27,12 @@ export class MovementsComponent {
     public paginationService: PaginationService,
     public summaryService: SummaryService
   ) {
-    this.movementsService.dateFilters.year = new Date().getFullYear();
-    this.movementsService.dateFilters.month = new Date().getMonth() + 1;
-
-    // this.summaryService.filters.year = new Date().getFullYear();
-    // this.summaryService.filters.month = new Date().getMonth() + 1;
+    // this.movementsService.dateFilters.year = new Date().getFullYear();
+    // this.movementsService.dateFilters.month = new Date().getMonth() + 1;
 
     // this.filteredMovement$ = this.summaryService.filterMovements();
 
-    // this.pagination = this.paginationService;
     this.paginationService.currentPage = 1;
-
     this.movementsService.filteredMovements
       .pipe(map((array) => array.length))
       .subscribe((arrayLength) => {
